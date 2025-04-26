@@ -4,8 +4,8 @@ import "./Logo.css";
 const Logo = () => {
     return(
         <strong className="logo">
-            <span className="logo-first">Meds</span>
-            <span className="logo-second">Schedule</span>
+            <span className="first">Meds</span>
+            <span className="second">Schedule</span>
         </strong>
     );
 }

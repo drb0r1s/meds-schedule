@@ -4,4 +4,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.account .logo-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account .logo-holder p {
+    color: white;
+    font-size: 20px;
+    margin: 0;
+}
+
+.account p {
+    color: white;
+    font-size: 15px;
+}
+
+.account p .register-button {
+    color: var(--red);
+    font-size: 15px;
+    font-family: Roboto-Bold;
+    border: none;
+}
+
+.account .continue-button {
+    color: white;
+    font-size: 15px;
+    background-color: var(--red);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 20px;
 }

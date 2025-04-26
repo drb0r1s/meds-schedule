@@ -5,14 +5,15 @@
     
 }
 
-.logo .logo-first {
-    color: white;
-    font-size: 30px;
+.logo span {
+    font-size: 40px;
     font-family: Roboto-Bold;
 }
 
-.logo .logo-second {
-    color: #DC143C;
-    font-size: 30px;
-    font-family: Roboto-Bold;
+.logo .first {
+    color: white;
+}
+
+.logo .second {
+    color: var(--red);
 }

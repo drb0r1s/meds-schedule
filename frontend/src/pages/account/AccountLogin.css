@@ -1,0 +1,35 @@
+.account-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-login fieldset {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    border: none;
+}
+
+.account-login fieldset input {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Light;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid grey;
+    padding: 10px 15px;
+}
+
+.account-login fieldset input:focus {
+    border-bottom: 1px solid white;
+}
+
+.account-login fieldset input::placeholder {
+    font-family: Roboto-Light;
+}

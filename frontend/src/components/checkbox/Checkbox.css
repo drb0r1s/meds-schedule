@@ -1,0 +1,36 @@
+.checkbox-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.checkbox-holder .checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 3px;
+}
+
+.checkbox-holder .checkbox img {
+    height: 17px;
+    width: 17px;
+    object-fit: contain;
+    border-radius: 3px;
+    background-color: transparent;
+}
+
+.checkbox-holder .checkbox-active {
+    background-color: var(--red);
+}
+
+.checkbox-holder p {
+    color: white;
+    font-size: 15px;
+    font-family: Roboto-Thin;
+    margin: 0;
+}
