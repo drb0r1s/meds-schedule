@@ -27,7 +27,7 @@
     font-size: 15px;
 }
 
-.account p .register-button {
+.account p .panel-button {
     color: var(--red);
     font-size: 15px;
     font-family: Roboto-Bold;

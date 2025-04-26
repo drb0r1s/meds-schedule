@@ -1,4 +1,4 @@
-.account-login {
+.account-panel {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,7 +6,7 @@
     gap: 10px;
 }
 
-.account-login fieldset {
+.account-panel fieldset {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -15,7 +15,7 @@
     border: none;
 }
 
-.account-login fieldset input {
+.account-panel fieldset input {
     color: white;
     font-size: 18px;
     font-family: Roboto-Light;
@@ -26,10 +26,10 @@
     padding: 10px 15px;
 }
 
-.account-login fieldset input:focus {
+.account-panel fieldset input:focus {
     border-bottom: 1px solid white;
 }
 
-.account-login fieldset input::placeholder {
+.account-panel fieldset input::placeholder {
     font-family: Roboto-Light;
 }

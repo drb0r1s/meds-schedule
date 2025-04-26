@@ -10,3 +10,6 @@ app.listen(port, () => console.log("Listening on http://localhost:9998"));
 app.get("/", (req, res) => {
     res.send("Hello world!");
 });
+
+const family = require("./routes/family.js");
+app.use("/family", family);
