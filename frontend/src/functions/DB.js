@@ -6,7 +6,7 @@ export const DB = {
             const response = await fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: value
+                body: JSON.stringify(value)
             });
     
             const result = await response.json();
@@ -19,6 +19,6 @@ export const DB = {
     },
     
     register: async value => {
-        await DB.postRequest(`${DB.URL}/family/register`, value);
+        await DB.postRequest(`${DB.URL}family/register`, value);
     }
 };

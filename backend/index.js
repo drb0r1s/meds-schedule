@@ -6,9 +6,11 @@ const DB = require("./db/index.js");
 const port = 9999;
 
 const app = express();
-app.use(cors());
 
-app.listen(port, () => console.log(`Server is listening on http://88.200.63.148:9998/`));
+app.use(cors());
+app.use(express.json());
+
+app.listen(port, () => console.log(`Server is listening on http://88.200.63.148:${port}/`));
 
 app.get("/", (req, res) => {
     res.send("Hello world!");
