@@ -3,7 +3,7 @@ require("dotenv").config();
 const DB = require("./db/index.js");
 
 const app = express();
-const port = 9998;
+const port = 9999;
 
 app.listen(port, () => console.log("Listening on http://localhost:9998"));
 
