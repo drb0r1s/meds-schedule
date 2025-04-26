@@ -1,5 +1,5 @@
 export const DB = {
-    URL: "http://localhost:9999",
+    URL: "http://88.200.63.148:9999/",
 
     postRequest: async (URL, value) => {
         try {

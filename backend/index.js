@@ -1,9 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 const DB = require("./db/index.js");
 
-const app = express();
 const port = 9999;
+
+const app = express();
+app.use(cors());
 
 app.listen(port, () => console.log(`Server is listening on http://88.200.63.148:9998/`));
 
