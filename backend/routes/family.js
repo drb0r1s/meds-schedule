@@ -7,3 +7,5 @@ family.post("/register", (req, res) => {
 
     res.status(200).json({ message: "Success!" });
 });
+
+module.exports = family;
