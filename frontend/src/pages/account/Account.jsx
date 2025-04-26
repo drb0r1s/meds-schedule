@@ -1,4 +1,5 @@
 import React from "react";
+import "./Account.css";
 import Logo from "../../components/Logo/Logo";
 
 const Account = () => {

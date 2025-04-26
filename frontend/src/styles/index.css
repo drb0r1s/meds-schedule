@@ -1,1 +1,9 @@
 /* 480px x 896px */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto-Regular;
+    background-color: #1c1a1a;
+}

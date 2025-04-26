@@ -2,14 +2,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .logo .logo-first {
     color: white;
     font-size: 30px;
+    font-family: Roboto-Bold;
 }
 
 .logo .logo-second {
-    color: rgb(207, 13, 13);
+    color: #DC143C;
     font-size: 30px;
+    font-family: Roboto-Bold;
 }
