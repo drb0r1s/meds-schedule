@@ -1,0 +1,15 @@
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo .logo-first {
+    color: white;
+    font-size: 30px;
+}
+
+.logo .logo-second {
+    color: rgb(207, 13, 13);
+    font-size: 30px;
+}

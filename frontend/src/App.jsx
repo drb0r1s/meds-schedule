@@ -1,10 +1,12 @@
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import { routes } from "./data/routes";
 
 const App = () => {
+    const router = createBrowserRouter(routes);
+    
     return(
-        <div className="app">
-            <h1>MedsSchedule</h1>
-        </div>
+        <RouterProvider router={router} />
     );
 }
 
