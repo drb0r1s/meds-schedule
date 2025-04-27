@@ -68,6 +68,8 @@ const Account = () => {
             const result = await DB.login(inputs);
             setIsLoading(false);
 
+            console.log(result)
+
             if(result.message) return setInfo({ type: "error", message: result.message });
         }
 
