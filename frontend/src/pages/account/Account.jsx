@@ -11,7 +11,7 @@ const Account = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "" });
     const [info, setInfo] = useState({ type: "", message: "" });
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     function changePanel(login) {
         setIsLogin(login);
@@ -64,11 +64,19 @@ const Account = () => {
         if(isError) return;
         
         if(isLogin) {
-            await DB.login(inputs);
+            setIsLoading(true);
+            const result = await DB.login(inputs);
+            setIsLoading(false);
+
+            if(result.message) return setInfo({ type: "error", message: result.message });
         }
 
         else {
-            await DB.register(inputs);
+            setIsLoading(true);
+            const result = await DB.register(inputs);
+            setIsLoading(false);
+
+            if(result.message) return setInfo({ type: "error", message: result.message });
         }
     }
     

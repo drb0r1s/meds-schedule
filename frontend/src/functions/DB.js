@@ -17,10 +17,10 @@ export const DB = {
     },
 
     login: async value => {
-        await DB.postRequest(`${DB.URL}family/login`, value);
+        return await DB.postRequest(`${DB.URL}family/login`, value);
     },
     
     register: async value => {
-        await DB.postRequest(`${DB.URL}family/register`, value);
+        return await DB.postRequest(`${DB.URL}family/register`, value);
     }
 };

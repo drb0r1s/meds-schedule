@@ -13,17 +13,19 @@ family.post("/login", async (req, res) => {
     if(isError) return;
 
     try {
-        const family = await DB.getFamily({ name });
+        family = await DB.getFamily({ name });
         if(!family) return error(res, { message: "Family not found." });
 
         const isMatch = bcrypt.compare(password, family.password);
         if(!isMatch) return error(res, { message: "Invalid password." });
 
         res.status(200).json({ message: "Login successful!" });
-        console.log("Logged in!");
+        return family;
     } catch(err) {
         console.log(`DB ERROR: ${err}`);
         res.sendStatus(500);
+
+        return error(res, { message: family.sqlMessage });
     }
 });
 
@@ -31,7 +33,7 @@ family.post("/register", async (req, res) => {
     const { name, password, repeatPassword } = req.body;
     
     const isError = checkInputs({ name, password, repeatPassword }, false, res);
-    if(isError) return;
+    if(isError.message) return;
 
     const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -48,12 +50,15 @@ family.post("/register", async (req, res) => {
     try {
         const queryResult = await DB.register(registerObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Family table.");
+    
+        res.status(200).json({ message: "Register successful!" });
+        return { success: true };
     } catch(err) {
         console.error(`DB ERROR: ${err}`);
         res.sendStatus(500);
-    }
 
-    res.status(200).json({ message: "Register successful!" });
+        return error(res, { message: queryResult.sqlMessage });
+    }
 });
 
 function checkInputs(inputs, isLogin, res) {
