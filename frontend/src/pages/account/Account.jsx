@@ -16,19 +16,28 @@ const Account = () => {
         setInputs({ name: "", password: "", repeatPassword: "" });
     }
 
-    async function handleContinue() {
-        if(isLogin) {
+    function checkInputs() {
+        if(!inputs.name.length) return setInfo({ type: "error", message: "Name field is empty." });
+        else if(!inputs.password.length) return setInfo({ type: "error", message: "Password field is empty." });
+        else if(inputs.name.length < 3 || inputs.name.length > 64) return setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
+        else if(inputs.password.length < 8 || inputs.password.length > 64) return setInfo({ type: "error", message: "Password length should be greater than 7 or less than 64!" });
+    
+        if(!isLogin) {
+            if(!inputs.repeatPassword.length) return setInfo({ type: "error", message: "Repeat password field is empty." });
+            else if(inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64) return setInfo({ type: "error", message: "Confirmation password length should be greater than 7 or less than 64!" });
+            else if(inputs.password !== inputs.repeatPassword) return setInfo({ type: "error", message: "Password and confirmation password don't match!" });
+        }
+    }
 
+    async function handleContinue() {
+        checkInputs();
+        
+        if(isLogin) {
+        
         }
 
         else {
-            if(!inputs.name.length) return setInfo({ type: "error", message: "Name field is empty." });
-            else if(!inputs.password.length) return setInfo({ type: "error", message: "Password field is empty." });
-            else if(!inputs.repeatPassword.length) return setInfo({ type: "error", message: "Repeat password field is empty." });
-            else if(inputs.name.length < 3 || inputs.name.length > 64) return setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
-            else if(inputs.password.length < 8 || inputs.password.length > 64) return setInfo({ type: "error", message: "Password length should be greater than 7 or less than 64!" });
-            else if(inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64) return setInfo({ type: "error", message: "Confirmation password length should be greater than 7 or less than 64!" });
-            else if(inputs.password !== inputs.repeatPassword) return setInfo({ type: "error", message: "Password and confirmation password don't match!" });
+            
 
             const res = await DB.register(inputs);
         }
