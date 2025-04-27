@@ -6,6 +6,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 40px;
+    overflow-y: hidden;
 }
 
 .account .logo-holder {
@@ -31,6 +32,7 @@
     color: var(--red);
     font-size: 15px;
     font-family: Roboto-Bold;
+    background-color: transparent;
     border: none;
 }
 

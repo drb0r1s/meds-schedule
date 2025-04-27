@@ -14,4 +14,8 @@ connection.connect(err => {
 
 const dataPool = {};
 
+dataPool.register = () => {
+
+}
+
 module.exports = dataPool;

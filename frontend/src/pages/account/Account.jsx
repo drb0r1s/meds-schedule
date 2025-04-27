@@ -3,6 +3,7 @@ import "./Account.css";
 import Logo from "../../components/logo/Logo";
 import AccountLogin from "./AccountLogin";
 import AccountRegister from "./AccountRegister";
+import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
 
 const Account = () => {
@@ -22,9 +23,11 @@ const Account = () => {
     
     return(
         <section className="account">
+            <Info type="error" message="Not enough something...." />
+            
             <div className="logo-holder">
                 <Logo />
-                <p>Log in to your account</p>
+                <p>{isLogin ? "Log in" : "Register"} to your account</p>
             </div>
 
             {isLogin ? <>
