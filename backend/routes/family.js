@@ -17,7 +17,7 @@ family.post("/register", async (req, res) => {
         description: "",
         color: "",
         created_at: ExtendedDate.now(),
-        updated_at: ""
+        updated_at: ExtendedDate.now()
     };
 
     try {
