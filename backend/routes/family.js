@@ -6,10 +6,31 @@ const ExtendedDate = require("../functions/ExtendedDate");
 
 const family = express.Router();
 
+family.post("/login", async (req, res) => {
+    const { name, password } = req.body;
+
+    const isError = checkInputs({ name, password }, true, res);
+    if(isError) return;
+
+    try {
+        const family = await DB.getFamily({ name });
+        if(!family) return error(res, { message: "Family not found." });
+
+        const isMatch = bcrypt.compare(password, family.password);
+        if(!isMatch) return error(res, { message: "Invalid password." });
+
+        res.status(200).json({ message: "Login successful!" });
+        console.log("Logged in!");
+    } catch(err) {
+        console.log(`DB ERROR: ${err}`);
+        res.sendStatus(500);
+    }
+});
+
 family.post("/register", async (req, res) => {
     const { name, password, repeatPassword } = req.body;
     
-    const isError = checkInputs({ name, password, repeatPassword }, true, res);
+    const isError = checkInputs({ name, password, repeatPassword }, false, res);
     if(isError) return;
 
     const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
@@ -32,7 +53,7 @@ family.post("/register", async (req, res) => {
         res.sendStatus(500);
     }
 
-    res.status(200).json({ message: "Success!" });
+    res.status(200).json({ message: "Register successful!" });
 });
 
 function checkInputs(inputs, isLogin, res) {

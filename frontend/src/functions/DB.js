@@ -15,6 +15,10 @@ export const DB = {
             console.error(`ERROR: ${err}`);
         }
     },
+
+    login: async value => {
+        await DB.postRequest(`${DB.URL}family/login`, value);
+    },
     
     register: async value => {
         await DB.postRequest(`${DB.URL}family/register`, value);
