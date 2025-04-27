@@ -12,13 +12,8 @@ family.post("/register", async (req, res) => {
     const isError = checkInputs({ name, password, repeatPassword }, true, res);
     if(isError) return;
 
-    let hashedPassword = "";
     const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
-
-    bcrypt.hash(password, saltRounds, (err, hashed) => {
-        if(err) throw err;
-        hashedPassword = hashed;
-    });
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const registerObject = {
         name,
