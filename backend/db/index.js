@@ -23,6 +23,15 @@ dataPool.getFamily = ({ name }) => {
     });
 }
 
+dataPool.loggedIn = ({ token }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Family WHERE password = ?", [token], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res[0]);
+        });
+    });
+}
+
 dataPool.register = ({ name, password, description, color, created_at, updated_at }) => {
     return new Promise((resolve, reject) => {
         connection.query("INSERT INTO Family (name, password, description, color, created_at, updated_at) VALUES (?,?,?,?,?,?)", [name, password, description, color, created_at, updated_at], (err, res) => {

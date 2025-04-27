@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Account.css";
 import Logo from "../../components/logo/Logo";
 import AccountLogin from "./AccountLogin";
@@ -12,6 +13,8 @@ const Account = () => {
     const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "" });
     const [info, setInfo] = useState({ type: "", message: "" });
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     function changePanel(login) {
         setIsLogin(login);
@@ -68,9 +71,12 @@ const Account = () => {
             const result = await DB.login(inputs);
             setIsLoading(false);
 
-            console.log(result)
-
             if(result.message) return setInfo({ type: "error", message: result.message });
+            
+            else {
+                localStorage.setItem("token", result.password);
+                navigate("/schedules");
+            }
         }
 
         else {

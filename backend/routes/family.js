@@ -21,7 +21,21 @@ family.post("/login", async (req, res) => {
 
         res.status(200).json(queryResult);
     } catch(err) {
-        console.log(`DB ERROR: ${err}`);
+        console.error(`DB ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
+family.post("/loggedIn", async (req, res) => {
+    const { token } = req.body;
+
+    try {
+        let queryResult = await DB.loggedIn({ token });
+        if(!queryResult) return error(res, { message: "Family not found." });
+
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`DB ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
