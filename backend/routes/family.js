@@ -27,7 +27,7 @@ family.post("/login", async (req, res) => {
         console.log(`DB ERROR: ${err}`);
         res.sendStatus(500);
 
-        return error(res, { message: queryResult.sqlMessage });
+        return error(res, { message: err });
     }
 });
 
@@ -61,7 +61,7 @@ family.post("/register", async (req, res) => {
         console.error(`DB ERROR: ${err}`);
         res.sendStatus(500);
 
-        return error(res, { message: queryResult.sqlMessage });
+        return error(res, { message: err });
     }
 });
 
