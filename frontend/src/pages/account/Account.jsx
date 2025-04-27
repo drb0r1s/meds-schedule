@@ -4,12 +4,14 @@ import Logo from "../../components/logo/Logo";
 import AccountLogin from "./AccountLogin";
 import AccountRegister from "./AccountRegister";
 import Info from "../../components/Info/Info";
+import Loading from "../../components/loading/Loading";
 import { DB } from "../../functions/DB";
 
 const Account = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "" });
     const [info, setInfo] = useState({ type: "", message: "" });
+    const [isLoading, setIsLoading] = useState(true);
 
     function changePanel(login) {
         setIsLogin(login);
@@ -66,14 +68,14 @@ const Account = () => {
         }
 
         else {
-            
-
-            const res = await DB.register(inputs);
+            await DB.register(inputs);
         }
     }
     
     return(
         <section className="account">
+            {isLoading && <Loading />}
+            
             {info.message && <Info info={info} setInfo={setInfo} />}
             
             <div className="logo-holder">
