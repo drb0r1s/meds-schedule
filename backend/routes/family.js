@@ -13,7 +13,7 @@ family.post("/login", async (req, res) => {
     if(isError) return;
 
     try {
-        family = await DB.getFamily({ name });
+        const family = await DB.getFamily({ name });
         if(!family) return error(res, { message: "Family not found." });
 
         const isMatch = bcrypt.compare(password, family.password);
