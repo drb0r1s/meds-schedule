@@ -14,8 +14,13 @@ connection.connect(err => {
 
 const dataPool = {};
 
-dataPool.register = () => {
-
+dataPool.register = ({ name, password, description, color, created_at, updated_at }) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO Family (name, password, description, color, created_at, updated_at) VALUES (?,?,?,?,?,?)`, [name, password, description, color, created_at, updated_at], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
 }
 
 module.exports = dataPool;

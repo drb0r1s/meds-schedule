@@ -1,15 +1,32 @@
 const express = require("express");
 const error = require("../functions/error");
+const DB = require("../db/index");
+const ExtendedDate = require("../functions/ExtendedDate");
 
 const family = express.Router();
 
-family.post("/register", (req, res) => {
+family.post("/register", async (req, res) => {
     const { name, password, repeatPassword } = req.body;
     
     const isError = checkInputs({ name, password, repeatPassword }, true, res);
     if(isError) return;
 
-    
+    const registerObject = {
+        name,
+        password,
+        description: "",
+        color: "",
+        created_at: ExtendedDate.now(),
+        updated_at: ""
+    };
+
+    try {
+        const queryResult = await DB.register(registerObject);
+        if(queryResult.affectedRows) console.log("New row has been inserted in Family table.");
+    } catch(err) {
+        console.error(`DB ERROR: ${err}`);
+        res.sendStatus(500);
+    }
 
     res.status(200).json({ message: "Success!" });
 });

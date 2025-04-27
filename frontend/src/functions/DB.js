@@ -11,9 +11,7 @@ export const DB = {
     
             const result = await response.json();
             return result;
-        }
-
-        catch(err) {
+        } catch(err) {
             console.error(`ERROR: ${err}`);
         }
     },
