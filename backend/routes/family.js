@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const error = require("../functions/error");
 const DB = require("../db/index");
 const ExtendedDate = require("../functions/ExtendedDate");
@@ -11,9 +12,17 @@ family.post("/register", async (req, res) => {
     const isError = checkInputs({ name, password, repeatPassword }, true, res);
     if(isError) return;
 
+    let hashedPassword = "";
+    const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
+
+    bcrypt.hash(password, saltRounds, (err, hashed) => {
+        if(err) throw err;
+        hashedPassword = hashed;
+    });
+
     const registerObject = {
         name,
-        password,
+        password: hashedPassword,
         description: "",
         color: "",
         created_at: ExtendedDate.now(),
