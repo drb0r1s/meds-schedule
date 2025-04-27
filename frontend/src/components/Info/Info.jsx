@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./Info.css";
 import { images } from "../../data/images";
 
-const Info = ({ type, message }) => {
+const Info = ({ info, setInfo }) => {
     const infoRef = useRef(null);
     const lineRef = useRef(null);
 
@@ -24,10 +24,12 @@ const Info = ({ type, message }) => {
     function disableInfo() {
         infoRef.current.id = "";
         clearInterval(interval);
+
+        setInfo({ type: "", message: "" });
     }
     
     return(
-        <div className={`info info-${type}`} ref={infoRef}>
+        <div className={`info info-${info.type}`} ref={infoRef}>
             <div className="line" ref={lineRef}></div>
             
             <div className="content-holder">
@@ -35,7 +37,7 @@ const Info = ({ type, message }) => {
                     <button onClick={disableInfo}><img src={images.xIcon} alt="X" /></button>
                 </div>
 
-                <p>{message}</p>
+                <p>{info.message}</p>
             </div>
         </div>
     );

@@ -27,7 +27,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 5px;
-    padding: 15px 0;
+    padding: 15px;
 }
 
 .info .content-holder .button-holder {
@@ -53,7 +53,9 @@
     color: white;
     font-size: 15px;
     font-family: Roboto-Regular;
+    text-align: center;
     margin: 0;
+    padding: 0 20px;
 }
 
 .info-error {

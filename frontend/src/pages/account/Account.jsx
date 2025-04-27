@@ -9,6 +9,12 @@ import { DB } from "../../functions/DB";
 const Account = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "" });
+    const [info, setInfo] = useState({ type: "", message: "" });
+
+    function changePanel(login) {
+        setIsLogin(login);
+        setInputs({ name: "", password: "", repeatPassword: "" });
+    }
 
     async function handleContinue() {
         if(isLogin) {
@@ -16,14 +22,21 @@ const Account = () => {
         }
 
         else {
+            if(!inputs.name.length) return setInfo({ type: "error", message: "Name field is empty." });
+            else if(!inputs.password.length) return setInfo({ type: "error", message: "Password field is empty." });
+            else if(!inputs.repeatPassword.length) return setInfo({ type: "error", message: "Repeat password field is empty." });
+            else if(inputs.name.length < 3 || inputs.name.length > 64) return setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
+            else if(inputs.password.length < 8 || inputs.password.length > 64) return setInfo({ type: "error", message: "Password length should be greater than 7 or less than 64!" });
+            else if(inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64) return setInfo({ type: "error", message: "Confirmation password length should be greater than 7 or less than 64!" });
+            else if(inputs.password !== inputs.repeatPassword) return setInfo({ type: "error", message: "Password and confirmation password don't match!" });
+
             const res = await DB.register(inputs);
-            console.log(res)
         }
     }
     
     return(
         <section className="account">
-            <Info type="error" message="Not enough something...." />
+            {info.message && <Info info={info} setInfo={setInfo} />}
             
             <div className="logo-holder">
                 <Logo />
@@ -34,13 +47,13 @@ const Account = () => {
                 <AccountLogin inputs={inputs} setInputs={setInputs} />
                 <p>Don't have an account? <button
                     className="panel-button"
-                    onClick={() => setIsLogin(false)}
+                    onClick={() => changePanel(false)}
                 >Register</button></p>
             </> : <>
                 <AccountRegister inputs={inputs} setInputs={setInputs} />
                 <p>Already have an account? <button
                     className="panel-button"
-                    onClick={() => setIsLogin(true)}
+                    onClick={() => changePanel(true)}
                 >Login</button></p>
             </>}
 

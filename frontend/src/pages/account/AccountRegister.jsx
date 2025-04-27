@@ -11,6 +11,8 @@ const AccountRegister = ({ inputs, setInputs }) => {
                 <input
                     type="text"
                     placeholder="Name"
+                    minLength="3"
+                    maxLength="64"
                     value={inputs.name}
                     onChange={e => setInputs(prevInputs => { return {...prevInputs, name: e.target.value} })}
                 />
@@ -20,6 +22,8 @@ const AccountRegister = ({ inputs, setInputs }) => {
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    minLength="8"
+                    maxLength="64"
                     value={inputs.password}
                     onChange={e => setInputs(prevInputs => { return {...prevInputs, password: e.target.value} })}
                 />
@@ -27,6 +31,8 @@ const AccountRegister = ({ inputs, setInputs }) => {
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Repeat password"
+                    minLength="8"
+                    maxLength="64"
                     value={inputs.repeatPassword}
                     onChange={e => setInputs(prevInputs => { return {...prevInputs, repeatPassword: e.target.value} })}
                 />

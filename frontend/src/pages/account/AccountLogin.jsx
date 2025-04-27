@@ -11,6 +11,8 @@ const AccountLogin = ({ inputs, setInputs }) => {
                 <input
                     type="text"
                     placeholder="Name"
+                    minLength="3"
+                    maxLength="64"
                     value={inputs.name}
                     onChange={e => setInputs(prevInputs => { return {...prevInputs, name: e.target.value} })}
                 />
@@ -20,6 +22,8 @@ const AccountLogin = ({ inputs, setInputs }) => {
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    minLength="8"
+                    maxLength="64"
                     value={inputs.password}
                     onChange={e => setInputs(prevInputs => { return {...prevInputs, password: e.target.value} })}
                 />
