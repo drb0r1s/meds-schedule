@@ -18,7 +18,7 @@ dataPool.getFamily = ({ name }) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Family WHERE name = ?", [name], (err, res) => {
             if(err) return reject(err);
-            return resolve(res);
+            return resolve(res[0]);
         });
     });
 }

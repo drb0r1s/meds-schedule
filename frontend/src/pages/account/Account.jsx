@@ -62,7 +62,7 @@ const Account = () => {
         if(isError) return;
         
         if(isLogin) {
-        
+            await DB.login(inputs);
         }
 
         else {
