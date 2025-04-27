@@ -17,20 +17,49 @@ const Account = () => {
     }
 
     function checkInputs() {
-        if(!inputs.name.length) return setInfo({ type: "error", message: "Name field is empty." });
-        else if(!inputs.password.length) return setInfo({ type: "error", message: "Password field is empty." });
-        else if(inputs.name.length < 3 || inputs.name.length > 64) return setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
-        else if(inputs.password.length < 8 || inputs.password.length > 64) return setInfo({ type: "error", message: "Password length should be greater than 7 or less than 64!" });
+        if(!inputs.name.length) {
+            setInfo({ type: "error", message: "Name field is empty." });
+            return true;
+        }
+
+        else if(!inputs.password.length) {
+            setInfo({ type: "error", message: "Password field is empty." });
+            return true;
+        }
+
+        else if(inputs.name.length < 3 || inputs.name.length > 64) {
+            setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
+            return true;
+        }
+
+        else if(inputs.password.length < 8 || inputs.password.length > 64) {
+            setInfo({ type: "error", message: "Password length should be greater than 7 or less than 64!" });
+            return true;
+        }
     
         if(!isLogin) {
-            if(!inputs.repeatPassword.length) return setInfo({ type: "error", message: "Repeat password field is empty." });
-            else if(inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64) return setInfo({ type: "error", message: "Confirmation password length should be greater than 7 or less than 64!" });
-            else if(inputs.password !== inputs.repeatPassword) return setInfo({ type: "error", message: "Password and confirmation password don't match!" });
+            if(!inputs.repeatPassword.length) {
+                setInfo({ type: "error", message: "Repeat password field is empty." });
+                return true;
+            }
+
+            else if(inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64) {
+                setInfo({ type: "error", message: "Confirmation password length should be greater than 7 or less than 64!" });
+                return true;
+            }
+
+            else if(inputs.password !== inputs.repeatPassword) {
+                setInfo({ type: "error", message: "Password and confirmation password don't match!" });
+                return true;
+            }
         }
+
+        return false;
     }
 
     async function handleContinue() {
-        checkInputs();
+        const isError = checkInputs();
+        if(isError) return;
         
         if(isLogin) {
         
