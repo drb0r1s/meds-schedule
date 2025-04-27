@@ -12,17 +12,14 @@ family.post("/login", async (req, res) => {
     const isError = checkInputs({ name, password }, true, res);
     if(isError) return;
 
-    let queryResult;
-
     try {
-        queryResult = await DB.getFamily({ name });
+        let queryResult = await DB.getFamily({ name });
         if(!queryResult) return error(res, { message: "Family not found." });
 
         const isMatch = await bcrypt.compare(password, queryResult.password);
         if(!isMatch) return error(res, { message: "Invalid password." });
 
-        res.status(200).json({ message: "Login successful!" });
-        return queryResult;
+        res.status(200).json(queryResult);
     } catch(err) {
         console.log(`DB ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
@@ -47,14 +44,11 @@ family.post("/register", async (req, res) => {
         updated_at: ExtendedDate.now()
     };
 
-    let queryResult;
-
     try {
-        queryResult = await DB.register(registerObject);
+        let queryResult = await DB.register(registerObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Family table.");
     
-        res.status(200).json({ message: "Register successful!" });
-        return { success: true };
+        res.status(200).json({ success: true });
     } catch(err) {
         console.error(`DB ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
