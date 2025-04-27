@@ -8,3 +8,40 @@
     gap: 40px;
     overflow-y: hidden;
 }
+
+.schedules h2 {
+    color: white;
+    font-size: 28px;
+    font-family: Roboto-Light;
+}
+
+.schedules h2 span {
+    color: var(--red);
+    font-family: Roboto-Bold;
+}
+
+.schedules .list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.schedules .list .add-button {
+    height: 70px;
+    width: 70px;
+    background-color: var(--red);
+    border: none;
+    border-radius: 50%;
+    position: relative;
+}
+
+.schedules .list .add-button img {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

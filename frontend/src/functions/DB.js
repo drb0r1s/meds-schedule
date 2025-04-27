@@ -12,7 +12,7 @@ export const DB = {
         }
     },
 
-    postRequest: async (URL, value) => {
+    postRequest: async (URL, value) => {        
         try {
             const response = await fetch(URL, {
                 method: "POST",
@@ -32,7 +32,7 @@ export const DB = {
     },
 
     loggedIn: async token => {
-        return await DB.postRequest(`${DB.URL}family/loggedIn`, token);
+        return await DB.postRequest(`${DB.URL}family/loggedIn`, { token });
     },
     
     register: async value => {

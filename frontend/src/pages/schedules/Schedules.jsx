@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import "./Schedules.css";
+import Loading from "../../components/loading/Loading";
 import { DB } from "../../functions/DB";
+import { images } from "../../data/images";
 
 const Schedules = () => {
     const [family, setFamily] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -15,8 +19,17 @@ const Schedules = () => {
         else {
             const getFamily = async () => {
                 const result = await DB.loggedIn(token);
+                
+                if(result.message) {
+                    localStorage.removeItem("token");
+                    navigate("/");
+                }
+                
                 setFamily(result);
+                setIsLoading(false);
             }
+
+            getFamily();
         }
     }, []);
 
@@ -26,7 +39,13 @@ const Schedules = () => {
     
     return(
         <section className="schedules">
-            <h2></h2>
+            {isLoading ? <Loading /> : <>
+                <h2>Welcome back to <span>{family.name}</span>!</h2>
+
+                <div className="list">
+                    <button className="add-button"><img src={images.plusIcon} alt="ADD" /></button>
+                </div>
+            </>}
         </section>
     );
 }
