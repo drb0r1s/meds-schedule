@@ -8,6 +8,7 @@ import { images } from "../../data/images";
 
 const Schedules = () => {
     const [family, setFamily] = useState({});
+    const [schedules, setSchedules] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isCreateModalActive, setIsCreateModalActive] = useState(false);
 
@@ -38,7 +39,15 @@ const Schedules = () => {
     }, []);
 
     useEffect(() => {
-        console.log(family);
+        const getSchedules = async () => {
+            const result = await DB.schedule.get(family.id);
+
+            if(result.message) return;
+
+            setSchedules(result);
+        }
+
+        getSchedules();
     }, [family]);
 
     useEffect(() => {

@@ -42,6 +42,10 @@ export const DB = {
     },
 
     schedule: {
+        get: async id => {
+            return await DB.postRequest(`${DB.URL}schedule/get`, { id });
+        },
+        
         create: async value => {
             return await DB.postRequest(`${DB.URL}schedule/create`, value);
         }
