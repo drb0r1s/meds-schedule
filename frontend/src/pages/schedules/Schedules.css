@@ -25,6 +25,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 30px;
 }
 
 .schedules .list strong {
@@ -47,8 +48,17 @@
 .schedules .list .schedule-button .background {
     height: 100px;
     width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--red);
     border-radius: 50%;
+}
+
+.schedules .list .schedule-button .background img {
+    height: 65px;
+    width: 65px;
+    object-fit: contain;
 }
 
 .schedules .list .schedule-button p {

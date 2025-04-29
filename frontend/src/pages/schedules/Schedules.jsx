@@ -95,7 +95,10 @@ const Schedules = () => {
                             <div
                                 className="background"
                                 style={schedule.color ? { backgroundColor: schedule.color } : {}}
-                            ></div>
+                            >
+                                <img src={images.pillIcon} alt="PILL" />
+                            </div>
+
                             <p>{schedule.name}</p>
                         </button>;
                     })}

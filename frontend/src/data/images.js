@@ -5,5 +5,6 @@ import profileIcon from "../images/profile-icon.svg";
 import medicationIcon from "../images/medication-icon.svg";
 import notificationIcon from "../images/notification-icon.svg";
 import historyIcon from "../images/history-icon.svg";
+import pillIcon from "../images/pill-icon.svg";
 
-export const images = { checkIcon, xIcon, plusIcon, profileIcon, medicationIcon, notificationIcon, historyIcon };
+export const images = { checkIcon, xIcon, plusIcon, profileIcon, medicationIcon, notificationIcon, historyIcon, pillIcon };

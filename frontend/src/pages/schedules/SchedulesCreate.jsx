@@ -32,9 +32,11 @@ const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedu
             <form>
                 <div className="form-color">
                     <div
-                        className="color-background"
+                        className="background"
                         style={inputs.color ? { backgroundColor: inputs.color } : {}}
-                    ></div>
+                    >
+                        <img src={images.pillIcon} alt="PILL" />
+                    </div>
                     
                     <input
                         type="color"
