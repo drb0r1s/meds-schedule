@@ -52,8 +52,8 @@
 }
 
 .schedules-create form .form-color {
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,8 +71,8 @@
 }
 
 .schedules-create form .form-color .background img {
-    height: 65px;
-    width: 65px;
+    height: 55px;
+    width: 55px;
     object-fit: contain;
 }
 
