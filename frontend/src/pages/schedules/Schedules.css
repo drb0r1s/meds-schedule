@@ -27,7 +27,7 @@
     flex-direction: column;
 }
 
-.schedules .list .add-button {
+.schedules .list .create-button {
     height: 70px;
     width: 70px;
     background-color: var(--red);
@@ -36,7 +36,7 @@
     position: relative;
 }
 
-.schedules .list .add-button img {
+.schedules .list .create-button img {
     height: 50px;
     width: 50px;
     object-fit: contain;

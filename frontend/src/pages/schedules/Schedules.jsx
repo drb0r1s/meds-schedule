@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./Schedules.css";
+import SchedulesCreate from "./SchedulesCreate";
 import Loading from "../../components/loading/Loading";
 import { DB } from "../../functions/DB";
 import { images } from "../../data/images";
@@ -8,6 +9,9 @@ import { images } from "../../data/images";
 const Schedules = () => {
     const [family, setFamily] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [isCreateModalActive, setIsCreateModalActive] = useState(false);
+
+    const createModalRef = useRef(null);
 
     const navigate = useNavigate();
     
@@ -36,14 +40,31 @@ const Schedules = () => {
     useEffect(() => {
         console.log(family);
     }, [family]);
+
+    useEffect(() => {
+        if(isCreateModalActive) setTimeout(() => { createModalRef.current.id = "schedules-create-active" }, 10);
+    }, [isCreateModalActive]);
+
+    function disableCreateModal() {
+        createModalRef.current.id = "";
+        setTimeout(() => setIsCreateModalActive(false), 300);
+    }
     
     return(
         <section className="schedules">
             {isLoading ? <Loading /> : <>
+                {isCreateModalActive && <SchedulesCreate
+                    createModalRef={createModalRef}
+                    disableCreateModal={disableCreateModal}
+                />}
+                
                 <h2>Welcome back to <span>{family.name}</span>!</h2>
 
                 <div className="list">
-                    <button className="add-button"><img src={images.plusIcon} alt="ADD" /></button>
+                    <button
+                        className="create-button"
+                        onClick={() => setIsCreateModalActive(true)}
+                    ><img src={images.plusIcon} alt="CREATE" /></button>
                 </div>
             </>}
         </section>
