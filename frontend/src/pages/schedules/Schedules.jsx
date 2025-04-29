@@ -22,7 +22,7 @@ const Schedules = () => {
 
         else {
             const getFamily = async () => {
-                const result = await DB.loggedIn(token);
+                const result = await DB.family.loggedIn(token);
                 
                 if(result.message) {
                     localStorage.removeItem("token");
@@ -54,6 +54,7 @@ const Schedules = () => {
         <section className="schedules">
             {isLoading ? <Loading /> : <>
                 {isCreateModalActive && <SchedulesCreate
+                    family={family}
                     createModalRef={createModalRef}
                     disableCreateModal={disableCreateModal}
                 />}

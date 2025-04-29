@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import "./SchedulesCreate.css";
+import Loading from "../../components/loading/Loading";
+import { DB } from "../../functions/DB";
 import { images } from "../../data/images";
 
-const SchedulesCreate = ({ createModalRef, disableCreateModal }) => {
+const SchedulesCreate = ({ family, createModalRef, disableCreateModal }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", color: "" });
-    
-    function handleCreate() {
-        
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function handleCreate() {
+        setIsLoading(true);
+        const result = await DB.schedule.create({ family_id: family.id, ...inputs });
+        setIsLoading(false);
+
+        disableCreateModal();
     }
 
     return(
         <div className="schedules-create" ref={createModalRef}>
+            {isLoading && <Loading />}
+            
             <button
                 className="x-button"
                 onClick={disableCreateModal}

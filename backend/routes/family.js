@@ -13,7 +13,7 @@ family.post("/login", async (req, res) => {
     if(isError) return;
 
     try {
-        let queryResult = await DB.getFamily({ name });
+        const queryResult = await DB.family.get({ name });
         if(!queryResult) return error(res, { message: "Family not found." });
 
         const isMatch = await bcrypt.compare(password, queryResult.password);
@@ -30,7 +30,7 @@ family.post("/loggedIn", async (req, res) => {
     const { token } = req.body;
 
     try {
-        let queryResult = await DB.loggedIn({ token });
+        const queryResult = await DB.family.loggedIn({ token });
         if(!queryResult) return error(res, { message: "Family not found." });
 
         res.status(200).json(queryResult);
@@ -59,7 +59,7 @@ family.post("/register", async (req, res) => {
     };
 
     try {
-        let queryResult = await DB.register(registerObject);
+        const queryResult = await DB.family.register(registerObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Family table.");
     
         res.status(200).json({ success: true });

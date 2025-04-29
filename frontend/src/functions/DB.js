@@ -27,15 +27,23 @@ export const DB = {
         }
     },
 
-    login: async value => {
-        return await DB.postRequest(`${DB.URL}family/login`, value);
+    family: {
+        login: async value => {
+            return await DB.postRequest(`${DB.URL}family/login`, value);
+        },
+    
+        loggedIn: async token => {
+            return await DB.postRequest(`${DB.URL}family/loggedIn`, { token });
+        },
+        
+        register: async value => {
+            return await DB.postRequest(`${DB.URL}family/register`, value);
+        }
     },
 
-    loggedIn: async token => {
-        return await DB.postRequest(`${DB.URL}family/loggedIn`, { token });
-    },
-    
-    register: async value => {
-        return await DB.postRequest(`${DB.URL}family/register`, value);
+    schedule: {
+        create: async value => {
+            return await DB.postRequest(`${DB.URL}schedule/create`, value);
+        }
     }
 };

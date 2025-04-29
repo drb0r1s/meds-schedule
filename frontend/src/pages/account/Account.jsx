@@ -68,7 +68,7 @@ const Account = () => {
         
         if(isLogin) {
             setIsLoading(true);
-            const result = await DB.login(inputs);
+            const result = await DB.family.login(inputs);
             setIsLoading(false);
 
             if(result.message) return setInfo({ type: "error", message: result.message });
@@ -81,7 +81,7 @@ const Account = () => {
 
         else {
             setIsLoading(true);
-            const result = await DB.register(inputs);
+            const result = await DB.family.register(inputs);
             setIsLoading(false);
 
             if(result.message) return setInfo({ type: "error", message: result.message });

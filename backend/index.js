@@ -17,3 +17,6 @@ app.get("/", (req, res) => {
 
 const family = require("./routes/family.js");
 app.use("/family", family);
+
+const schedule = require("./routes/schedule.js");
+app.use("/schedule", schedule);
