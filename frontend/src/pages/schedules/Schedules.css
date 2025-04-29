@@ -27,21 +27,70 @@
     flex-direction: column;
 }
 
-.schedules .list .create-button {
-    height: 70px;
-    width: 70px;
-    background-color: var(--red);
-    border: none;
-    border-radius: 50%;
-    position: relative;
+.schedules .list strong {
+    color: grey;
+    font-size: 18px;
+    font-family: Roboto-Thin;
+    font-style: italic;
 }
 
-.schedules .list .create-button img {
-    height: 50px;
-    width: 50px;
+.schedules .list .schedule-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.schedules .list .schedule-button .background {
+    height: 100px;
+    width: 100px;
+    background-color: var(--red);
+    border-radius: 50%;
+}
+
+.schedules .list .schedule-button p {
+    color: white;
+    font-size: 24px;
+    font-family: Roboto-Regular;
+    margin: 0;
+}
+
+.schedules .menu {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-top: 1px solid white;
+    position: fixed;
+    bottom: 0;
+    padding: 15px;
+}
+
+.schedules .menu button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+}
+
+.schedules .menu button:nth-child(3) {
+    background-color: var(--red);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.schedules .menu button img {
+    height: 35px;
+    width: 35px;
     object-fit: contain;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.schedules .menu button:nth-child(3) img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
 }
