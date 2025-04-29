@@ -85,6 +85,11 @@ const Account = () => {
             setIsLoading(false);
 
             if(result.message) return setInfo({ type: "error", message: result.message });
+        
+            else {
+                setInfo({ type: "success", message: `Family ${inputs.name} was created successfully!` });
+                changePanel(true);
+            }
         }
     }
     

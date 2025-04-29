@@ -91,7 +91,10 @@ const Schedules = () => {
                 
                 <h2>Welcome back to <span>{family.name}</span>!</h2>
 
-                <div className="list">
+                <div
+                    className="list"
+                    style={!schedules.length ? { justifyContent: "center" } : {}}
+                >
                     {!schedules.length ? <strong>There are no schedules.</strong> : schedules.map((schedule, index) => {
                         return <button
                             key={index}
