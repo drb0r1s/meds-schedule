@@ -62,7 +62,7 @@ family.post("/register", async (req, res) => {
         const queryResult = await DB.family.register(registerObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Family table.");
     
-        res.status(200).json({ success: true });
+        res.status(200).json(registerObject);
     } catch(err) {
         console.error(`DB ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });

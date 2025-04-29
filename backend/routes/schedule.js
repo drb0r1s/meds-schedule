@@ -36,7 +36,7 @@ schedule.post("/create", async (req, res) => {
         const queryResult = await DB.schedule.create(createObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Schedule table.");
     
-        res.status(200).json({ success: true });
+        res.status(200).json(createObject);
     } catch(err) {
         console.error(`DB ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });

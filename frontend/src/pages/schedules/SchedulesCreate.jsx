@@ -4,7 +4,7 @@ import Loading from "../../components/loading/Loading";
 import { DB } from "../../functions/DB";
 import { images } from "../../data/images";
 
-const SchedulesCreate = ({ family, createModalRef, disableCreateModal }) => {
+const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedules }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", color: "" });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -13,6 +13,8 @@ const SchedulesCreate = ({ family, createModalRef, disableCreateModal }) => {
         const result = await DB.schedule.create({ family_id: family.id, ...inputs });
         setIsLoading(false);
 
+        if(!result.message) setSchedules(prevSchedules => [...prevSchedules, result]);
+        
         disableCreateModal();
     }
 

@@ -81,6 +81,7 @@ const Schedules = () => {
                     family={family}
                     createModalRef={createModalRef}
                     disableCreateModal={disableCreateModal}
+                    setSchedules={setSchedules}
                 />}
                 
                 <h2>Welcome back to <span>{family.name}</span>!</h2>
