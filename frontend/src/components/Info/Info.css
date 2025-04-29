@@ -9,6 +9,7 @@
     position: absolute;
     bottom: -100px;
     transition: 300ms;
+    z-index: 1;
 }
 
 .info .line {
@@ -60,6 +61,10 @@
 
 .info-error {
     background-color: var(--red);
+}
+
+.info-success {
+    background-color: var(--green);
 }
 
 #info-active {

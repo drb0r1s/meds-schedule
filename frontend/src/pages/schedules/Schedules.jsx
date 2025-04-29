@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import "./Schedules.css";
 import SchedulesCreate from "./SchedulesCreate";
 import Loading from "../../components/loading/Loading";
+import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
 import { images } from "../../data/images";
 
@@ -11,6 +12,7 @@ const Schedules = () => {
     const [schedules, setSchedules] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isCreateModalActive, setIsCreateModalActive] = useState(false);
+    const [info, setInfo] = useState({ type: "", message: "" });
 
     const createModalRef = useRef(null);
 
@@ -77,11 +79,14 @@ const Schedules = () => {
     return(
         <section className="schedules">
             {isLoading ? <Loading /> : <>
+                {info.message && <Info info={info} setInfo={setInfo} />}
+                
                 {isCreateModalActive && <SchedulesCreate
                     family={family}
                     createModalRef={createModalRef}
                     disableCreateModal={disableCreateModal}
                     setSchedules={setSchedules}
+                    setInfo={setInfo}
                 />}
                 
                 <h2>Welcome back to <span>{family.name}</span>!</h2>
