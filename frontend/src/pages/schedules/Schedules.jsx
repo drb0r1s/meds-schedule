@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./Schedules.css";
 import SchedulesCreate from "./SchedulesCreate";
+import SchedulesProfile from "./SchedulesProfile";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
@@ -13,9 +14,11 @@ const Schedules = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [schedulesLoading, setSchedulesLoading] = useState(true);
     const [noSchedules, setNoSchedules] = useState(false);
-    const [isCreateModalActive, setIsCreateModalActive] = useState(false);
+    const [modals, setModals] = useState({ profile: false, create: false });
     const [info, setInfo] = useState({ type: "", message: "" });
 
+    const profileModalHolderRef = useRef(null);
+    const profileModalRef = useRef(null);
     const createModalRef = useRef(null);
 
     const navigate = useNavigate();
@@ -62,12 +65,28 @@ const Schedules = () => {
     }, [family]);
 
     useEffect(() => {
-        if(isCreateModalActive) setTimeout(() => { createModalRef.current.id = "schedules-create-active" }, 10);
-    }, [isCreateModalActive]);
+        if(modals.profile) setTimeout(() => {
+            profileModalHolderRef.current.id = "schedules-profile-holder-active";
+            setTimeout(() => { profileModalRef.current.id = "schedules-profile-active" }, 300);
+        }, 10);
+    }, [modals.profile]);
+
+    useEffect(() => {
+        if(modals.create) setTimeout(() => { createModalRef.current.id = "schedules-create-active" }, 10);
+    }, [modals.create]);
+
+    function disableProfileModal() {
+        profileModalRef.current.id = "";
+        
+        setTimeout(() => {
+            profileModalHolderRef.current.id = "";
+            setTimeout(() => setModals({...modals, profile: false}), 300);
+        }, 300);
+    }
 
     function disableCreateModal() {
         createModalRef.current.id = "";
-        setTimeout(() => setIsCreateModalActive(false), 300);
+        setTimeout(() => setModals({...modals, create: false}), 300);
     }
 
     function getDosesURL(schedule) {
@@ -77,10 +96,12 @@ const Schedules = () => {
 
     function handleMenuButton(button) {
         switch(button) {
-            case "profile": break;
+            case "profile":
+                setModals({...modals, profile: true});
+                break;
             case "inventory": break;
             case "create":
-                setIsCreateModalActive(true);
+                setModals({...modals, create: true});
                 break;
             case "notifications": break;
             case "history": break;
@@ -92,7 +113,14 @@ const Schedules = () => {
             {isLoading ? <Loading /> : <>
                 {info.message && <Info info={info} setInfo={setInfo} />}
                 
-                {isCreateModalActive && <SchedulesCreate
+                {modals.profile && <SchedulesProfile
+                    family={family}
+                    profileModalHolderRef={profileModalHolderRef}
+                    profileModalRef={profileModalRef}
+                    disableProfileModal={disableProfileModal}
+                />}
+                
+                {modals.create && <SchedulesCreate
                     family={family}
                     createModalRef={createModalRef}
                     disableCreateModal={disableCreateModal}

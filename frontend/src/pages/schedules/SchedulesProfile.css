@@ -1,0 +1,136 @@
+.schedules-profile-holder {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(0,0,0,.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    overflow-y: hidden;
+    transition: 300ms;
+    z-index: 2;
+}
+
+#schedules-profile-holder-active {
+    opacity: 1;
+}
+
+.schedules-profile-holder .schedules-profile {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: var(--background);
+    border-right: 1px solid white;
+    position: absolute;
+    left: -80%;
+    transition: 300ms;
+}
+
+.schedules-profile-holder #schedules-profile-active {
+    left: 0;
+}
+
+.schedules-profile-holder .schedules-profile .background {
+    height: 30%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(var(--red) 0, var(--background) 95%);
+    position: relative;
+}
+
+.schedules-profile-holder .schedules-profile .background button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+.schedules-profile-holder .schedules-profile .background button img {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+}
+
+.schedules-profile-holder .schedules-profile .background h2 {
+    width: auto;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    font-family: Roboto-Bold;
+    letter-spacing: 3px;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 20px;
+    transform: translateY(50%);
+    padding: 0;
+}
+
+.schedules-profile-holder .schedules-profile .menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    background-color: transparent;
+    border: none;
+    position: static;
+    padding: 0 20px;
+    padding-top: 50px;
+}
+
+.schedules-profile-holder .schedules-profile .menu .first-group,
+.schedules-profile-holder .schedules-profile .menu .second-group {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.schedules-profile-holder .schedules-profile .menu .first-group button,
+.schedules-profile-holder .schedules-profile .menu .second-group button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.schedules-profile-holder .schedules-profile .menu .first-group button img,
+.schedules-profile-holder .schedules-profile .menu .second-group button img {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+}
+
+.schedules-profile-holder .schedules-profile .menu .first-group button p,
+.schedules-profile-holder .schedules-profile .menu .second-group button p {
+    color: white;
+    font-size: 20px;
+    font-family: Roboto-Light;
+    text-transform: capitalize;
+}
+
+.schedules-profile-holder .schedules-profile .menu .second-group button:nth-child(2) p {
+    color: var(--red);
+}
