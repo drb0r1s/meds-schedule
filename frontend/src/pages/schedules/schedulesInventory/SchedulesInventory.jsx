@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./SchedulesInventory.css";
-import Loading from "../../components/loading/Loading";
-import { images } from "../../data/images";
+import Loading from "../../../components/loading/Loading";
+import { DB } from "../../../functions/DB";
+import { images } from "../../../data/images";
 
 const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }) => {    
     const [medications, setMedications] = useState([]);
@@ -10,7 +11,12 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
     useEffect(() => {
         const getMedications = async () => {
+            const result = await DB.family.getMedications(family.id);
+            if(result.message) return;
 
+            setMedications(result);
+            setIsLoading(false);
+            if(!result.length) setNoMedications(true);
         }
 
         getMedications();
@@ -25,9 +31,13 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
             <h2>Inventory</h2>
 
-            {isLoading ? <Loading /> : noMedications ? <strong>There are no medications.</strong> : <div className="list">
-            
+            {isLoading ? <Loading /> : <div className="list">
+                {!isLoading && noMedications ? <strong>There are no medications.</strong> : <>
+                    
+                </>}
             </div>}
+
+            <button className="create-button"><img src={images.plusIcon} alt="CREATE" /></button>
         </section>
     );
 }

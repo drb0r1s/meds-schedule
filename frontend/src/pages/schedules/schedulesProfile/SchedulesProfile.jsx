@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import "./SchedulesProfile.css";
-import { images } from "../../data/images";
+import { images } from "../../../data/images";
 
 const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disableProfileModal }) => {
     const navigate = useNavigate();

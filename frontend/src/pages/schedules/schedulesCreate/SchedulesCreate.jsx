@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./SchedulesCreate.css";
-import Loading from "../../components/loading/Loading";
-import { DB } from "../../functions/DB";
-import { images } from "../../data/images";
+import Loading from "../../../components/loading/Loading";
+import { DB } from "../../../functions/DB";
+import { images } from "../../../data/images";
 
 const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedules, setInfo }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", color: "" });

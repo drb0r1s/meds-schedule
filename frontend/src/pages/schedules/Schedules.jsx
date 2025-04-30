@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./Schedules.css";
-import SchedulesProfile from "./SchedulesProfile";
-import SchedulesInventory from "./SchedulesInventory";
-import SchedulesCreate from "./SchedulesCreate";
+import SchedulesProfile from "./schedulesProfile/SchedulesProfile";
+import SchedulesInventory from "./schedulesInventory/SchedulesInventory";
+import SchedulesCreate from "./schedulesCreate/SchedulesCreate";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
