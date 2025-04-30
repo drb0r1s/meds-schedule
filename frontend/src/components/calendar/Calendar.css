@@ -1,0 +1,81 @@
+.calendar {
+    height: calc(100vh - 55px);
+    width: 100vw;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+}
+
+.calendar .pill-icon {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.calendar .hours {
+    height: calc(100% - 35px);
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 7px;
+}
+
+.calendar .hours .hour {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Thin;
+    margin: 0;
+}
+
+.calendar .timeslots-holder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.calendar .timeslots-holder .days {
+    height: 35px;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(7, 1fr);
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 5px;
+}
+
+.calendar .timeslots-holder .days .day {
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    font-family: Roboto-Thin;
+    margin: 0;
+}
+
+.calendar .timeslots-holder .timeslots {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(24, 1fr);
+}
+
+.calendar .timeslots-holder .timeslots .timeslot {
+    height: 100%;
+    width: 100%;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.calendar .timeslots-holder .timeslots .timeslot:nth-last-child(-n + 7) {
+    border-bottom: none;
+}

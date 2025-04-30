@@ -1,5 +1,5 @@
 .doses {
-    height: calc(100vh);
+    height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
@@ -8,96 +8,51 @@
     overflow-y: hidden;
 }
 
-.doses h2 {
+.doses .menu {
+    height: 55px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--background);
+    border-top: 1px solid white;
+    padding: 10px 25px;
+    z-index: 1;
+}
+
+.doses .menu h2 {
     color: var(--red);
     font-size: 28px;
     text-align: center;
     font-family: Roboto-Bold;
-    background-color: var(--background);
-    border-bottom: 1px solid white;
-    padding: 10px;
-    z-index: 1;
 }
 
-.doses .calendar {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    position: relative;
-}
-
-.doses .calendar .pill-icon {
-    height: 25px;
-    width: 25px;
-    object-fit: contain;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-}
-
-.doses .calendar .hours {
-    height: calc(100% - 35px);
-    display: grid;
-    align-items: center;
-    justify-content: space-between;
-    grid-template-columns: repeat(1, 1fr);
-    padding: 0 7px;
-}
-
-.doses .calendar .hours .hour {
-    color: white;
-    font-size: 18px;
-    font-family: Roboto-Thin;
-    margin: 0;
-}
-
-.doses .calendar .timeslots-holder {
-    height: 100%;
-    width: 100%;
+.doses .menu .center-group,
+.doses .menu .right-group {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    gap: 20px;
 }
 
-.doses .calendar .timeslots-holder .days {
-    height: 35px;
-    width: 100%;
-    display: grid;
+.doses .menu .center-group button,
+.doses .menu .right-group button {
+    display: flex;
     align-items: center;
     justify-content: center;
-    grid-template-columns: repeat(7, 1fr);
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
+    background-color: transparent;
+    border: none;
+}
+
+.doses .menu .center-group button:nth-child(2) {
+    background-color: var(--red);
+    border-radius: 50%;
     padding: 5px;
 }
 
-.doses .calendar .timeslots-holder .days .day {
-    color: white;
-    font-size: 12px;
-    text-align: center;
-    font-family: Roboto-Thin;
-    margin: 0;
-}
-
-.doses .calendar .timeslots-holder .timeslots {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(24, 1fr);
-}
-
-.doses .calendar .timeslots-holder .timeslots .timeslot {
-    height: 100%;
-    width: 100%;
-    border-bottom: 1px solid white;
-    border-left: 1px solid white;
-}
-
-.doses .calendar .timeslots-holder .timeslots .timeslot:nth-last-child(-n + 7) {
-    border-bottom: none;
+.doses .menu .center-group button img,
+.doses .menu .right-group button img {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
 }
