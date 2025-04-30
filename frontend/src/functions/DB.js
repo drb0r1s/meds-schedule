@@ -42,6 +42,10 @@ export const DB = {
 
         getSchedules: async id => {
             return await DB.postRequest(`${DB.URL}family/getSchedules`, { id });
+        },
+
+        getMedications: async id => {
+            return await DB.postRequest(`${DB.URL}family/getMedications`, { id });
         }
     },
 
@@ -53,5 +57,9 @@ export const DB = {
         create: async value => {
             return await DB.postRequest(`${DB.URL}schedule/create`, value);
         }
+    },
+
+    medication: {
+
     }
 };

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./Schedules.css";
-import SchedulesCreate from "./SchedulesCreate";
 import SchedulesProfile from "./SchedulesProfile";
+import SchedulesInventory from "./SchedulesInventory";
+import SchedulesCreate from "./SchedulesCreate";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
@@ -14,11 +15,12 @@ const Schedules = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [schedulesLoading, setSchedulesLoading] = useState(true);
     const [noSchedules, setNoSchedules] = useState(false);
-    const [modals, setModals] = useState({ profile: false, create: false });
+    const [modals, setModals] = useState({ profile: false, inventory: false, create: false });
     const [info, setInfo] = useState({ type: "", message: "" });
 
     const profileModalHolderRef = useRef(null);
     const profileModalRef = useRef(null);
+    const inventoryModalRef = useRef(null);
     const createModalRef = useRef(null);
 
     const navigate = useNavigate();
@@ -72,6 +74,10 @@ const Schedules = () => {
     }, [modals.profile]);
 
     useEffect(() => {
+        if(modals.inventory) setTimeout(() => { inventoryModalRef.current.id = "schedules-inventory-active" }, 10);
+    }, [modals.inventory]);
+
+    useEffect(() => {
         if(modals.create) setTimeout(() => { createModalRef.current.id = "schedules-create-active" }, 10);
     }, [modals.create]);
 
@@ -82,6 +88,11 @@ const Schedules = () => {
             profileModalHolderRef.current.id = "";
             setTimeout(() => setModals({...modals, profile: false}), 300);
         }, 300);
+    }
+
+    function disableInventoryModal() {
+        inventoryModalRef.current.id = "";
+        setTimeout(() => setModals({...modals, inventory: false}), 300);
     }
 
     function disableCreateModal() {
@@ -99,7 +110,9 @@ const Schedules = () => {
             case "profile":
                 setModals({...modals, profile: true});
                 break;
-            case "inventory": break;
+            case "inventory":
+                setModals({...modals, inventory: true});
+                break;
             case "create":
                 setModals({...modals, create: true});
                 break;
@@ -118,6 +131,12 @@ const Schedules = () => {
                     profileModalHolderRef={profileModalHolderRef}
                     profileModalRef={profileModalRef}
                     disableProfileModal={disableProfileModal}
+                />}
+
+                {modals.inventory && <SchedulesInventory
+                    family={family}
+                    inventoryModalRef={inventoryModalRef}
+                    disableInventoryModal={disableInventoryModal}
                 />}
                 
                 {modals.create && <SchedulesCreate
