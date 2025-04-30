@@ -20,11 +20,18 @@
     position: absolute;
     top: 0;
     padding: 20px;
+    z-index: 1;
 }
 
 .schedules h2 span {
     color: var(--red);
     font-family: Roboto-Bold;
+}
+
+.schedules .loading-holder {
+    position: static;
+    z-index: 0;
+    padding-top: 100px;
 }
 
 .schedules .list {

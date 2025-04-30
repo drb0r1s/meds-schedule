@@ -11,6 +11,8 @@ const Schedules = () => {
     const [family, setFamily] = useState({});
     const [schedules, setSchedules] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [schedulesLoading, setSchedulesLoading] = useState(true);
+    const [noSchedules, setNoSchedules] = useState(false);
     const [isCreateModalActive, setIsCreateModalActive] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
 
@@ -44,12 +46,16 @@ const Schedules = () => {
     }, []);
 
     useEffect(() => {
+        if(!Object.keys(family).length) return;
+
         const getSchedules = async () => {
             const result = await DB.schedule.get(family.id);
 
             if(result.message) return;
 
             setSchedules(result);
+            setSchedulesLoading(false);
+            if(!result.length) setNoSchedules(true);
         }
 
         getSchedules();
@@ -91,11 +97,11 @@ const Schedules = () => {
                 
                 <h2>Welcome back to <span>{family.name}</span>!</h2>
 
-                <div
+                {schedulesLoading && !noSchedules ? <Loading /> : <div
                     className="list"
                     style={!schedules.length ? { justifyContent: "center" } : {}}
                 >
-                    {!schedules.length ? <strong>There are no schedules.</strong> : schedules.map((schedule, index) => {
+                    {noSchedules ? <strong>There are no schedules.</strong> : schedules.map((schedule, index) => {
                         return <button
                             key={index}
                             className="schedule-button"
@@ -110,7 +116,7 @@ const Schedules = () => {
                             <p>{schedule.name}</p>
                         </button>;
                     })}
-                </div>
+                </div>}
 
                 <div className="menu">
                     {menuButtons.map((button, index) => {
