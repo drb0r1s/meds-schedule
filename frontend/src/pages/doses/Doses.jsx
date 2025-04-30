@@ -14,7 +14,7 @@ const Doses = () => {
     const scheduleId = doses.split("-")[doses.split("-").length - 1];
 
     useEffect(() => {
-        if(location.state.schedule) {
+        if(location.state?.schedule) {
             setSchedule(location.state.schedule);
             setIsLoading(false);
         }
@@ -25,7 +25,7 @@ const Doses = () => {
                 
                 if(result.message) return;
 
-                setSchedule(schedule);
+                setSchedule(result);
                 setIsLoading(false);
             }
 

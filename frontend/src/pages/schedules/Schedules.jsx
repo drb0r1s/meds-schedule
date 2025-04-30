@@ -49,7 +49,7 @@ const Schedules = () => {
         if(!Object.keys(family).length) return;
 
         const getSchedules = async () => {
-            const result = await DB.schedule.get(family.id);
+            const result = await DB.family.getSchedules(family.id);
 
             if(result.message) return;
 
