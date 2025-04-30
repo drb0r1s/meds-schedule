@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
 import "./Doses.css";
 import Loading from "../../components/loading/Loading";
@@ -10,15 +10,13 @@ const Doses = () => {
     const location = useLocation();
 
     const [schedule, setSchedule] = useState({});
-    const [hoursGap, setHoursGap] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-
-    const hoursRef = useRef(null);
-    const timeslotsRef = useRef(null);
 
     const scheduleId = doses.split("-")[doses.split("-").length - 1];
     
     const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    const dates = getDates();
+
     const hours = new Array(24).fill(0);
     const timeslots = new Array(7 * 24).fill(0);
 
@@ -42,20 +40,56 @@ const Doses = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if(!Object.keys(schedule).length) return;
-        setHoursGap(calculateHoursGap());
-    }, [schedule]);
+    function getDates() {
+        const dates = new Array(7);
+        const dayOfTheWeek = adjustDay(new Date().getDay());
+        const dayOfTheMonth = new Date().getDate();
 
-    function calculateHoursGap() {
-        const timeslot = timeslotsRef.current.firstChild;
-        const timeslotHeight = parseFloat(getComputedStyle(timeslot).getPropertyValue("height"));
+        const currentMonth = new Date().getMonth();
+        const monthLengths = [31, isLeapYear() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-        const hour = hoursRef.current.firstChild;
-        const hourHeight = parseFloat(getComputedStyle(hour).getPropertyValue("height"));
+        dates[dayOfTheWeek] = dayOfTheMonth;
 
-        const gap = `${timeslotHeight - hourHeight}px`;
-        return gap;
+        let prevValue = dayOfTheMonth;
+        
+        // Looping from the current day of the week to the start of the week (if the current day of the week is not Monday).
+        if(dayOfTheWeek > 0) for(let i = dayOfTheWeek - 1; i >= 0; i--) {            
+            prevValue--;
+
+            if(!prevValue) {
+                prevValue = monthLengths[currentMonth === 0 ? 11 : currentMonth - 1];
+                dates[i] = prevValue;
+            }
+
+            else dates[i] = prevValue;
+        }
+
+        let nextValue = dayOfTheMonth;
+
+        // Looping from the current day of the week to the end of the week (if the current day of the week is not Sunday).
+        if(dayOfTheWeek < 6) for(let i = dayOfTheWeek + 1; i <= 6; i++) {
+            nextValue++;
+
+            if(nextValue > monthLengths[currentMonth]) {
+                nextValue = 1;
+                dates[i] = nextValue;
+            }
+
+            else dates[i] = nextValue;
+        }
+
+        // new Date.getDay() starts from Sunday (index 0).
+        // Function adjustDay() is readjusting starting day (starting from Monday).
+        function adjustDay(day) {
+            if(day === 0) return 6;
+            return day - 1;
+        }
+
+        return dates;
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0);
     }
     
     return(
@@ -70,7 +104,7 @@ const Doses = () => {
                         className="pill-icon"
                     />
                     
-                    <div className="hours" ref={hoursRef}>
+                    <div className="hours">
                         {hours.map((hour, index) => {
                             return <p key={index} className="hour">{index < 10 ? `0${index}` : index}</p>;
                         })}
@@ -79,11 +113,11 @@ const Doses = () => {
                     <div className="timeslots-holder">
                         <div className="days">
                             {days.map((day, index) => {
-                                return <p key={index} className="day">{day}</p>;
+                                return <p key={index} className="day">{day} {dates[index]}</p>;
                             })}
                         </div>
 
-                        <div className="timeslots" ref={timeslotsRef}>
+                        <div className="timeslots">
                             {timeslots.map((timeslot, index) => {
                                 return <div key={index} className="timeslot"></div>;
                             })}
