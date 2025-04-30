@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./SchedulesInventory.css";
+import ScheduleInventoryCreate from "./SchedulesInventoryCreate";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
@@ -8,6 +9,10 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
     const [medications, setMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [noMedications, setNoMedications] = useState(false);
+    const [isCreateModalActive, setIsCreateModalActive] = useState(false);
+    const [createInputs, setCreateInputs] = useState({ name: "", description: "", substance: "", expirationDate: "", amount: "", amountUnit: "" });
+
+    const inventoryCreateModalRef = useRef(null);
 
     useEffect(() => {
         const getMedications = async () => {
@@ -21,9 +26,25 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
         getMedications();
     }, []);
+
+    useEffect(() => {
+        if(isCreateModalActive) setTimeout(() => { inventoryCreateModalRef.current.id = "schedules-inventory-create-active" }, 10);
+    }, [isCreateModalActive]);
+
+    function disableInventoryCreateModal() {
+        inventoryCreateModalRef.current.id = "";
+        setTimeout(() => setIsCreateModalActive(false), 300);
+    }
     
     return(
         <section className="schedules-inventory" ref={inventoryModalRef}>
+            {isCreateModalActive && <ScheduleInventoryCreate
+                inventoryCreateModalRef={inventoryCreateModalRef}
+                createInputs={createInputs}
+                setCreateInputs={setCreateInputs}
+                disableInventoryCreateModal={disableInventoryCreateModal}
+            />}
+            
             <button
                 className="x-button"
                 onClick={disableInventoryModal}
@@ -37,7 +58,10 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
                 </>}
             </div>}
 
-            <button className="create-button"><img src={images.plusIcon} alt="CREATE" /></button>
+            <button
+                className="create-button"
+                onClick={() => setIsCreateModalActive(true)}
+            ><img src={images.plusIcon} alt="CREATE" /></button>
         </section>
     );
 }

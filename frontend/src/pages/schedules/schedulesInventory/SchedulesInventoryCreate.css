@@ -1,0 +1,18 @@
+.schedules-inventory-create {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--background);
+    position: fixed;
+    left: -100vw;
+    transition: 300ms;
+    overflow-y: hidden;
+    z-index: 3;
+}
+
+#schedules-inventory-create-active {
+    left: 0;
+}
