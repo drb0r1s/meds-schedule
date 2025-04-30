@@ -6,6 +6,7 @@ const Logo = () => {
         <strong className="logo">
             <span className="first">Meds</span>
             <span className="second">Schedule</span>
+            <span className="first">.</span>
         </strong>
     );
 }
