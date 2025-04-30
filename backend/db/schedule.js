@@ -4,7 +4,7 @@ const dataPool = {};
 
 dataPool.get = ({ id }) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM Schedule WHERE family_id = ?", [id], (err, res) => {
+        connection.query("SELECT * FROM Schedule WHERE id = ?", [id], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });

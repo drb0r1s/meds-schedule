@@ -69,6 +69,18 @@ family.post("/register", async (req, res) => {
     }
 });
 
+family.post("/getSchedules", async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const queryResult = await DB.family.getSchedules({ id });
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`DB ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 function checkInputs(inputs, isLogin, res) {
     if(!inputs.name.length) return error(res, { message: "Name field is empty." });
     else if(!inputs.password.length) return error(res, { message: "Password field is empty." });

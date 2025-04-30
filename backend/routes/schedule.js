@@ -7,7 +7,7 @@ const schedule = express.Router();
 
 schedule.post("/get", async (req, res) => {
     const { id } = req.body;
-
+    
     try {
         const queryResult = await DB.schedule.get({ id });
         res.status(200).json(queryResult);

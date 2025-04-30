@@ -1,0 +1,24 @@
+.doses {
+    height: calc(100vh);
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow-y: hidden;
+}
+
+.doses h2 {
+    width: 100%;
+    color: var(--red);
+    font-size: 28px;
+    text-align: center;
+    font-family: Roboto-Light;
+    background-color: var(--background);
+    border-bottom: 1px solid white;
+    position: absolute;
+    top: 0;
+    padding: 20px;
+    z-index: 1;
+}

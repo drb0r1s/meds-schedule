@@ -29,4 +29,13 @@ dataPool.register = ({ name, password, description, color, created_at, updated_a
     });
 }
 
+dataPool.getSchedules = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Schedule WHERE family_id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;

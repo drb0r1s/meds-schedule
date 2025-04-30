@@ -22,7 +22,7 @@ const Schedules = () => {
 
     const menuButtons = ["profile", "inventory", "create", "notifications", "history"];
     const menuButtonIcons = [images.profileIcon, images.medicationIcon, images.plusIcon, images.notificationIcon, images.historyIcon];
-    
+
     useEffect(() => {
         const token = localStorage.getItem("token");
 
@@ -70,6 +70,11 @@ const Schedules = () => {
         setTimeout(() => setIsCreateModalActive(false), 300);
     }
 
+    function getDosesURL(schedule) {
+        const name = schedule.name.replaceAll(" ", "-");
+        return `${name}-${schedule.id}`;
+    }
+
     function handleMenuButton(button) {
         switch(button) {
             case "profile": break;
@@ -105,6 +110,7 @@ const Schedules = () => {
                         return <button
                             key={index}
                             className="schedule-button"
+                            onClick={() => navigate(`/schedules/${getDosesURL(schedule)}`, { state: { schedule } })}
                         >
                             <div
                                 className="background"

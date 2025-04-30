@@ -38,6 +38,10 @@ export const DB = {
         
         register: async value => {
             return await DB.postRequest(`${DB.URL}family/register`, value);
+        },
+
+        getSchedules: async id => {
+            return await DB.postRequest(`${DB.URL}family/getSchedules`, { id });
         }
     },
 
