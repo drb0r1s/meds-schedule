@@ -10,7 +10,6 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
     const [isLoading, setIsLoading] = useState(true);
     const [noMedications, setNoMedications] = useState(false);
     const [isCreateModalActive, setIsCreateModalActive] = useState(false);
-    const [createInputs, setCreateInputs] = useState({ name: "", description: "", substance: "", expirationDate: "", amount: "", amountUnit: "" });
 
     const inventoryCreateModalRef = useRef(null);
 
@@ -39,9 +38,8 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
     return(
         <section className="schedules-inventory" ref={inventoryModalRef}>
             {isCreateModalActive && <ScheduleInventoryCreate
+                family={family}
                 inventoryCreateModalRef={inventoryCreateModalRef}
-                createInputs={createInputs}
-                setCreateInputs={setCreateInputs}
                 disableInventoryCreateModal={disableInventoryCreateModal}
             />}
             

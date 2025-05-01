@@ -20,3 +20,6 @@ app.use("/family", family);
 
 const schedule = require("./routes/schedule.js");
 app.use("/schedule", schedule);
+
+const medication = require("./routes/medication.js");
+app.use("/medication", medication);
