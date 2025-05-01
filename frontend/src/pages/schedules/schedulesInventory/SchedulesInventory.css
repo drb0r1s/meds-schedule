@@ -102,7 +102,7 @@
 .schedules-inventory .list .medication .info-holder span {
     color: var(--red);
     font-size: 15px;
-    font-family: Roboto-Thin;
+    font-family: Roboto-Light;
     font-style: italic;
 }
 
