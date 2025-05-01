@@ -17,6 +17,10 @@
     left: 0;
 }
 
+.schedules-inventory .info {
+    z-index: 4;
+}
+
 .schedules-inventory .x-button {
     background-color: transparent;
     border: none;
@@ -48,11 +52,11 @@
 }
 
 .schedules-inventory .list {
-    height: calc(100vh - 75px);
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
 }
 
@@ -61,6 +65,64 @@
     font-size: 18px;
     font-family: Roboto-Thin;
     font-style: italic;
+}
+
+.schedules-inventory .list .medication {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.schedules-inventory .list .medication img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.schedules-inventory .list .medication .info-holder {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.schedules-inventory .list .medication .info-holder strong {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Regular;
+    font-style: normal;
+    margin: 0;
+}
+
+.schedules-inventory .list .medication .info-holder span {
+    color: var(--red);
+    font-size: 15px;
+    font-family: Roboto-Thin;
+    font-style: italic;
+}
+
+.schedules-inventory .list .medication .info-holder .info-inner-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.schedules-inventory .list .medication .info-holder .info-inner-holder p {
+    color: white;
+    font-size: 12px;
+    font-family: Roboto-Regular;
+    margin: 0;
+}
+
+.schedules-inventory .list .medication .info-holder .info-inner-holder p span {
+    font-size: 12px;
 }
 
 .schedules-inventory .create-button {

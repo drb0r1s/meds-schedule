@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "./SchedulesInventoryCreate.css";
 import Loading from "../../../components/loading/Loading";
-import Info from "../../../components/Info/Info";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal }) => {
+const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, info, setInfo }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
     const [isLoading, setIsLoading] = useState(false);
-    const [info, setInfo] = useState({ type: "", message: "" });
 
     const amountUnits = ["mg", "g", "mcg", "ml", "l", "pills", "capsules", "drops", "patches", "inhalations", "other"];
     const monthLengths = [31, isLeapYear() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -114,8 +112,6 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
     return(
         <div className="schedules-inventory-create" ref={inventoryCreateModalRef}>    
             {isLoading && <Loading />}
-
-            {info.message && <Info info={info} setInfo={setInfo} />}
             
             <button
                 className="x-button"
