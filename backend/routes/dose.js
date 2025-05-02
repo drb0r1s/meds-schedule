@@ -6,9 +6,9 @@ const ExtendedDate = require("../functions/ExtendedDate");
 const dose = express.Router();
 
 dose.post("/create", async (req, res) => {
-    const { schedule_id, name, description, time, color } = req.body;
+    const { schedule_id, name, description, medication, time, color } = req.body;
 
-    const isError = checkInputs({ name, description, time, color }, res);
+    const isError = checkInputs({ name, description, medication, time, color }, res);
     if(isError) return;
 
     const createObject = {
