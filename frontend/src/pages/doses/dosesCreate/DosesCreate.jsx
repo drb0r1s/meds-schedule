@@ -111,7 +111,10 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
 
         setIsLoading(true);
         
-        const medicationsResult = await DB.medication.checkExistence(schedule.family_id, inputs.medication);
+        // Create a copy of inputs.medication array, but stop the last index, because we don't need empty input.
+        const medications = inputs.medication.slice(0, -1);
+
+        const medicationsResult = await DB.medication.checkExistence(schedule.family_id, medications);
         
         if(medicationsResult.message) setInfo({ type: "error", message: medicationsResult.message });
         
