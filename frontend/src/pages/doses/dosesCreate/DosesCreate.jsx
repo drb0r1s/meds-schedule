@@ -110,22 +110,21 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         if(isError) return;
 
         setIsLoading(true);
+        
+        const medicationsResult = await DB.medication.checkExistence(schedule.family_id, inputs.medication);
+        
+        if(medicationsResult.message) setInfo({ type: "error", message: medicationsResult.message });
+        
+        else {
+            const result = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
+            if(result.message) return setInfo({ type: "error", message: result.message });
+        
+            setInfo({ type: "success", message: `${inputs.name} was successfully added to schedule.` });
+            setInputs({ name: "", description: "", medication: [""], time: { hours: "", minutes: "", day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() }, color: "", amount: "", amountUnit: "" });
+            disableDosesCreateModal();
+        }
 
-        const medicationNames = [];
-        for(let i = 0; i < inputs.medication.length; i++) medicationNames.push(inputs.medication[i].name);
-        
-        const medicationsResult = await DB.medication.checkExistence({ family_id: schedule.family_id, names: medicationNames });
-        
-        if(!medicationsResult) return setInfo({ type: "error", message: "Not enough medicine in the inventory." });
-        
-        const result = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
         setIsLoading(false);
-
-        if(result.message) return setInfo({ type: "error", message: result.message });
-
-        setInfo({ type: "success", message: `${inputs.name} was successfully added to schedule.` });
-        setInputs({ name: "", description: "", medication: [""], time: { hours: "", minutes: "", day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() }, color: "", amount: "", amountUnit: "" });
-        disableDosesCreateModal();
     }
     
     return(

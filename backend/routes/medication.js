@@ -35,11 +35,38 @@ medication.post("/create", async (req, res) => {
 });
 
 medication.post("/check-existence", async (req, res) => {
-    const { family_id, names } = req.body;
+    const { family_id, medications } = req.body;
+
+    const medicationNames = [];
+
+    for(let i = 0; i < medications.length; i++) {
+        if(medications[i].name) medicationNames.push(medications[i].name);
+    }
 
     try {
-        const queryResult = await DB.medication.checkExistence({ family_id, names });
-        res.status(200).json(queryResult.length === names.length);
+        const queryResult = await DB.medication.getSpecific({ family_id, names: medicationNames });
+        
+        let status = true;
+
+        if(queryResult.length !== names.length) status = { message: "Some of the entered medicines don't exist in the inventory." };
+
+        for(let i = 0; i < medications.length; i++) {
+            for(let j = 0; j < queryResult.length; j++) {
+                if(medications[i].name !== queryResult[i].name) continue;
+
+                if(medications[i].amount > queryResult[i].amount) {
+                    status = { message: `There is not enough ${medications[i].name} in the inventory.` };
+                    break;
+                }
+
+                if(medications[i].amountUnit !== queryResult[i].amountUnit) {
+                    status = { message: `Unit for ${medications[i].name} is not the same as in inventory.` };
+                    break;
+                }
+            }
+        }
+        
+        res.status(200).json(status);
     } catch(err) {
         console.error(`DB ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
