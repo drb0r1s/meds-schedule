@@ -10,8 +10,8 @@ dataPool.create = ({ dose_id, medications }) => {
         if(i < medications.length - 1) questionmarks += "(?,?,?,?),";
         else questionmarks += "(?,?,?,?)";
 
-        values.push(dose_id);
-        values.push(...medications[i]);
+        const { medication_id, amount, amount_unit } = medications[i];
+        values.push(dose_id, medication_id, amount, amount_unit);
     }
     
     return new Promise((resolve, reject) => {

@@ -115,6 +115,7 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         const medications = inputs.medication.slice(0, -1);
 
         const medicationsResult = await DB.medication.checkExistence(schedule.family_id, medications);
+        console.log(medicationsResult)
         
         if(medicationsResult.message) setInfo({ type: "error", message: medicationsResult.message });
         

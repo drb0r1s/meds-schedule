@@ -68,7 +68,7 @@ medication.post("/check-existence", async (req, res) => {
             }
         }
 
-        if(!status.message) status = idMedications;
+        if(!status?.message) status = idMedications;
         
         res.status(200).json(status);
     } catch(err) {
