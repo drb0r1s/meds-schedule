@@ -6,7 +6,7 @@ dataPool.create = ({ schedule_id, name, description, time, status, color, create
     return new Promise((resolve, reject) => {
         connection.query("INSERT INTO Dose (schedule_id, name, description, time, status, color, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)", [schedule_id, name, description, time, status, color, created_at, updated_at], (err, res) => {
             if(err) return reject(err);
-            return resolve(res.insertId);
+            return resolve(res);
         });
     });
 }

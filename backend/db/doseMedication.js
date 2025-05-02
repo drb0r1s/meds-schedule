@@ -17,7 +17,7 @@ dataPool.create = ({ dose_id, medications }) => {
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO DoseMedication (dose_id, medication_id, amount, amount_unit) VALUES ${questionmarks}`, values, (err, res) => {
             if(err) return reject(err);
-            return resolve(res.insertId);
+            return resolve(res);
         });
     });
 }
