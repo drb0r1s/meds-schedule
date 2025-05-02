@@ -121,7 +121,7 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
             const doseResult = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
             if(doseResult.message) return setInfo({ type: "error", message: doseResult.message });
 
-            const doseMedicationResult = await DB.doseMedication.create({ dose_id: doseResult, medications: medicationsResult });
+            const doseMedicationResult = await DB.doseMedication.create({ dose_id: doseResult.id, medications: medicationsResult });
             if(doseMedicationResult.message) return setInfo({ type: "error", message: doseMedicationResult.message });
 
             setInfo({ type: "success", message: `${inputs.name} was successfully added to schedule.` });
