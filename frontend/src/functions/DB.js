@@ -68,6 +68,10 @@ export const DB = {
     medication: {
         create: async value => {
             return await DB.postRequest(`${DB.URL}medication/create`, value);
+        },
+
+        checkExistence: async (family_id, names) => {
+            return await DB.postRequest(`${DB.URL}medication/check-existence`, { family_id, names });
         }
     }
 };

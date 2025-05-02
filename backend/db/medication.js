@@ -11,4 +11,20 @@ dataPool.create = ({ family_id, name, description, substance, expiration_date, a
     });
 }
 
+dataPool.checkExistence = ({ family_id, names }) => {
+    let questionMarks = "";
+
+    for(let i = 0; i < names.length; i++) {
+        if(i < names.length - 1) questionMarks += "?,";
+        else questionMarks += "?";
+    }
+    
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT DISTINCT name FROM Medication WHERE family_id = ? AND name IN (${questionMarks})`, [family_id, ...names], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;

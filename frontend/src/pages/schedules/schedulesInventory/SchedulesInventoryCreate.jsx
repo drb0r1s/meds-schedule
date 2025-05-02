@@ -5,7 +5,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, info, setInfo }) => {
+const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, setInfo }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
     const [isLoading, setIsLoading] = useState(false);
 

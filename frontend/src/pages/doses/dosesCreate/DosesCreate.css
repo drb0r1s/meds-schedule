@@ -3,7 +3,7 @@
     width: 100vw;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     background-color: var(--background);
     position: fixed;
@@ -42,8 +42,9 @@
     font-size: 28px;
     text-align: center;
     font-family: Roboto-Light;
+    background-color: var(--background);
     border-bottom: 1px solid white;
-    position: absolute;
+    position: sticky;
     top: 0;
     padding: 20px;
 }
@@ -53,13 +54,27 @@
     font-family: Roboto-Bold;
 }
 
+.doses-create .form-holder {
+    height: calc(100vh - 75px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 30px 0;
+    overflow-y: auto;
+}
+
+.doses-create .form-holder::-webkit-scrollbar {
+    display: none;
+}
+
 .doses-create form {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 30px;
-    margin-top: 30px;
 }
 
 .doses-create form fieldset {
@@ -85,7 +100,8 @@
     transition: 300ms;
 }
 
-.doses-create form .time-inputs {
+.doses-create form .time-inputs,
+.doses-create form .medication-inputs {
     flex-direction: column;
     gap: 10px;
 }
@@ -126,6 +142,25 @@
 .doses-create form fieldset input::placeholder,
 .doses-create form fieldset textarea::placeholder {
     font-family: Roboto-Light;
+}
+
+.doses-create form .medication-holder {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.doses-create form .medication-holder strong {
+    color: white;
+    font-size: 17px;
+    font-family: Roboto-Regular;
+    font-weight: normal;
+}
+
+.doses-create form .medication-holder fieldset .input-disabled {
+    opacity: .3;
 }
 
 .doses-create .add-button {

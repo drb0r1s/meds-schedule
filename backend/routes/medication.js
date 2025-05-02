@@ -34,11 +34,19 @@ medication.post("/create", async (req, res) => {
     }
 });
 
-const amountUnits = ["mg", "g", "mcg", "ml", "l", "pills", "capsules", "drops", "patches", "inhalations", "other"];
+medication.post("/check-existence", async (req, res) => {
+    const { family_id, names } = req.body;
 
-function isLeapYear(year) {
-    return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0);
-}
+    try {
+        const queryResult = await DB.medication.checkExistence({ family_id, names });
+        res.status(200).json(queryResult.length === names.length);
+    } catch(err) {
+        console.error(`DB ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
+const amountUnits = ["mg", "g", "mcg", "ml", "l", "pills", "capsules", "drops", "patches", "inhalations", "other"];
 
 function checkInputs(inputs, res) {
     if(!inputs.name.length) return error(res, { message: "Name field is empty." });

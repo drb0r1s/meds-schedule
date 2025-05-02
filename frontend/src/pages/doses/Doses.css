@@ -8,6 +8,10 @@
     overflow-y: hidden;
 }
 
+.doses .info {
+    z-index: 4;
+}
+
 .doses .menu {
     height: 55px;
     width: 100%;

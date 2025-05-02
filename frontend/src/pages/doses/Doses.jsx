@@ -62,8 +62,6 @@ const Doses = () => {
     return(
         <section className="doses">
             {isLoading ? <Loading /> : <>
-                {info.message && <Info info={info} setInfo={setInfo} />}
-                
                 {modals.create && <DosesCreate
                     schedule={schedule}
                     dosesCreateModalRef={dosesCreateModalRef}
@@ -71,6 +69,8 @@ const Doses = () => {
                     info={info}
                     setInfo={setInfo}
                 />}
+
+                {info.message && <Info info={info} setInfo={setInfo} />}
                 
                 <Calendar time={getWeek(weekDistance)} />
                 
