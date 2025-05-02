@@ -21,5 +21,8 @@ app.use("/family", family);
 const schedule = require("./routes/schedule.js");
 app.use("/schedule", schedule);
 
+const dose = require("./routes/dose.js");
+app.use("/dose", dose);
+
 const medication = require("./routes/medication.js");
 app.use("/medication", medication);

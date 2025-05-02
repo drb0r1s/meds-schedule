@@ -1,5 +1,6 @@
 import React from "react";
 import "./Calendar.css";
+import { ExtendedDate } from "../../functions/ExtendedDate";
 import { images } from "../../data/images";
 
 const Calendar = ({ time }) => {
@@ -18,7 +19,6 @@ const Calendar = ({ time }) => {
         const dayOfTheMonth = date.getDate();
 
         const currentMonth = date.getMonth();
-        const monthLengths = [31, isLeapYear() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
         dates[dayOfTheWeek] = dayOfTheMonth;
 
@@ -29,7 +29,7 @@ const Calendar = ({ time }) => {
             prevValue--;
 
             if(!prevValue) {
-                prevValue = monthLengths[currentMonth === 0 ? 11 : currentMonth - 1];
+                prevValue = ExtendedDate.monthLengths[currentMonth === 0 ? 11 : currentMonth - 1];
                 dates[i] = prevValue;
             }
 
@@ -42,7 +42,7 @@ const Calendar = ({ time }) => {
         if(dayOfTheWeek < 6) for(let i = dayOfTheWeek + 1; i <= 6; i++) {
             nextValue++;
 
-            if(nextValue > monthLengths[currentMonth]) {
+            if(nextValue > ExtendedDate.monthLengths[currentMonth]) {
                 nextValue = 1;
                 dates[i] = nextValue;
             }

@@ -1,4 +1,4 @@
-.schedules-inventory-create {
+.doses-create {
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -13,17 +13,11 @@
     z-index: 3;
 }
 
-#schedules-inventory-create-active {
+#doses-create-active {
     left: 0;
 }
 
-.schedules-inventory-create .loading-holder {
-    position: fixed;
-    padding-top: 75px;
-    z-index: 1;
-}
-
-.schedules-inventory-create .x-button {
+.doses-create .x-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,24 +29,31 @@
     z-index: 2;
 }
 
-.schedules-inventory-create .x-button img {
+.doses-create .x-button img {
     height: 25px;
     width: 25px;
     object-fit: contain;
 }
 
-.schedules-inventory-create h2 {
+.doses-create h2 {
+    height: 75px;
+    width: 100%;
     color: white;
     font-size: 28px;
+    text-align: center;
     font-family: Roboto-Light;
+    border-bottom: 1px solid white;
+    position: absolute;
+    top: 0;
+    padding: 20px;
 }
 
-.schedules-inventory-create h2 span {
+.doses-create h2 span {
     color: var(--red);
     font-family: Roboto-Bold;
 }
 
-.schedules-inventory-create form {
+.doses-create form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,7 +62,7 @@
     margin-top: 30px;
 }
 
-.schedules-inventory-create form fieldset {
+.doses-create form fieldset {
     width: 100%;
     display: flex;
     align-items: center;
@@ -69,9 +70,9 @@
     border: none;
 }
 
-.schedules-inventory-create form fieldset input,
-.schedules-inventory-create form fieldset textarea,
-.schedules-inventory-create form fieldset select {
+.doses-create form fieldset input,
+.doses-create form fieldset textarea,
+.doses-create form fieldset select {
     width: 100%;
     color: white;
     font-size: 18px;
@@ -84,35 +85,50 @@
     transition: 300ms;
 }
 
-.schedules-inventory-create form .expiration-date-inputs {
+.doses-create form .time-inputs {
+    flex-direction: column;
     gap: 10px;
 }
 
-.schedules-inventory-create form .expiration-date-inputs input {
+.doses-create form .time-inputs .time-inputs-first,
+.doses-create form .time-inputs .time-inputs-second {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.doses-create form .time-inputs input {
     text-align: center;
 }
 
-.schedules-inventory-create form .expiration-date-inputs input:nth-child(1),
-.schedules-inventory-create form .expiration-date-inputs input:nth-child(2) {
+.doses-create form .time-inputs .time-inputs-first span {
+    color: white;
+    font-size: 20px;
+}
+
+.doses-create form .time-inputs .time-inputs-second input:nth-child(1),
+.doses-create form .time-inputs .time-inputs-second input:nth-child(2) {
     width: 50%;
 }
 
-.schedules-inventory-create form fieldset textarea {
+.doses-create form fieldset textarea {
     width: 100%;
     resize: none;
 }
 
-.schedules-inventory-create form fieldset input:focus,
-.schedules-inventory-create form fieldset textarea:focus {
+.doses-create form fieldset input:focus,
+.doses-create form fieldset textarea:focus {
     border-bottom: 1px solid white;
 }
 
-.schedules-inventory-create form fieldset input::placeholder,
-.schedules-inventory-create form fieldset textarea::placeholder {
+.doses-create form fieldset input::placeholder,
+.doses-create form fieldset textarea::placeholder {
     font-family: Roboto-Light;
 }
 
-.schedules-inventory-create .add-button {
+.doses-create .add-button {
     color: white;
     font-size: 15px;
     background-color: var(--red);

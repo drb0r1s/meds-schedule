@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./SchedulesInventoryCreate.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
+import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
 const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, info, setInfo }) => {
@@ -9,11 +10,6 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
     const [isLoading, setIsLoading] = useState(false);
 
     const amountUnits = ["mg", "g", "mcg", "ml", "l", "pills", "capsules", "drops", "patches", "inhalations", "other"];
-    const monthLengths = [31, isLeapYear() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-    function isLeapYear(year) {
-        return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0);
-    }
 
     function checkInputs() {
         if(!inputs.name.length) {
@@ -71,7 +67,7 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
             return true;
         }
 
-        else if(parseInt(inputs.expirationDate.day) < 1 || parseInt(inputs.expirationDate.day) > 31 || parseInt(inputs.expirationDate.day) > monthLengths[parseInt(inputs.expirationDate.month) - 1]) {
+        else if(parseInt(inputs.expirationDate.day) < 1 || parseInt(inputs.expirationDate.day) > 31 || parseInt(inputs.expirationDate.day) > ExtendedDate.monthLengths[parseInt(inputs.expirationDate.month) - 1]) {
             setInfo({ type: "error", message: "Day is invalid." });
             return true;
         }

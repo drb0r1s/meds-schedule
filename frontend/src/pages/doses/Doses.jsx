@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useLocation, useNavigate } from "react-router";
 import "./Doses.css";
+import DosesCreate from "./dosesCreate/DosesCreate";
 import Loading from "../../components/loading/Loading";
+import Info from "../../components/Info/Info";
 import Calendar from "../../components/calendar/Calendar";
 import { DB } from "../../functions/DB";
 import { images } from "../../data/images";
@@ -14,6 +16,10 @@ const Doses = () => {
     const [schedule, setSchedule] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [weekDistance, setWeekDistance] = useState(0);
+    const [modals, setModals] = useState({ create: false });
+    const [info, setInfo] = useState({ type: "", message: "" });
+
+    const dosesCreateModalRef = useRef(null);
 
     const scheduleId = doses.split("-")[doses.split("-").length - 1];
 
@@ -37,6 +43,15 @@ const Doses = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if(modals.create) setTimeout(() => { dosesCreateModalRef.current.id = "doses-create-active" }, 10);
+    }, [modals.create]);
+
+    function disableDosesCreateModal() {
+        dosesCreateModalRef.current.id = "";
+        setTimeout(() => setModals({...modals, create: false}), 300);
+    }
+
     function getWeek(distance) {
         // 1000ms -> 60s -> 60m -> 24h -> 7 days
         const distancedWeek = distance * (1000 * 60 * 60 * 24 * 7);
@@ -47,6 +62,16 @@ const Doses = () => {
     return(
         <section className="doses">
             {isLoading ? <Loading /> : <>
+                {info.message && <Info info={info} setInfo={setInfo} />}
+                
+                {modals.create && <DosesCreate
+                    schedule={schedule}
+                    dosesCreateModalRef={dosesCreateModalRef}
+                    disableDosesCreateModal={disableDosesCreateModal}
+                    info={info}
+                    setInfo={setInfo}
+                />}
+                
                 <Calendar time={getWeek(weekDistance)} />
                 
                 <div className="menu">
@@ -54,7 +79,7 @@ const Doses = () => {
 
                     <div className="center-group">
                         <button onClick={() => setWeekDistance(weekDistance - 1)}><img src={images.arrowUpIcon} alt="UP" /></button>
-                        <button><img src={images.plusIcon} alt="CREATE" /></button>
+                        <button onClick={() => setModals({...modals, create: true})}><img src={images.plusIcon} alt="CREATE" /></button>
                         <button onClick={() => setWeekDistance(weekDistance + 1)}><img src={images.arrowDownIcon} alt="DOWN" /></button>
                     </div>
 
