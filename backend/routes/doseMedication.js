@@ -8,7 +8,7 @@ doseMedication.post("/create", async (req, res) => {
     const { dose_id, medications } = req.body;
 
     try {
-        const queryResult = DB.doseMedication.create({ dose_id, medications });
+        const queryResult = await DB.doseMedication.create({ dose_id, medications });
         if(queryResult.affectedRows) console.log("New row has been inserted in DoseMedication table.");
    
         res.status(200).json(queryResult.insertId);
