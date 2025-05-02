@@ -26,7 +26,7 @@ dose.post("/create", async (req, res) => {
         const queryResult = await DB.dose.create(createObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Dose table.");
    
-        res.status(200).json(createObject);
+        res.status(200).json(queryResult);
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
