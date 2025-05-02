@@ -48,18 +48,18 @@ medication.post("/check-existence", async (req, res) => {
         
         let status = true;
 
-        if(queryResult.length !== names.length) status = { message: "Some of the entered medicines don't exist in the inventory." };
+        if(queryResult.length !== medications.length) status = { message: "Some of the entered medicines don't exist in the inventory." };
 
         for(let i = 0; i < medications.length; i++) {
             for(let j = 0; j < queryResult.length; j++) {
-                if(medications[i].name !== queryResult[i].name) continue;
+                if(medications[i].name !== queryResult[j].name) continue;
 
-                if(medications[i].amount > queryResult[i].amount) {
+                if(medications[i].amount > queryResult[j].amount) {
                     status = { message: `There is not enough ${medications[i].name} in the inventory.` };
                     break;
                 }
 
-                if(medications[i].amountUnit !== queryResult[i].amountUnit) {
+                if(medications[i].amountUnit !== queryResult[j].amountUnit) {
                     status = { message: `Unit for ${medications[i].name} is not the same as in inventory.` };
                     break;
                 }

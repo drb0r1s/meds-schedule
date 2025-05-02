@@ -37,9 +37,6 @@ function checkInputs(inputs, res) {
     if(!inputs.name.length) return error(res, { message: "Name field is empty." });
     else if(!inputs.time.hours.length) return error(res, { message: "Hours field is empty." });
     else if(!inputs.time.minutes.length) return error(res, { message: "Minutes field is empty." });
-    else if(!inputs.time.day.length) return error(res, { message: "Day field is empty." });
-    else if(!inputs.time.month.length) return error(res, { message: "Month field is empty." })
-    else if(!inputs.time.year.length) return error(res, { message: "Year field is empty." });
     else if(inputs.name.length < 3 || inputs.name.length > 64) return error(res, { message: "Name length should be greater than 2 or less than 64!" });
     else if(isNaN(parseInt(inputs.time.hours)) || isNaN(parseInt(inputs.time.minutes)) || isNaN(parseInt(inputs.time.day)) || isNaN(parseInt(inputs.time.month)) || isNaN(parseInt(inputs.time.year))) return error(res, { message: "Time is invalid." });
     else if(parseInt(inputs.time.hours) < 0 || parseInt(inputs.time.hours) > 23) return error(res, { message: "Hours field is invalid." });
