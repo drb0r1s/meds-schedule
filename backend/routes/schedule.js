@@ -12,7 +12,7 @@ schedule.post("/get", async (req, res) => {
         const queryResult = await DB.schedule.get({ id });
         res.status(200).json(queryResult);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
@@ -38,7 +38,7 @@ schedule.post("/create", async (req, res) => {
     
         res.status(200).json(createObject);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });

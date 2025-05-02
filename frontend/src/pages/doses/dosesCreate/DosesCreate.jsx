@@ -119,11 +119,19 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         if(medicationsResult.message) setInfo({ type: "error", message: medicationsResult.message });
         
         else {
-            const result = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
-            if(result.message) return setInfo({ type: "error", message: result.message });
-        
+            const doseResult = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
+            if(doseResult.message) return setInfo({ type: "error", message: doseResult.message });
+
+            const medicationIds = [];
+            for(let i = 0; i < medicationsResult.length; i++) medicationIds.push(medicationsResult[i].id);
+
+            const doseMedicationResult = await DB.doseMedication.create({ dose_id: doseResult.id, medications: medicationsResult });
+            if(doseMedicationResult.message) return setInfo({ type: "error", message: doseMedicationResult.message });
+
             setInfo({ type: "success", message: `${inputs.name} was successfully added to schedule.` });
-            setInputs({ name: "", description: "", medication: [""], time: { hours: "", minutes: "", day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() }, color: "", amount: "", amountUnit: "" });
+            setInputs({ name: "", description: "", medication: [{ name: "", amount: "", amountUnit: "" }], time: { hours: "", minutes: "", day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() }, color: "" });
+            setNumberOfMedications(1);
+
             disableDosesCreateModal();
         }
 

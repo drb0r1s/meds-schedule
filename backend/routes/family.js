@@ -21,7 +21,7 @@ family.post("/login", async (req, res) => {
 
         res.status(200).json(queryResult);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
@@ -35,7 +35,7 @@ family.post("/loggedIn", async (req, res) => {
 
         res.status(200).json(queryResult);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
@@ -64,7 +64,7 @@ family.post("/register", async (req, res) => {
     
         res.status(200).json(registerObject);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
@@ -76,7 +76,7 @@ family.post("/getSchedules", async (req, res) => {
         const queryResult = await DB.family.getSchedules({ id });
         res.status(200).json(queryResult);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
@@ -88,7 +88,7 @@ family.post("/getMedications", async (req, res) => {
         const queryResult = await DB.family.getMedications({ id });
         res.status(200).json(queryResult);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });

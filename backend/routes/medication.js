@@ -29,7 +29,7 @@ medication.post("/create", async (req, res) => {
    
         res.status(200).json(createObject);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
@@ -44,7 +44,8 @@ medication.post("/check-existence", async (req, res) => {
     try {
         const queryResult = await DB.medication.getSpecific({ family_id, names: medicationNames });
         
-        let status = true;
+        let status;
+        const idMedications = [];
 
         if(queryResult.length !== medications.length) status = { message: "Some of the entered medicines don't exist in the inventory." };
 
@@ -61,12 +62,17 @@ medication.post("/check-existence", async (req, res) => {
                     status = { message: `Unit for ${medications[i].name} is not the same as in inventory.` };
                     break;
                 }
+
+                // If no input violation happened, we are just going to assign each medication object proper id, based on matching name with rows from Medication table (queryResult).
+                idMedications.push({...medications[i], id: queryResult[j].id});
             }
         }
+
+        if(!status.message) status = idMedications;
         
         res.status(200).json(status);
     } catch(err) {
-        console.error(`DB ERROR: ${err}`);
+        console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
 });
