@@ -5,7 +5,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, setInfo }) => {
+const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, setInfo, setMedications }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -103,6 +103,8 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
         setInfo({ type: "success", message: `${inputs.name} was successfully added to inventory.` });
         setInputs({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
         disableInventoryCreateModal();
+
+        setMedications(prevMedications => [...prevMedications, result]);
     }
 
     return(

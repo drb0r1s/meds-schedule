@@ -59,6 +59,7 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
                 disableInventoryCreateModal={disableInventoryCreateModal}
                 info={info}
                 setInfo={setInfo}
+                setMedications={setMedications}
             />}
 
             {modals.medication && <SchedulesInventoryMedication
