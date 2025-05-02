@@ -39,9 +39,7 @@ medication.post("/check-existence", async (req, res) => {
 
     const medicationNames = [];
 
-    for(let i = 0; i < medications.length; i++) {
-        if(medications[i].name) medicationNames.push(medications[i].name);
-    }
+    for(let i = 0; i < medications.length; i++) medicationNames.push(medications[i].name);
 
     try {
         const queryResult = await DB.medication.getSpecific({ family_id, names: medicationNames });
@@ -59,7 +57,7 @@ medication.post("/check-existence", async (req, res) => {
                     break;
                 }
 
-                if(medications[i].amountUnit !== queryResult[j].amountUnit) {
+                if(medications[i].amountUnit !== queryResult[j].amount_unit) {
                     status = { message: `Unit for ${medications[i].name} is not the same as in inventory.` };
                     break;
                 }
