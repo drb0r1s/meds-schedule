@@ -57,10 +57,6 @@ const Doses = () => {
     }, [schedule]);
 
     useEffect(() => {
-        console.log(doses)
-    }, [doses]);
-
-    useEffect(() => {
         if(modals.create) setTimeout(() => { dosesCreateModalRef.current.id = "doses-create-active" }, 10);
     }, [modals.create]);
 

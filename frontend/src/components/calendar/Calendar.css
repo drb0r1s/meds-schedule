@@ -79,3 +79,7 @@
 .calendar .timeslots-holder .timeslots .timeslot:nth-last-child(-n + 7) {
     border-bottom: none;
 }
+
+.calendar .timeslots-holder .timeslots .timeslot-today {
+    background-color: var(--red);
+}

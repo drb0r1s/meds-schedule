@@ -4,64 +4,85 @@ import { ExtendedDate } from "../../functions/ExtendedDate";
 import { images } from "../../data/images";
 
 const Calendar = ({ time }) => {
+    const date = time ? new Date(time) : new Date();
+
+    const calendar = {
+        weekDay: adjustDay(date.getDay()),
+        monthDay: date.getDate(),
+        month: date.getMonth(),
+        year: date.getFullYear()
+    };
+    
     const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-    const dates = getDates();
+    const week = getDates();
 
     const hours = new Array(24).fill(0);
     const timeslots = Array.from({ length: 24 }, () => Array(7).fill(0));
 
     function getDates() {
-        const dates = new Array(7);
-        
-        const date = time ? new Date(time) : new Date();
-        
-        const dayOfTheWeek = adjustDay(date.getDay());
-        const dayOfTheMonth = date.getDate();
+        const week = new Array(7);
+        week[calendar.weekDay] = { year: calendar.year, month: calendar.month, day: calendar.monthDay };
 
-        const currentMonth = date.getMonth();
-
-        dates[dayOfTheWeek] = dayOfTheMonth;
-
-        let prevValue = dayOfTheMonth;
+        // Spread operator here is important, otherwise we would update the same week object.
+        const prevWeekDay = {...week[calendar.weekDay]};
         
         // Looping from the current day of the week to the start of the week (if the current day of the week is not Monday).
-        if(dayOfTheWeek > 0) for(let i = dayOfTheWeek - 1; i >= 0; i--) {            
-            prevValue--;
+        if(calendar.weekDay > 0) for(let i = calendar.weekDay - 1; i >= 0; i--) {            
+            prevWeekDay.day--;
 
-            if(!prevValue) {
-                prevValue = ExtendedDate.monthLengths[currentMonth === 0 ? 11 : currentMonth - 1];
-                dates[i] = prevValue;
+            if(!prevWeekDay.day) {
+                prevWeekDay.day = ExtendedDate.monthLengths[calendar.month === 0 ? 11 : calendar.month - 1];
+                
+                prevWeekDay.month--;
+
+                // January has index 0, we went to previous year if index is -1.
+                if(prevWeekDay.month === -1) {
+                    prevWeekDay.month = 11; // December (index 11).
+                    prevWeekDay.year--;
+                }
             }
 
-            else dates[i] = prevValue;
+            week[i] = prevWeekDay;
         }
 
-        let nextValue = dayOfTheMonth;
+        // Spread operator here is important, otherwise we would update the same week object.
+        const nextWeekDay = {...week[calendar.weekDay]};
 
         // Looping from the current day of the week to the end of the week (if the current day of the week is not Sunday).
-        if(dayOfTheWeek < 6) for(let i = dayOfTheWeek + 1; i <= 6; i++) {
-            nextValue++;
+        if(calendar.weekDay < 6) for(let i = calendar.weekDay + 1; i <= 6; i++) {
+            nextWeekDay.day++;
 
-            if(nextValue > ExtendedDate.monthLengths[currentMonth]) {
-                nextValue = 1;
-                dates[i] = nextValue;
+            if(nextWeekDay.day > ExtendedDate.monthLengths[calendar.month]) {
+                nextWeekDay.day = 1;
+                
+                nextWeekDay.month++;
+
+                // December has index 11, we went to next year if index is 12.
+                if(nextWeekDay.month === 12) {
+                    nextWeekDay.month = 0;
+                    nextWeekDay.year++;
+                }
             }
 
-            else dates[i] = nextValue;
+            week[i] = nextWeekDay;
         }
 
-        // new Date.getDay() starts from Sunday (index 0).
-        // Function adjustDay() is readjusting starting day (starting from Monday).
-        function adjustDay(day) {
-            if(day === 0) return 6;
-            return day - 1;
-        }
-
-        return dates;
+        return week;
     }
 
-    function isLeapYear(year) {
-        return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0);
+    // new Date.getDay() starts from Sunday (index 0).
+    // Function adjustDay() is readjusting starting day (starting from Monday).
+    function adjustDay(day) {
+        if(day === 0) return 6;
+        return day - 1;
+    }
+
+    function isToday(id) {
+        const today = new Date();
+        const [year, month, monthDay] = id.split("-");
+
+        if(today.getFullYear() === parseInt(year) && today.getMonth() === parseInt(month) && today.getDate() === parseInt(monthDay)) return true;
+        return false;
     }
     
     return(
@@ -81,17 +102,19 @@ const Calendar = ({ time }) => {
             <div className="timeslots-holder">
                 <div className="days">
                     {days.map((day, index) => {
-                        return <p key={index} className="day">{day} {dates[index]}</p>;
+                        return <p key={index} className="day">{day} {week[index].day}</p>;
                     })}
                 </div>
 
                 <div className="timeslots">
                     {timeslots.map((timeslotHour, hourIndex) => {
                         return timeslotHour.map((timeslotDay, dayIndex) => {
+                            const timeslotId = `${week[dayIndex].year}-${week[dayIndex].month}-${week[dayIndex].day}-${dayIndex}-${hourIndex}`;
+                            
                             return <div
-                                key={`${dayIndex}-${hourIndex}`}
-                                className="timeslot"
-                                id={`${dayIndex}-${hourIndex}`}
+                                key={timeslotId}
+                                className={`timeslot ${isToday(timeslotId) ? "timeslot-today" : ""}`}
+                                id={timeslotId}
                             ></div>;
                         });
                     })}
