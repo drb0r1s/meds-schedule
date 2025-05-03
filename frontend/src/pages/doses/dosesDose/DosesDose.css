@@ -34,6 +34,10 @@
     top: 0;
 }
 
+.doses-dose .loading-holder {
+    height: 50%;
+}
+
 .doses-dose .x-button {
     display: flex;
     align-items: center;
@@ -64,4 +68,91 @@
     position: sticky;
     top: 0;
     padding: 20px;
+}
+
+.doses-dose .medication-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.doses-dose .medication-holder h3 {
+    width: 100%;
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Regular;
+    padding-left: 20px;
+}
+
+.doses .medication-holder .list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.doses .medication-holder .list .medication {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.doses .medication-holder .list .medication img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.doses .medication-holder .list .medication .medication-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.doses .medication-holder .list .medication .medication-info strong {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Regular;
+    font-style: normal;
+}
+
+.doses .medication-holder .list .medication .medication-info span {
+    color: var(--red);
+    font-size: 14px;
+    font-family: Roboto-Light;
+    font-style: italic;
+}
+
+.doses .medication-holder .list .medication .medication-info p {
+    color: white;
+    font-size: 15px;
+    font-family: Roboto-Regular;
+    margin: 0;
+}
+
+.doses .medication-holder .list .medication .medication-info p span {
+    font-size: 14px;
+    font-style: normal;
+}
+
+.doses .medication-holder button {
+    color: var(--red);
+    font-size: 20px;
+    font-family: Roboto-Bold;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    position: sticky;
+    bottom: 0;
+    margin-top: 30px;
+    padding: 5px 10px;
 }

@@ -47,7 +47,7 @@ medication.post("/check-existence", async (req, res) => {
         let status;
         const idMedications = [];
 
-        if(queryResult.length !== medications.length) status = { message: "Some of the entered medicines don't exist in the inventory." };
+        if(queryResult.length !== medications.length) status = { message: "Some of the entered medications don't exist in the inventory." };
 
         for(let i = 0; i < medications.length; i++) {
             for(let j = 0; j < queryResult.length; j++) {

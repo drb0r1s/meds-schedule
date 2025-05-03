@@ -5,19 +5,19 @@ import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
 const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal }) => {
-    const [doseMedicine, setDoseMedicine] = useState({});
+    const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const getDoseMedicine = async () => {
+        const getDoseMedications = async () => {
             const result = await DB.doseMedication.get(dose.id);
             if(result.message) return;
 
-            console.log(result);
+            setDoseMedications(result);
             setIsLoading(false);
         }
 
-        getDoseMedicine();
+        getDoseMedications();
     }, []);
     
     return(
@@ -35,6 +35,27 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                 ><img src={images.xIcon} alt="X" /></button>
 
                 <h2>{dose.name}</h2>
+
+                <div className="medication-holder">
+                    <h3>Your medication{doseMedications.length > 1 ? "s" : ""}:</h3>
+
+                    <div className="list">
+                        {doseMedications.map((doseMedication, index) => {
+                            return <div key={index} className="medication">
+                                <img src={images.pillIcon} alt={doseMedication.name} />
+
+                                <div className="medication-info">
+                                    <strong>{doseMedication.name}</strong>
+                                    <span>{doseMedication.substance}</span>
+
+                                    <p>Amount to take: <span>{doseMedication.amount} {doseMedication.amount_unit}</span></p>
+                                </div>
+                            </div>;
+                        })}
+                    </div>
+
+                    <button>Take</button>
+                </div>
             </div>
         </div>
     );

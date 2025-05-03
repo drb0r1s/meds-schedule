@@ -5,7 +5,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, setInfo }) => {
+const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, setInfo, setDoses }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", medication: [{ name: "", amount: "", amountUnit: "" }], time: { hours: "", minutes: "", day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() }, color: "" });
     const [numberOfMedications, setNumberOfMedications] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -129,6 +129,8 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
             setNumberOfMedications(1);
 
             disableDosesCreateModal();
+
+            setDoses(prevDoses => [...prevDoses, doseResult]);
         }
 
         setIsLoading(false);

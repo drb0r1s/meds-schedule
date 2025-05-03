@@ -94,6 +94,7 @@ const Doses = () => {
                     disableDosesCreateModal={disableDosesCreateModal}
                     info={info}
                     setInfo={setInfo}
+                    setDoses={setDoses}
                 />}
 
                 {modals.timeslot && <DosesTimeslot

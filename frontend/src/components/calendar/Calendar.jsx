@@ -4,7 +4,7 @@ import { ExtendedDate } from "../../functions/ExtendedDate";
 import { images } from "../../data/images";
 
 const Calendar = ({ time, doses, setModals }) => {
-    const [dosesMatrix, setDosesMatrix] = useState(Array.from({ length: 24 }, () => Array(7).fill([])));
+    const [dosesMatrix, setDosesMatrix] = useState(Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => [])));
     
     const date = time ? new Date(time) : new Date();
 
@@ -19,19 +19,20 @@ const Calendar = ({ time, doses, setModals }) => {
     const week = getDates();
 
     const hours = new Array(24).fill(0);
-    const timeslots = Array.from({ length: 24 }, () => Array(7).fill(0));
+    const timeslots = Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => []));
 
     useEffect(() => {
         if(!doses) return;
 
-        const newDosesMatrix = Array.from({ length: 24 }, () => Array(7).fill([]));
-
-        for(let i = 0; i < 24; i++) {
-            for(let j = 0; j < 7; j++) {
-                doses.forEach(dose => {
-                    const doseTime = ExtendedDate.parseSQL(dose.time);
-                    const doseTimeWeekDay = adjustDay(new Date(dose.time).getDay());
-                                        
+        const newDosesMatrix = Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => []));
+        
+        doses.forEach(dose => {
+            const doseTime = ExtendedDate.parseSQL(dose.time);
+            const doseTimeWeekDay = adjustDay(new Date(dose.time).getDay());
+            
+            for(let i = 0; i < 24; i++) {
+                for(let j = 0; j < 7; j++) {
+                    
                     if(
                         doseTime.year === week[j].year &&
                         (doseTime.month - 1) === week[j].month && // DATETIME in MySQL starts from index 1 (January) for months, adjustment is needed.
@@ -39,12 +40,12 @@ const Calendar = ({ time, doses, setModals }) => {
                         doseTimeWeekDay === j &&
                         doseTime.hours === i
                     ) newDosesMatrix[i][j].push(dose);
-                });
+                }
             }
-        }
+        });
 
         setDosesMatrix(newDosesMatrix);
-    }, [doses]);
+    }, [time]);
 
     function getDates() {
         const week = new Array(7);
