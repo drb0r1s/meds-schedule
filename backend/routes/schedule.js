@@ -43,6 +43,18 @@ schedule.post("/create", async (req, res) => {
     }
 });
 
+schedule.post("/get-doses", async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const queryResult = await DB.schedule.getDoses({ id });
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 function checkInputs(inputs, res) {
     if(!inputs.name.length) return error(res, { message: "Name field is empty." });
     else if(inputs.name.length < 3 || inputs.name.length > 64) return error(res, { message: "Name length should be greater than 2 or less than 64!" });

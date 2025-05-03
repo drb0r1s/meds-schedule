@@ -20,4 +20,13 @@ dataPool.create = ({ family_id, name, description, color, created_at, updated_at
     });
 }
 
+dataPool.getDoses = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Doses WHERE schedule_id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;

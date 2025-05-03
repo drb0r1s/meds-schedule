@@ -69,7 +69,7 @@ family.post("/register", async (req, res) => {
     }
 });
 
-family.post("/getSchedules", async (req, res) => {
+family.post("/get-schedules", async (req, res) => {
     const { id } = req.body;
 
     try {
@@ -81,7 +81,7 @@ family.post("/getSchedules", async (req, res) => {
     }
 });
 
-family.post("/getMedications", async (req, res) => {
+family.post("/get-medications", async (req, res) => {
     const { id } = req.body;
 
     try {

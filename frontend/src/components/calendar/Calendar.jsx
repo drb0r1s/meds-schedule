@@ -8,7 +8,7 @@ const Calendar = ({ time }) => {
     const dates = getDates();
 
     const hours = new Array(24).fill(0);
-    const timeslots = new Array(7 * 24).fill(0);
+    const timeslots = Array.from({ length: 24 }, () => Array(7).fill(0));
 
     function getDates() {
         const dates = new Array(7);
@@ -86,8 +86,14 @@ const Calendar = ({ time }) => {
                 </div>
 
                 <div className="timeslots">
-                    {timeslots.map((timeslot, index) => {
-                        return <div key={index} className="timeslot"></div>;
+                    {timeslots.map((timeslotHour, hourIndex) => {
+                        return timeslotHour.map((timeslotDay, dayIndex) => {
+                            return <div
+                                key={`${dayIndex}-${hourIndex}`}
+                                className="timeslot"
+                                id={`${dayIndex}-${hourIndex}`}
+                            ></div>;
+                        });
                     })}
                 </div>
             </div>

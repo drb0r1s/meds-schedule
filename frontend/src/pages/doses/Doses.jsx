@@ -9,11 +9,12 @@ import { DB } from "../../functions/DB";
 import { images } from "../../data/images";
 
 const Doses = () => {
-    const { doses } = useParams();
+    const { doses: dosesURL } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
 
     const [schedule, setSchedule] = useState({});
+    const [doses, setDoses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [weekDistance, setWeekDistance] = useState(0);
     const [modals, setModals] = useState({ create: false });
@@ -21,7 +22,7 @@ const Doses = () => {
 
     const dosesCreateModalRef = useRef(null);
 
-    const scheduleId = doses.split("-")[doses.split("-").length - 1];
+    const scheduleId = dosesURL.split("-")[dosesURL.split("-").length - 1];
 
     useEffect(() => {
         if(location.state?.schedule) {
@@ -32,7 +33,6 @@ const Doses = () => {
         else {
             const getSchedule = async () => {
                 const result = await DB.schedule.get(scheduleId);
-                
                 if(result.message) return;
 
                 setSchedule(result);
@@ -42,6 +42,23 @@ const Doses = () => {
             getSchedule();
         }
     }, []);
+
+    useEffect(() => {
+        if(!Object.keys(schedule).length) return;
+
+        const getDoses = async () => {
+            const result = await DB.schedule.getDoses(schedule.id);
+            if(result.message) return;
+
+            setDoses(result);
+        }
+
+        getDoses();
+    }, [schedule]);
+
+    useEffect(() => {
+        console.log(doses)
+    }, [doses]);
 
     useEffect(() => {
         if(modals.create) setTimeout(() => { dosesCreateModalRef.current.id = "doses-create-active" }, 10);
