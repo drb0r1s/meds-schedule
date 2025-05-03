@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Calendar.css";
 import { ExtendedDate } from "../../functions/ExtendedDate";
 import { images } from "../../data/images";
 
-const Calendar = ({ time }) => {
+const Calendar = ({ time, doses, setModals }) => {
+    const [dosesMatrix, setDosesMatrix] = useState(Array.from({ length: 24 }, () => Array(7).fill([])));
+    
     const date = time ? new Date(time) : new Date();
 
     const calendar = {
@@ -18,6 +20,31 @@ const Calendar = ({ time }) => {
 
     const hours = new Array(24).fill(0);
     const timeslots = Array.from({ length: 24 }, () => Array(7).fill(0));
+
+    useEffect(() => {
+        if(!doses) return;
+
+        const newDosesMatrix = Array.from({ length: 24 }, () => Array(7).fill([]));
+
+        for(let i = 0; i < 24; i++) {
+            for(let j = 0; j < 7; j++) {
+                doses.forEach(dose => {
+                    const doseTime = ExtendedDate.parseSQL(dose.time);
+                    const doseTimeWeekDay = adjustDay(new Date(dose.time).getDay());
+                                        
+                    if(
+                        doseTime.year === week[j].year &&
+                        (doseTime.month - 1) === week[j].month && // DATETIME in MySQL starts from index 1 (January) for months, adjustment is needed.
+                        doseTime.day === week[j].day &&
+                        doseTimeWeekDay === j &&
+                        doseTime.hours === i
+                    ) newDosesMatrix[i][j].push(dose);
+                });
+            }
+        }
+
+        setDosesMatrix(newDosesMatrix);
+    }, [doses]);
 
     function getDates() {
         const week = new Array(7);
@@ -42,7 +69,7 @@ const Calendar = ({ time }) => {
                 }
             }
 
-            week[i] = prevWeekDay;
+            week[i] = {...prevWeekDay};
         }
 
         // Spread operator here is important, otherwise we would update the same week object.
@@ -64,7 +91,7 @@ const Calendar = ({ time }) => {
                 }
             }
 
-            week[i] = nextWeekDay;
+            week[i] = {...nextWeekDay};
         }
 
         return week;
@@ -86,7 +113,7 @@ const Calendar = ({ time }) => {
     }
     
     return(
-        <div className="calendar">
+        <div className="calendar">    
             <img
                 src={images.pillIcon}
                 alt="PILL"
@@ -115,7 +142,26 @@ const Calendar = ({ time }) => {
                                 key={timeslotId}
                                 className={`timeslot ${isToday(timeslotId) ? "timeslot-today" : ""}`}
                                 id={timeslotId}
-                            ></div>;
+                                onClick={() => setModals(prevModals => { return {...prevModals, timeslot: [timeslotId, dosesMatrix[hourIndex][dayIndex]]} })}
+                            >
+                                {doses.map((dose, index) => {
+                                    const doseTime = ExtendedDate.parseSQL(dose.time);
+                                    const doseTimeWeekDay = adjustDay(new Date(dose.time).getDay());
+                                    
+                                    if(
+                                        doseTime.year === week[dayIndex].year &&
+                                        (doseTime.month - 1) === week[dayIndex].month && // DATETIME in MySQL starts from index 1 (January) for months, adjustment is needed.
+                                        doseTime.day === week[dayIndex].day &&
+                                        doseTimeWeekDay === dayIndex &&
+                                        doseTime.hours === hourIndex
+                                    ) return <div
+                                        key={index}
+                                        className="dose"
+                                    >{dose.name}</div>;
+
+                                    return <React.Fragment key={index}></React.Fragment>;
+                                })}
+                            </div>;
                         });
                     })}
                 </div>

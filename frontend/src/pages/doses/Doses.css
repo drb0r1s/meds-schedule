@@ -12,6 +12,14 @@
     z-index: 4;
 }
 
+.doses .calendar-holder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .doses .menu {
     height: 55px;
     width: 100%;

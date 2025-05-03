@@ -6,6 +6,15 @@ export const ExtendedDate = {
         return `${day}.${month}.${year}`;
     },
 
+    parseSQL: string => {
+        const parsed = new Date(string).toISOString().slice(0, 19).replace("T", " ");
+        const [year, month, other] = parsed.split("-");
+        const [day, time] = other.split(" ");
+        const [hours, minutes] = time.split(":");
+
+        return { year: parseInt(year), month: parseInt(month), day: parseInt(day), hours: parseInt(hours), minutes: parseInt(minutes) };
+    },
+
     isLeapYear
 };
 

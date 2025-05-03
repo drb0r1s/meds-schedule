@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useLocation, useNavigate } from "react-router";
 import "./Doses.css";
 import DosesCreate from "./dosesCreate/DosesCreate";
+import DosesTimeslot from "./dosesTimeslot/DosesTimeslot";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Calendar from "../../components/calendar/Calendar";
@@ -16,11 +17,13 @@ const Doses = () => {
     const [schedule, setSchedule] = useState({});
     const [doses, setDoses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [dosesLoading, setDosesLoading] = useState(true);
     const [weekDistance, setWeekDistance] = useState(0);
-    const [modals, setModals] = useState({ create: false });
+    const [modals, setModals] = useState({ create: false, timeslot: false });
     const [info, setInfo] = useState({ type: "", message: "" });
 
     const dosesCreateModalRef = useRef(null);
+    const dosesTimeslotModalRef = useRef(null);
 
     const scheduleId = dosesURL.split("-")[dosesURL.split("-").length - 1];
 
@@ -51,6 +54,7 @@ const Doses = () => {
             if(result.message) return;
 
             setDoses(result);
+            setDosesLoading(false);
         }
 
         getDoses();
@@ -60,9 +64,18 @@ const Doses = () => {
         if(modals.create) setTimeout(() => { dosesCreateModalRef.current.id = "doses-create-active" }, 10);
     }, [modals.create]);
 
+    useEffect(() => {
+        if(modals.timeslot) setTimeout(() => { dosesTimeslotModalRef.current.id = "doses-timeslot-active" }, 10);
+    }, [modals.timeslot]);
+
     function disableDosesCreateModal() {
         dosesCreateModalRef.current.id = "";
         setTimeout(() => setModals({...modals, create: false}), 300);
+    }
+
+    function disableDosesTimeslotModal() {
+        dosesTimeslotModalRef.current.id = "";
+        setTimeout(() => setModals({...modals, timeslot: false}), 300);
     }
 
     function getWeek(distance) {
@@ -83,9 +96,18 @@ const Doses = () => {
                     setInfo={setInfo}
                 />}
 
+                {modals.timeslot && <DosesTimeslot
+                    timeslotDoses={modals.timeslot}
+                    dosesTimeslotModalRef={dosesTimeslotModalRef}
+                    disableDosesTimeslotModal={disableDosesTimeslotModal}
+                />}
+
                 {info.message && <Info info={info} setInfo={setInfo} />}
                 
-                <Calendar time={getWeek(weekDistance)} />
+                <div className="calendar-holder">
+                    {dosesLoading && <Loading />}
+                    <Calendar time={getWeek(weekDistance)} doses={doses} setModals={setModals} />
+                </div>
                 
                 <div className="menu">
                     <h2>{schedule.name}</h2>

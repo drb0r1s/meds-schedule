@@ -70,10 +70,14 @@
 }
 
 .calendar .timeslots-holder .timeslots .timeslot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
     width: 100%;
     border-bottom: 1px solid white;
     border-left: 1px solid white;
+    position: relative;
 }
 
 .calendar .timeslots-holder .timeslots .timeslot:nth-last-child(-n + 7) {
@@ -81,5 +85,16 @@
 }
 
 .calendar .timeslots-holder .timeslots .timeslot-today {
+    background-color: rgba(220, 20, 60, .5);
+}
+
+.calendar .timeslots-holder .timeslots .dose {
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 12px;
+    font-family: Roboto-Regular;
     background-color: var(--red);
+    border: none;
+    position: absolute;
 }
