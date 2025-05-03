@@ -1,0 +1,67 @@
+.doses-dose-holder {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    background-color: rgba(0,0,0,.5);
+    position: fixed;
+    opacity: 0;
+    transition: 300ms;
+    overflow-y: hidden;
+    z-index: 3;
+}
+
+#doses-dose-holder-active {
+    opacity: 1;
+}
+
+.doses-dose {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: var(--background);
+    position: relative;
+    top: 50%;
+    transition: 300ms;
+}
+
+#doses-dose-active {
+    top: 0;
+}
+
+.doses-dose .x-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 2;
+}
+
+.doses-dose .x-button img {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+}
+
+.doses-dose h2 {
+    height: 75px;
+    width: 100%;
+    color: var(--red);
+    font-size: 28px;
+    text-align: center;
+    font-family: Roboto-Bold;
+    background-color: var(--background);
+    border-bottom: 1px solid white;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+}

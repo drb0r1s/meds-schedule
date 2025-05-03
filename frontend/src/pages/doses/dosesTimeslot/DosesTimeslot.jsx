@@ -1,14 +1,43 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./DosesTimeslot.css";
+import DosesDose from "../dosesDose/DosesDose";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
 const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimeslotModal }) => {
+    const [isDoseModalActive, setIsDoseModalActive] = useState(false);
+    
     const [time, doses] = timeslotDoses;
     const [year, month, day, weekDay, hour] = time.split("-");
+
+    const dosesDoseModalHolderRef = useRef(null);    
+    const dosesDoseModalRef = useRef(null);
+
+    useEffect(() => {
+        if(isDoseModalActive) setTimeout(() => {
+            dosesDoseModalHolderRef.current.id = "doses-dose-holder-active";
+            setTimeout(() => { dosesDoseModalRef.current.id = "doses-dose-active" }, 300);
+        }, 10);
+    }, [isDoseModalActive]);
+
+    function disableDosesDoseModal() {
+        dosesDoseModalRef.current.id = "";
+        
+        setTimeout(() => {
+            dosesDoseModalHolderRef.current.id = "";
+            setTimeout(() => setIsDoseModalActive(false), 300);
+        }, 300);
+    }
     
     return(
         <div className="doses-timeslot" ref={dosesTimeslotModalRef}>
+            {isDoseModalActive && <DosesDose
+                dose={isDoseModalActive}
+                dosesDoseModalHolderRef={dosesDoseModalHolderRef}
+                dosesDoseModalRef={dosesDoseModalRef}
+                disableDosesDoseModal={disableDosesDoseModal}
+            />}
+            
             <button
                 className="x-button"
                 onClick={disableDosesTimeslotModal}
@@ -25,6 +54,7 @@ const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimes
                         return <div
                             key={index}
                             className="dose"
+                            onClick={() => setIsDoseModalActive(dose)}
                         >
                             <img src={images.pillIcon} alt="PILL" />
 

@@ -2,6 +2,15 @@ const connection = require("./connection");
 
 const dataPool = {};
 
+dataPool.get = ({ dose_id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT m.*, dm.* FROM DoseMedication dm JOIN Medication m ON dm.medication_id = m.id WHERE dm.dose_id = ?", [dose_id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 dataPool.create = ({ dose_id, medications }) => {
     let questionmarks = "";
     const values = [];

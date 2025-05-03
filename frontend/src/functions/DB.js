@@ -80,6 +80,10 @@ export const DB = {
     },
 
     doseMedication: {
+        get: async dose_id => {
+            return await DB.postRequest(`${DB.URL}dose-medication/get`, { dose_id });
+        },
+        
         create: async value => {
             return await DB.postRequest(`${DB.URL}dose-medication/create`, value);
         }

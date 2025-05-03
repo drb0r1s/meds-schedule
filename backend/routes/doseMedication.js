@@ -4,6 +4,18 @@ const DB = require("../db/index");
 
 const doseMedication = express.Router();
 
+doseMedication.post("/get", async (req, res) => {
+    const { dose_id } = req.body;
+
+    try {
+        const queryResult = await DB.doseMedication.get({ dose_id });
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 doseMedication.post("/create", async (req, res) => {
     const { dose_id, medications } = req.body;
 
