@@ -3,7 +3,12 @@ export const ExtendedDate = {
     
     display: date => {
         const [year, month, day] = date.split("T")[0].split("-");
-        return `${day}.${month}.${year}`;
+        return `${day}.${month}.${year}.`;
+    },
+
+    displayDatetime: datetime => {
+        const { year, month, day, hours, minutes } = ExtendedDate.parseSQL(datetime);
+        return `${hours}:${minutes} ${day}.${month}.${year}.`;
     },
 
     parseSQL: string => {

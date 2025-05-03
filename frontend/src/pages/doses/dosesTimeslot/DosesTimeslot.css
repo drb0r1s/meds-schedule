@@ -53,3 +53,70 @@
     color: var(--red);
     font-family: Roboto-Bold;
 }
+
+.doses-timeslot .list {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.doses-timeslot .list strong {
+    color: grey;
+    font-size: 18px;
+    font-family: Roboto-Thin;
+    font-style: italic;
+}
+
+.doses-timeslot .list .dose {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.doses-timeslot .list .dose img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.doses-timeslot .list .dose-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.doses-timeslot .list .dose-info strong {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Regular;
+    font-style: normal;
+}
+
+.doses-timeslot .list .dose-info .dose-info-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.doses-timeslot .list .dose-info .dose-info-time p {
+    color: white;
+    font-size: 14px;
+    font-family: Roboto-Light;
+    margin: 0;
+}
+
+.doses-timeslot .list .dose-info .dose-info-time p:nth-child(2) {
+    color: var(--red);
+    font-family: Roboto-Bold;
+    text-transform: uppercase;
+}

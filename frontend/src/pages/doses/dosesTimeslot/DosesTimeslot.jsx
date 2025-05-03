@@ -6,8 +6,6 @@ import { images } from "../../../data/images";
 const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimeslotModal }) => {
     const [time, doses] = timeslotDoses;
     const [year, month, day, weekDay, hour] = time.split("-");
-
-    console.log(doses)
     
     return(
         <div className="doses-timeslot" ref={dosesTimeslotModalRef}>
@@ -16,9 +14,32 @@ const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimes
                 onClick={disableDosesTimeslotModal}
             ><img src={images.xIcon} alt="X" /></button>
 
-            <h2>Doses for <span>{hour}:00 {day}.{month}.{year}.</span></h2>
+            <h2>Doses for <span>{hour}:00 {day}.{parseInt(month) + 1}.{year}.</span></h2>
 
+            <div
+                className="list"
+                style={!doses.length ? { justifyContent: "center" } : {}}
+            >
+                {!doses.length ? <strong>There are no doses.</strong> : <>
+                    {doses.map((dose, index) => {
+                        return <div
+                            key={index}
+                            className="dose"
+                        >
+                            <img src={images.pillIcon} alt="PILL" />
 
+                            <div className="dose-info">
+                                <strong>{dose.name}</strong>
+                                
+                                <div className="dose-info-time">
+                                    <p>{ExtendedDate.displayDatetime(dose.time)}</p>
+                                    <p>{dose.status}</p>
+                                </div>
+                            </div>
+                        </div>;
+                    })}
+                </>}
+            </div>
         </div>
     );
 }
