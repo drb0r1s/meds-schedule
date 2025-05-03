@@ -15,7 +15,7 @@ dose.post("/create", async (req, res) => {
         schedule_id,
         name,
         description,
-        time: `${time.year}-${time.month > 10 ? time.month : `0${time.month}`}-${time.day > 10 ? time.day : `0${time.day}`} ${time.hours > 10 ? time.hours : `0${time.hours}`}:${time.minutes > 10 ? time.minutes : `0${time.minutes}`}:00`,
+        time: `${time.year}-${time.month >= 10 ? time.month : `0${time.month}`}-${time.day >= 10 ? time.day : `0${time.day}`} ${time.hours >= 10 ? time.hours : `0${time.hours}`}:${time.minutes >= 10 ? time.minutes : `0${time.minutes}`}:00`,
         status: "pending",
         color,
         created_at: ExtendedDate.now(),

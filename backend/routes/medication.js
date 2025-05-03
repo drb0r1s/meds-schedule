@@ -16,7 +16,7 @@ medication.post("/create", async (req, res) => {
         name,
         description,
         substance,
-        expiration_date: `${expirationDate.year}-${expirationDate.month > 10 ? expirationDate.month : `0${expirationDate.month}`}-${expirationDate.day > 10 ? expirationDate.day : `0${expirationDate.day}`}`,
+        expiration_date: `${expirationDate.year}-${expirationDate.month >= 10 ? expirationDate.month : `0${expirationDate.month}`}-${expirationDate.day >= 10 ? expirationDate.day : `0${expirationDate.day}`}`,
         amount,
         amount_unit: amountUnit,
         created_at: ExtendedDate.now(),

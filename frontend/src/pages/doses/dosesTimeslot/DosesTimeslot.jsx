@@ -14,7 +14,7 @@ const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimes
                 onClick={disableDosesTimeslotModal}
             ><img src={images.xIcon} alt="X" /></button>
 
-            <h2>Doses for <span>{hour}:00 {day}.{parseInt(month) + 1}.{year}.</span></h2>
+            <h2>Doses for <span>{hour >= 10 ? hour : `0${hour}`}:00 {day}.{parseInt(month) + 1}.{year}.</span></h2>
 
             <div
                 className="list"
