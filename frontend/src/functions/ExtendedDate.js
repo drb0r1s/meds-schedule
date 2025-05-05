@@ -7,17 +7,20 @@ export const ExtendedDate = {
     },
 
     displayDatetime: datetime => {
-        const { year, month, day, hours, minutes } = ExtendedDate.parseSQL(datetime);
+        const { year, month, day, hours, minutes } = ExtendedDate.parseTime(datetime);
         return `${hours}:${minutes} ${day}.${month}.${year}.`;
     },
 
-    parseSQL: string => {
-        const parsed = new Date(string).toISOString().slice(0, 19).replace("T", " ");
-        const [year, month, other] = parsed.split("-");
-        const [day, time] = other.split(" ");
-        const [hours, minutes] = time.split(":");
+    parseTime: string => {
+        const date = new Date(string);
+        
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
 
-        return { year: parseInt(year), month: parseInt(month), day: parseInt(day), hours: parseInt(hours), minutes: parseInt(minutes) };
+        return { year, month, day, hours, minutes };
     },
 
     isLeapYear

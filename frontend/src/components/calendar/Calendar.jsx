@@ -27,7 +27,7 @@ const Calendar = ({ time, doses, setModals }) => {
         const newDosesMatrix = Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => []));
         
         doses.forEach(dose => {
-            const doseTime = ExtendedDate.parseSQL(dose.time);
+            const doseTime = ExtendedDate.parseTime(dose.time);
             const doseTimeWeekDay = adjustDay(new Date(dose.time).getDay());
             
             for(let i = 0; i < 24; i++) {
@@ -146,7 +146,7 @@ const Calendar = ({ time, doses, setModals }) => {
                                 onClick={() => setModals(prevModals => { return {...prevModals, timeslot: [timeslotId, dosesMatrix[hourIndex][dayIndex]]} })}
                             >
                                 {doses.map((dose, index) => {
-                                    const doseTime = ExtendedDate.parseSQL(dose.time);
+                                    const doseTime = ExtendedDate.parseTime(dose.time);
                                     const doseTimeWeekDay = adjustDay(new Date(dose.time).getDay());
                                     
                                     if(
