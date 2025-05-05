@@ -4,7 +4,7 @@ const dataPool = {};
 
 dataPool.get = ({ dose_id }) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT m.*, dm.* FROM DoseMedication dm JOIN Medication m ON dm.medication_id = m.id WHERE dm.dose_id = ?", [dose_id], (err, res) => {
+        connection.query("SELECT m.id AS medication_id, m.family_id, m.name, m.description, m.substance, m.expiration_date, m.amount, m.amount_unit, dm.id, dm.dose_id, dm.amount AS amount_to_take FROM DoseMedication dm JOIN Medication m ON dm.medication_id = m.id WHERE dm.dose_id = ?", [dose_id], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });

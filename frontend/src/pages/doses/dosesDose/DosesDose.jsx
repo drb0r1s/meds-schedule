@@ -19,6 +19,10 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
 
         getDoseMedications();
     }, []);
+
+    async function handleTake() {
+        console.log(doseMedications)
+    }
     
     return(
         <div
@@ -54,7 +58,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                         })}
                     </div>
 
-                    <button>Take</button>
+                    <button onClick={handleTake}>Take</button>
                 </div>
             </div>
         </div>

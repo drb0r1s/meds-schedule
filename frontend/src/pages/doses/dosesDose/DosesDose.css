@@ -18,7 +18,7 @@
 }
 
 .doses-dose {
-    height: 50%;
+    height: 70vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@
     flex-direction: column;
     background-color: var(--background);
     position: relative;
-    top: 50%;
+    top: 70%;
     transition: 300ms;
 }
 
@@ -71,6 +71,7 @@
 }
 
 .doses-dose .medication-holder {
+    height: calc(70vh - 75px);
     width: 100%;
     display: flex;
     align-items: center;
@@ -85,15 +86,20 @@
     font-size: 18px;
     font-family: Roboto-Regular;
     padding-left: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed white;
 }
 
 .doses .medication-holder .list {
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
+    border-bottom: 1px solid white;
     padding: 20px;
+    overflow-y: auto;
 }
 
 .doses .medication-holder .list .medication {
@@ -151,8 +157,6 @@
     background-color: white;
     border: none;
     border-radius: 5px;
-    position: sticky;
-    bottom: 0;
-    margin-top: 30px;
-    padding: 5px 10px;
+    margin-top: 20px;
+    padding: 10px 15px;
 }
