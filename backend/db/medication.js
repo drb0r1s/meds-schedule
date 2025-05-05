@@ -27,4 +27,23 @@ dataPool.getSpecific = ({ family_id, names }) => {
     });
 }
 
+dataPool.decrease = ({ values }) => {
+    let cases = "";
+    const ids = [];
+
+    for(let i = 0; i < values.length; i++) {
+        cases += `WHEN ${values[i].medication_id} THEN ${values[i].amount_to_take} `;
+        ids.push(values[i].medication_id);
+    }
+
+    cases += "END";
+    
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE Medication SET amount = amount - CASE id ${cases} END WHERE id IN (${ids.join(",")})`, [], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;

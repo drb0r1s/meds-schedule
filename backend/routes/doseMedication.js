@@ -30,4 +30,21 @@ doseMedication.post("/create", async (req, res) => {
     }
 });
 
+doseMedication.post("/take", async (req, res) => {
+    const { values } = req.body;
+
+    try {
+        const doseQueryResult = await DB.dose.setStatusTaken({ values });
+        if(doseQueryResult.affectedRows) console.log("Rows have been updated in Dose table.");
+        
+        const medicationQueryResult = await DB.medication.decrease({ values });
+        if(medicationQueryResult.affectedRows) console.log("Rows have been updated in Medication table.");
+
+        res.status(200).json({ success: true });
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 module.exports = doseMedication;

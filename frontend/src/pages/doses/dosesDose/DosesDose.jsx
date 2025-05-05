@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./DosesDose.css";
 import Loading from "../../../components/loading/Loading";
+import Info from "../../../components/Info/Info";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
 const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [info, setInfo] = useState({ type: "", message: "" });
 
     useEffect(() => {
         const getDoseMedications = async () => {
@@ -20,8 +22,34 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         getDoseMedications();
     }, []);
 
+    function checkAmount() {
+        let status = false;
+
+        for(let i = 0; i < doseMedications.length; i++) {
+            if(doseMedications[i].amount < doseMedications[i].amount_to_take) {
+                status = true;
+                break;
+            }
+        }
+
+        return status;
+    }
+
     async function handleTake() {
-        console.log(doseMedications)
+        const isError = checkAmount();
+
+        if(isError) {
+            setInfo({ type: "error", message: "Not enough medications in the inventory." });
+            return;
+        }
+
+        setIsLoading(true);
+        const result = await DB.doseMedication.take(doseMedications);
+        setIsLoading(false);
+
+        if(result.message) return;
+
+        setInfo({ type: "success", message: `${dose.name} was marked as taken.` });
     }
     
     return(
@@ -32,6 +60,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         >
             <div className="doses-dose" ref={dosesDoseModalRef}>
                 {isLoading && <Loading />}
+                {info.message && <Info info={info} setInfo={setInfo} />}
                 
                 <button
                     className="x-button"
@@ -52,7 +81,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                                     <strong>{doseMedication.name}</strong>
                                     <span>{doseMedication.substance}</span>
 
-                                    <p>Amount to take: <span>{doseMedication.amount} {doseMedication.amount_unit}</span></p>
+                                    <p>Amount to take: <span>{doseMedication.amount_to_take} {doseMedication.amount_unit}</span></p>
                                 </div>
                             </div>;
                         })}

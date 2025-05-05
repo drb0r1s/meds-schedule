@@ -77,12 +77,6 @@ medication.post("/check-existence", async (req, res) => {
     }
 });
 
-medication.post("/decrease", async (req, res) => {
-    const { values } = req.body;
-
-    
-});
-
 const amountUnits = ["mg", "g", "mcg", "ml", "l", "pills", "capsules", "drops", "patches", "inhalations", "other"];
 
 function checkInputs(inputs, res) {
