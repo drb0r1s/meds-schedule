@@ -6,9 +6,9 @@ export const ExtendedDate = {
         return `${day}.${month}.${year}.`;
     },
 
-    displayDatetime: datetime => {
+    displayDatetime: (datetime, noDate = false) => {
         const { year, month, day, hours, minutes } = ExtendedDate.parseTime(datetime);
-        return `${hours}:${minutes} ${day}.${month}.${year}.`;
+        return `${leadingZero(hours)}:${leadingZero(minutes)}${noDate ? "" : ` ${leadingZero(day)}.${leadingZero(month)}.${year}.`}`;
     },
 
     parseTime: string => {
@@ -28,4 +28,9 @@ export const ExtendedDate = {
 
 function isLeapYear(year) {
     return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0);
+}
+
+function leadingZero(number) {
+    if(number >= 10) return number;
+    return `0${number}`;
 }

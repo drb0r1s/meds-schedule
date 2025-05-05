@@ -33,6 +33,8 @@ doseMedication.post("/create", async (req, res) => {
 doseMedication.post("/take", async (req, res) => {
     const { dose, doseMedications } = req.body;
 
+    if(dose.status !== "pending") return;
+
     try {
         const doseQueryResult = await DB.dose.setStatusTaken({ dose });
         if(doseQueryResult.affectedRows) console.log("Rows have been updated in Dose table.");

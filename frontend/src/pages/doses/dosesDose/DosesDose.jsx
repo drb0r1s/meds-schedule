@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./DosesDose.css";
 import Loading from "../../../components/loading/Loading";
-import Info from "../../../components/Info/Info";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal }) => {
+const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [info, setInfo] = useState({ type: "", message: "" });
 
     useEffect(() => {
         const getDoseMedications = async () => {
@@ -36,6 +34,8 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
     }
 
     async function handleTake() {
+        if(dose.status !== "pending") return;
+        
         const isError = checkAmount();
 
         if(isError) {
@@ -50,6 +50,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         if(result.message) return;
 
         setInfo({ type: "success", message: `${dose.name} was marked as taken.` });
+        disableDosesDoseModal();
     }
     
     return(
@@ -60,7 +61,6 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         >
             <div className="doses-dose" ref={dosesDoseModalRef}>
                 {isLoading && <Loading />}
-                {info.message && <Info info={info} setInfo={setInfo} />}
                 
                 <button
                     className="x-button"
@@ -87,7 +87,11 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                         })}
                     </div>
 
-                    <button onClick={handleTake}>Take</button>
+                    <button
+                        style={dose.status !== "pending" ? { opacity: .5 } : {}}
+                        disabled={dose.status !== "pending"}
+                        onClick={handleTake}
+                    >{dose.status === "pending" ? "Take" : dose.status === "taken" ? "Taken" : "Missed"}</button>
                 </div>
             </div>
         </div>
