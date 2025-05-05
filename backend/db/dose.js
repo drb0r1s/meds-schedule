@@ -11,12 +11,9 @@ dataPool.create = ({ schedule_id, name, description, time, status, color, create
     });
 }
 
-dataPool.setStatusTaken = ({ values }) => {
-    const ids = [];
-    for(let i = 0; i < values.length; i++) ids.push(values.dose_id);
-
+dataPool.setStatusTaken = ({ dose }) => {
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE Dose SET status = 'taken' WHERE id IN (${ids.join(",")})`, [], (err, res) => {
+        connection.query(`UPDATE Dose SET status = 'taken' WHERE id = ?`, [dose.id], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });

@@ -31,13 +31,13 @@ doseMedication.post("/create", async (req, res) => {
 });
 
 doseMedication.post("/take", async (req, res) => {
-    const { values } = req.body;
+    const { dose, doseMedications } = req.body;
 
     try {
-        const doseQueryResult = await DB.dose.setStatusTaken({ values });
+        const doseQueryResult = await DB.dose.setStatusTaken({ dose });
         if(doseQueryResult.affectedRows) console.log("Rows have been updated in Dose table.");
         
-        const medicationQueryResult = await DB.medication.decrease({ values });
+        const medicationQueryResult = await DB.medication.decrease({ doseMedications });
         if(medicationQueryResult.affectedRows) console.log("Rows have been updated in Medication table.");
 
         res.status(200).json({ success: true });

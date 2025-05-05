@@ -27,13 +27,13 @@ dataPool.getSpecific = ({ family_id, names }) => {
     });
 }
 
-dataPool.decrease = ({ values }) => {
+dataPool.decrease = ({ doseMedications }) => {
     let cases = "";
     const ids = [];
 
-    for(let i = 0; i < values.length; i++) {
-        cases += `WHEN ${values[i].medication_id} THEN ${values[i].amount_to_take} `;
-        ids.push(values[i].medication_id);
+    for(let i = 0; i < doseMedications.length; i++) {
+        cases += `WHEN ${doseMedications[i].medication_id} THEN ${doseMedications[i].amount_to_take} `;
+        ids.push(doseMedications[i].medication_id);
     }
 
     cases += "END";

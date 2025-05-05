@@ -88,8 +88,8 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}dose-medication/create`, value);
         },
 
-        take: async values => {
-            return await DB.postRequest(`${DB.URL}dose-medication/take`, values);
+        take: async (dose, doseMedications) => {
+            return await DB.postRequest(`${DB.URL}dose-medication/take`, { dose, doseMedications });
         }
     }
 };

@@ -44,7 +44,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         }
 
         setIsLoading(true);
-        const result = await DB.doseMedication.take(doseMedications);
+        const result = await DB.doseMedication.take(dose, doseMedications);
         setIsLoading(false);
 
         if(result.message) return;
