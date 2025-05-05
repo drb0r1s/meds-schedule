@@ -39,7 +39,7 @@ dataPool.decrease = ({ values }) => {
     cases += "END";
     
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE Medication SET amount = amount - CASE id ${cases} END WHERE id IN (${ids.join(",")})`, [], (err, res) => {
+        connection.query(`UPDATE Medication SET amount = amount - CASE id ${cases} WHERE id IN (${ids.join(",")})`, [], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });
