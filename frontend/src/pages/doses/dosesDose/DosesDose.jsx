@@ -4,7 +4,7 @@ import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo }) => {
+const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -44,10 +44,16 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         }
 
         setIsLoading(true);
-        const result = await DB.doseMedication.take(dose, doseMedications);
+
+        const doseMedicationResult = await DB.doseMedication.take(dose, doseMedications);
+        if(doseMedicationResult.message) return;
+
+        const doseResult = await DB.schedule.getDoses(dose.schedule_id);
+        if(doseResult.message) return;
+
         setIsLoading(false);
 
-        if(result.message) return;
+        setDoses(doseResult);
 
         setInfo({ type: "success", message: `${dose.name} was marked as taken.` });
         disableDosesDoseModal();

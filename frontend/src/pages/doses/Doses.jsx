@@ -21,6 +21,7 @@ const Doses = () => {
     const [weekDistance, setWeekDistance] = useState(0);
     const [modals, setModals] = useState({ create: false, timeslot: false });
     const [info, setInfo] = useState({ type: "", message: "" });
+    const [dosesMatrix, setDosesMatrix] = useState(Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => [])));
 
     const dosesCreateModalRef = useRef(null);
     const dosesTimeslotModalRef = useRef(null);
@@ -98,16 +99,25 @@ const Doses = () => {
                 />}
 
                 {modals.timeslot && <DosesTimeslot
-                    timeslotDoses={modals.timeslot}
+                    timeslot={modals.timeslot}
                     dosesTimeslotModalRef={dosesTimeslotModalRef}
                     disableDosesTimeslotModal={disableDosesTimeslotModal}
+                    setDoses={setDoses}
+                    dosesMatrix={dosesMatrix}
                 />}
 
                 {info.message && <Info info={info} setInfo={setInfo} />}
                 
                 <div className="calendar-holder">
                     {dosesLoading && <Loading />}
-                    <Calendar time={getWeek(weekDistance)} doses={doses} setModals={setModals} />
+                    
+                    <Calendar
+                        time={getWeek(weekDistance)}
+                        doses={doses}
+                        setModals={setModals}
+                        setDosesMatrix={setDosesMatrix}
+                        weekDistance={weekDistance}
+                    />
                 </div>
                 
                 <div className="menu">

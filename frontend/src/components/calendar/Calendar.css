@@ -98,3 +98,7 @@
     border: none;
     position: absolute;
 }
+
+.calendar .timeslots-holder .timeslots .dose-taken {
+    opacity: .3;
+}

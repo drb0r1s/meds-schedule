@@ -5,15 +5,20 @@ import DosesDose from "../dosesDose/DosesDose";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimeslotModal }) => {
+const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotModal, setDoses, dosesMatrix }) => {
+    const [id, coordinates] = timeslot;
+    const [year, month, day, weekDay, hour] = id.split("-");
+    
+    const [timeslotDoses, setTimeslotDoses] = useState(dosesMatrix[coordinates.y][coordinates.x]);
     const [isDoseModalActive, setIsDoseModalActive] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
-    
-    const [time, doses] = timeslotDoses;
-    const [year, month, day, weekDay, hour] = time.split("-");
 
     const dosesDoseModalHolderRef = useRef(null);    
     const dosesDoseModalRef = useRef(null);
+
+    useEffect(() => {
+        setTimeslotDoses(dosesMatrix[coordinates.y][coordinates.x])
+    }, [dosesMatrix]);
 
     useEffect(() => {
         if(isDoseModalActive) setTimeout(() => {
@@ -41,6 +46,7 @@ const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimes
                 dosesDoseModalRef={dosesDoseModalRef}
                 disableDosesDoseModal={disableDosesDoseModal}
                 setInfo={setInfo}
+                setDoses={setDoses}
             />}
             
             <button
@@ -52,10 +58,10 @@ const DosesTimeslot = ({ timeslotDoses, dosesTimeslotModalRef, disableDosesTimes
 
             <div
                 className="list"
-                style={!doses.length ? { justifyContent: "center" } : {}}
+                style={!timeslotDoses.length ? { justifyContent: "center" } : {}}
             >
-                {!doses.length ? <strong>There are no doses.</strong> : <>
-                    {doses.map((dose, index) => {
+                {!timeslotDoses.length ? <strong>There are no doses.</strong> : <>
+                    {timeslotDoses.map((dose, index) => {
                         return <div
                             key={index}
                             className="dose"

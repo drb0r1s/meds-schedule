@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Calendar.css";
 import { ExtendedDate } from "../../functions/ExtendedDate";
 import { images } from "../../data/images";
 
-const Calendar = ({ time, doses, setModals }) => {
-    const [dosesMatrix, setDosesMatrix] = useState(Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => [])));
-    
+const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance }) => {
     const date = time ? new Date(time) : new Date();
 
     const calendar = {
@@ -23,7 +21,7 @@ const Calendar = ({ time, doses, setModals }) => {
 
     useEffect(() => {
         if(!doses) return;
-
+    
         const newDosesMatrix = Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => []));
         
         doses.forEach(dose => {
@@ -45,7 +43,7 @@ const Calendar = ({ time, doses, setModals }) => {
         });
 
         setDosesMatrix(newDosesMatrix);
-    }, [time]);
+    }, [weekDistance, doses]);
 
     function getDates() {
         const week = new Array(7);
@@ -143,7 +141,7 @@ const Calendar = ({ time, doses, setModals }) => {
                                 key={timeslotId}
                                 className={`timeslot ${isToday(timeslotId) ? "timeslot-today" : ""}`}
                                 id={timeslotId}
-                                onClick={() => setModals(prevModals => { return {...prevModals, timeslot: [timeslotId, dosesMatrix[hourIndex][dayIndex]]} })}
+                                onClick={() => setModals(prevModals => { return {...prevModals, timeslot: [timeslotId, { y: hourIndex, x: dayIndex }]} })}
                             >
                                 {doses.map((dose, index) => {
                                     const doseTime = ExtendedDate.parseTime(dose.time);
@@ -157,7 +155,7 @@ const Calendar = ({ time, doses, setModals }) => {
                                         doseTime.hours === hourIndex
                                     ) return <div
                                         key={index}
-                                        className="dose"
+                                        className={`dose ${dose.status === "taken" ? "dose-taken" : ""}`}
                                     >{dose.name}</div>;
 
                                     return <React.Fragment key={index}></React.Fragment>;
