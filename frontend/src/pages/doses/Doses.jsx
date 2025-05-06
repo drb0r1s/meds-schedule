@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router";
 import "./Doses.css";
 import DosesCreate from "./dosesCreate/DosesCreate";
 import DosesTimeslot from "./dosesTimeslot/DosesTimeslot";
+import DosesSchedule from "./dosesSchedule/DosesSchedule";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Calendar from "../../components/calendar/Calendar";
@@ -19,12 +20,13 @@ const Doses = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [dosesLoading, setDosesLoading] = useState(true);
     const [weekDistance, setWeekDistance] = useState(0);
-    const [modals, setModals] = useState({ create: false, timeslot: false });
+    const [modals, setModals] = useState({ create: false, timeslot: false, schedule: false });
     const [info, setInfo] = useState({ type: "", message: "" });
     const [dosesMatrix, setDosesMatrix] = useState(Array.from({ length: 24 }, () => Array.from({ length: 7 }, () => [])));
 
     const dosesCreateModalRef = useRef(null);
     const dosesTimeslotModalRef = useRef(null);
+    const dosesScheduleModalRef = useRef(null);
 
     const scheduleId = dosesURL.split("-")[dosesURL.split("-").length - 1];
 
@@ -69,6 +71,10 @@ const Doses = () => {
         if(modals.timeslot) setTimeout(() => { dosesTimeslotModalRef.current.id = "doses-timeslot-active" }, 10);
     }, [modals.timeslot]);
 
+    useEffect(() => {
+        if(modals.schedule) setTimeout(() => { dosesScheduleModalRef.current.id = "doses-schedule-active" }, 10);
+    }, [modals.schedule]);
+
     function disableDosesCreateModal() {
         dosesCreateModalRef.current.id = "";
         setTimeout(() => setModals({...modals, create: false}), 300);
@@ -77,6 +83,11 @@ const Doses = () => {
     function disableDosesTimeslotModal() {
         dosesTimeslotModalRef.current.id = "";
         setTimeout(() => setModals({...modals, timeslot: false}), 300);
+    }
+
+    function disableDosesScheduleModal() {
+        dosesScheduleModalRef.current.id = "";
+        setTimeout(() => setModals({...modals, schedule: false}), 300);
     }
 
     function getWeek(distance) {
@@ -106,6 +117,12 @@ const Doses = () => {
                     dosesMatrix={dosesMatrix}
                 />}
 
+                {modals.schedule && <DosesSchedule
+                    schedule={schedule}
+                    dosesScheduleModalRef={dosesScheduleModalRef}
+                    disableDosesScheduleModal={disableDosesScheduleModal}
+                />}
+
                 {info.message && <Info info={info} setInfo={setInfo} />}
                 
                 <div className="calendar-holder">
@@ -121,7 +138,7 @@ const Doses = () => {
                 </div>
                 
                 <div className="menu">
-                    <h2>{schedule.name}</h2>
+                    <h2 onClick={() => setModals({...modals, schedule: true})}>{schedule.name}</h2>
 
                     <div className="center-group">
                         <button onClick={() => setWeekDistance(weekDistance - 1)}><img src={images.arrowUpIcon} alt="UP" /></button>

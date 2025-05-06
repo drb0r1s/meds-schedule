@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./DosesDose.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
+import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
 const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
@@ -67,13 +68,29 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         >
             <div className="doses-dose" ref={dosesDoseModalRef}>
                 {isLoading && <Loading />}
-                
-                <button
-                    className="x-button"
-                    onClick={disableDosesDoseModal}
-                ><img src={images.xIcon} alt="X" /></button>
 
-                <h2>{dose.name}</h2>
+                <div className="title-holder">
+                    <button
+                        className="x-button"
+                        onClick={disableDosesDoseModal}
+                    ><img src={images.xIcon} alt="X" /></button>
+                    
+                    <div
+                        className="color-holder"
+                        style={dose.color ? { backgroundColor: dose.color }: {}}
+                    >
+                        <img src={images.pillIcon} alt="PILL" />
+                    </div>
+                
+                    <h2>{dose.name}</h2>
+                </div>
+
+                <div className="info-holder">
+                    {!dose.description ? <strong>This dose doesn't have description.</strong> : <p>{dose.description}</p>}
+                
+                    <p>Created at: <span>{ExtendedDate.displayDatetime(dose.created_at)}</span></p>
+                    {(dose.created_at !== dose.updated_at) && <p>Last update: <span>{ExtendedDate.displayDatetime(dose.updated_at)}</span></p>}
+                </div>
 
                 <div className="medication-holder">
                     <h3>Your medication{doseMedications.length > 1 ? "s" : ""}:</h3>
@@ -94,10 +111,22 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                     </div>
 
                     <button
-                        style={dose.status !== "pending" ? { opacity: .5 } : {}}
+                        style={dose.status !== "pending" ? { opacity: .5, position: "static" } : {}}
                         disabled={dose.status !== "pending"}
                         onClick={handleTake}
                     >{dose.status === "pending" ? "Take" : dose.status === "taken" ? "Taken" : "Missed"}</button>
+                </div>
+
+                <div className="menu">
+                    <button>
+                        <img src={images.penIcon} alt="EDIT" />
+                        <span>Edit</span>
+                    </button>
+                        
+                    <button>
+                        <img src={images.deleteIcon} alt="DELETE" />
+                        <span>Delete</span>
+                    </button>
                 </div>
             </div>
         </div>

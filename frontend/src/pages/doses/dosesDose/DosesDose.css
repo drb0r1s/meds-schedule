@@ -28,6 +28,7 @@
     position: relative;
     top: 70%;
     transition: 300ms;
+    overflow-y: auto;
 }
 
 #doses-dose-active {
@@ -38,7 +39,21 @@
     height: 70%;
 }
 
-.doses-dose .x-button {
+.doses-dose .title-holder {
+    height: 75px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: var(--background);
+    border-bottom: 1px solid white;
+    position: sticky;
+    top: 0;
+    padding: 10px 0;
+}
+
+.doses-dose .title-holder .x-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,33 +65,74 @@
     z-index: 2;
 }
 
-.doses-dose .x-button img {
+.doses-dose .title-holder .x-button img {
     height: 25px;
     width: 25px;
     object-fit: contain;
 }
 
-.doses-dose h2 {
-    height: 75px;
+.doses-dose .title-holder .color-holder {
+    height: 55px;
+    width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--red);
+    border-radius: 50%;
+}
+
+.doses-dose .title-holder .color-holder img {
+    height: 35px;
+    width: 35px;
+    object-fit: contain;
+}
+
+.doses-dose .title-holder h2 {
+    height: auto;
+    width: auto;
+    color: white;
+    font-size: 32px;
+    font-family: Roboto-Regular;
+    border: none;
+    padding: 0;
+}
+
+.doses-dose .info-holder {
     width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 20px;
+}
+
+.doses-dose .info-holder strong {
+    color: grey;
+    font-size: 18px;
+    font-family: Roboto-Thin;
+    font-style: italic;
+}
+
+.doses-dose .info-holder p {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Light;
+    margin: 0;
+}
+
+.doses-dose .info-holder p span {
     color: var(--red);
-    font-size: 28px;
-    text-align: center;
-    font-family: Roboto-Bold;
-    background-color: var(--background);
-    border-bottom: 1px solid white;
-    position: sticky;
-    top: 0;
-    padding: 20px;
+    font-family: Roboto-Medium;
 }
 
 .doses-dose .medication-holder {
-    height: calc(70vh - 75px);
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    flex-grow: 1;
     padding: 20px 0;
 }
 
@@ -90,19 +146,17 @@
     border-bottom: 1px dashed white;
 }
 
-.doses .medication-holder .list {
-    height: 100%;
+.doses-dose .medication-holder .list {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    border-bottom: 1px solid white;
+    border-bottom: 1px dashed white;
     padding: 20px;
-    overflow-y: auto;
 }
 
-.doses .medication-holder .list .medication {
+.doses-dose .medication-holder .list .medication {
     width: 100%;
     display: flex;
     align-items: center;
@@ -110,13 +164,13 @@
     gap: 10px;
 }
 
-.doses .medication-holder .list .medication img {
+.doses-dose .medication-holder .list .medication img {
     height: 40px;
     width: 40px;
     object-fit: contain;
 }
 
-.doses .medication-holder .list .medication .medication-info {
+.doses-dose .medication-holder .list .medication .medication-info {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -124,33 +178,33 @@
     gap: 5px;
 }
 
-.doses .medication-holder .list .medication .medication-info strong {
+.doses-dose .medication-holder .list .medication .medication-info strong {
     color: white;
     font-size: 18px;
     font-family: Roboto-Regular;
     font-style: normal;
 }
 
-.doses .medication-holder .list .medication .medication-info span {
+.doses-dose .medication-holder .list .medication .medication-info span {
     color: var(--red);
     font-size: 14px;
     font-family: Roboto-Light;
     font-style: italic;
 }
 
-.doses .medication-holder .list .medication .medication-info p {
+.doses-dose .medication-holder .list .medication .medication-info p {
     color: white;
     font-size: 15px;
     font-family: Roboto-Regular;
     margin: 0;
 }
 
-.doses .medication-holder .list .medication .medication-info p span {
+.doses-dose .medication-holder .list .medication .medication-info p span {
     font-size: 14px;
     font-style: normal;
 }
 
-.doses .medication-holder button {
+.doses-dose .medication-holder button {
     color: var(--red);
     font-size: 20px;
     font-family: Roboto-Bold;
@@ -158,5 +212,43 @@
     border: none;
     border-radius: 5px;
     margin-top: 20px;
+    position: sticky;
+    bottom: 10px;
     padding: 10px 15px;
+}
+
+.doses-dose .menu {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+
+.doses-dose .menu button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    background-color: transparent;
+    border: none;
+}
+
+.doses-dose .menu button img {
+    height: 35px;
+    width: 35px;
+    object-fit: contain;
+}
+
+.doses-dose .menu button span {
+    color: white;
+    font-size: 20px;
+    font-family: Roboto-Light;
+}
+
+.doses-dose .menu button:nth-child(2) span {
+    color: var(--red);
 }
