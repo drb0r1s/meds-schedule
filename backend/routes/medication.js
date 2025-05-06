@@ -93,7 +93,7 @@ function checkInputs(inputs, res) {
     else if(parseInt(inputs.expirationDate.month) < 1 || parseInt(inputs.expirationDate.month) > 12) return error(res, { message: "Month is invalid." });
     else if(parseInt(inputs.expirationDate.day) < 1 || parseInt(inputs.expirationDate.day) > 31 || parseInt(inputs.expirationDate.day) > ExtendedDate.monthLengths[parseInt(inputs.expirationDate.month) - 1]) return error(res, { message: "Day is invalid." });
     else if(parseInt(inputs.expirationDate.year) < new Date().getFullYear() || parseInt(inputs.expirationDate.year) > new Date().getFullYear() + 10) return error(res, { message: "Year is invalid." });
-    else if(isNaN(parseInt(inputs.amount)) || parseInt(inputs.amount) < 0 || parseInt(inputs.amount) > 100000) return error(res, { message: "Amount is invalid." });
+    else if(isNaN(parseInt(inputs.amount)) || parseInt(inputs.amount) <= 0 || parseInt(inputs.amount) > 100000) return error(res, { message: "Amount is invalid." });
     else if(amountUnits.indexOf(inputs.amountUnit) === -1) return error(res, { message: "Amount unit is invalid." });
 
     return false;

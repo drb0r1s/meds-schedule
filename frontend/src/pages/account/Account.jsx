@@ -7,6 +7,7 @@ import AccountRegister from "./AccountRegister";
 import Info from "../../components/Info/Info";
 import Loading from "../../components/loading/Loading";
 import { DB } from "../../functions/DB";
+import { CheckInputs } from "../../functions/CheckInputs";
 
 const Account = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -21,49 +22,8 @@ const Account = () => {
         setInputs({ name: "", password: "", repeatPassword: "" });
     }
 
-    function checkInputs() {
-        if(!inputs.name.length) {
-            setInfo({ type: "error", message: "Name field is empty." });
-            return true;
-        }
-
-        else if(!inputs.password.length) {
-            setInfo({ type: "error", message: "Password field is empty." });
-            return true;
-        }
-
-        else if(inputs.name.length < 3 || inputs.name.length > 64) {
-            setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
-            return true;
-        }
-
-        else if(inputs.password.length < 8 || inputs.password.length > 64) {
-            setInfo({ type: "error", message: "Password length should be greater than 7 or less than 64!" });
-            return true;
-        }
-    
-        if(!isLogin) {
-            if(!inputs.repeatPassword.length) {
-                setInfo({ type: "error", message: "Repeat password field is empty." });
-                return true;
-            }
-
-            else if(inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64) {
-                setInfo({ type: "error", message: "Confirmation password length should be greater than 7 or less than 64!" });
-                return true;
-            }
-
-            else if(inputs.password !== inputs.repeatPassword) {
-                setInfo({ type: "error", message: "Password and confirmation password don't match!" });
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     async function handleContinue() {
-        const isError = checkInputs();
+        const isError = CheckInputs.family(inputs, setInfo, isLogin);
         if(isError) return;
         
         if(isLogin) {

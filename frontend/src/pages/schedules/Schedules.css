@@ -9,6 +9,10 @@
     overflow-y: hidden;
 }
 
+.schedules .info {
+    z-index: 4;
+}
+
 .schedules h2 {
     width: 100%;
     color: white;

@@ -56,7 +56,7 @@ function checkInputs(inputs, res) {
                 inputs.medication[i].name.length < 3 ||
                 inputs.medication[i].name.length > 64 ||
                 isNaN(parseInt(inputs.medication[i].amount)) ||
-                parseInt(inputs.medication[i].amount) < 0 ||
+                parseInt(inputs.medication[i].amount) <= 0 ||
                 parseInt(inputs.medication[i].amount) > 100000 ||
                 amountUnits.indexOf(inputs.medication[i].amountUnit) === -1
             ) return true;

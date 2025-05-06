@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./SchedulesInventoryCreate.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
-import { ExtendedDate } from "../../../functions/ExtendedDate";
+import { CheckInputs } from "../../../functions/CheckInputs";
 import { images } from "../../../data/images";
 
 const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, setInfo, setMedications }) => {
@@ -10,88 +10,9 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
     const [isLoading, setIsLoading] = useState(false);
 
     const amountUnits = ["mg", "g", "mcg", "ml", "l", "pills", "capsules", "drops", "patches", "inhalations", "other"];
-
-    function checkInputs() {
-        if(!inputs.name.length) {
-            setInfo({ type: "error", message: "Name field is empty." });
-            return true;
-        }
-
-        else if(!inputs.substance.length) {
-            setInfo({ type: "error", message: "Substance field is empty." });
-            return true;
-        }
-
-        else if(!inputs.expirationDate.day.length) {
-            setInfo({ type: "error", message: "Day field is empty." });
-            return true;
-        }
-
-        else if(!inputs.expirationDate.month.length) {
-            setInfo({ type: "error", message: "Month field is empty." });
-            return true;
-        }
-
-        else if(!inputs.expirationDate.year.length) {
-            setInfo({ type: "error", message: "Year field is empty." });
-            return true;
-        }
-
-        else if(!inputs.amount.length) {
-            setInfo({ type: "error", message: "Amount field is empty." });
-            return true;
-        }
-
-        else if(!inputs.amountUnit.length) {
-            setInfo({ type: "error", message: "Amount unit field is empty." });
-            return true;
-        }
-
-        else if(inputs.name.length < 3 || inputs.name.length > 64) {
-            setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
-            return true;
-        }
-
-        else if(inputs.substance.length < 3 || inputs.substance.length > 64) {
-            setInfo({ type: "error", message: "Substance name length should be greater than 2 or less than 64!" });
-            return true;
-        }
-
-        else if(isNaN(parseInt(inputs.expirationDate.day)) || isNaN(parseInt(inputs.expirationDate.month)) || isNaN(parseInt(inputs.expirationDate.year))) {
-            setInfo({ type: "error", message: "Expiration date is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.expirationDate.month) < 1 || parseInt(inputs.expirationDate.month) > 12) {
-            setInfo({ type: "error", message: "Month is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.expirationDate.day) < 1 || parseInt(inputs.expirationDate.day) > 31 || parseInt(inputs.expirationDate.day) > ExtendedDate.monthLengths[parseInt(inputs.expirationDate.month) - 1]) {
-            setInfo({ type: "error", message: "Day is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.expirationDate.year) < new Date().getFullYear() || parseInt(inputs.expirationDate.year) > new Date().getFullYear() + 10) {
-            setInfo({ type: "error", message: "Year is invalid." });
-            return true;
-        }
-
-        else if(isNaN(parseInt(inputs.amount)) || parseInt(inputs.amount) < 0 || parseInt(inputs.amount) > 100000) {
-            setInfo({ type: "error", message: "Amount is invalid." });
-            return true;
-        }
-
-        else if(amountUnits.indexOf(inputs.amountUnit) === -1) {
-            setInfo({ type: "error", message: "Amount unit is invalid." });
-            return true;
-        }
-
-        return false;
-    }
     
     async function handleCreate() {
-        const isError = checkInputs();
+        const isError = CheckInputs.medication(inputs, setInfo);
         if(isError) return;
 
         setIsLoading(true);

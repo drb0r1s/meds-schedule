@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./DosesCreate.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
-import { ExtendedDate } from "../../../functions/ExtendedDate";
+import { CheckInputs } from "../../../functions/CheckInputs";
 import { images } from "../../../data/images";
 
 const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, setInfo, setDoses }) => {
@@ -25,88 +25,9 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         setInputs({...inputs, medication: [...nonEmptyInputs, { name: "", amount: "", amountUnit: "" }]});
         setNumberOfMedications(nonEmptyInputs.length + 1);
     }
-
-    function checkInputs() {
-        if(!inputs.name.length) {
-            setInfo({ type: "error", message: "Name field is empty." });
-            return true;
-        }
-
-        else if(!inputs.time.hours.length) {
-            setInfo({ type: "error", message: "Hours field is empty." });
-            return true;
-        }
-        
-        else if(!inputs.time.minutes.length) {
-            setInfo({ type: "error", message: "Minutes field is empty." });
-            return true;
-        }
-
-        else if(!inputs.medication[0].name.length) {
-            setInfo({ type: "error", message: "Medication field is empty." });
-            return true;
-        }
-
-        else if(inputs.name.length < 3 || inputs.name.length > 64) {
-            setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
-            return true;
-        }
-
-        else if(checkMedicationInputs()) {
-            setInfo({ type: "error", message: "Medications are invalid." });
-            return true;
-        }
-
-        else if(isNaN(parseInt(inputs.time.hours)) || isNaN(parseInt(inputs.time.minutes)) || isNaN(parseInt(inputs.time.day)) || isNaN(parseInt(inputs.time.month)) || isNaN(parseInt(inputs.time.year))) {
-            setInfo({ type: "error", message: "Time is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.time.hours) < 0 || parseInt(inputs.time.hours) > 23) {
-            setInfo({ type: "error", message: "Hours field is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.time.minutes) < 0 || parseInt(inputs.time.minutes) > 59) {
-            setInfo({ type: "error", message: "Minutes field is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.time.month) < 1 || parseInt(inputs.time.month) > 12) {
-            setInfo({ type: "error", message: "Month is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.time.day) < 1 || parseInt(inputs.time.day) > 31 || parseInt(inputs.time.day) > ExtendedDate.monthLengths[parseInt(inputs.time.month) - 1]) {
-            setInfo({ type: "error", message: "Day is invalid." });
-            return true;
-        }
-
-        else if(parseInt(inputs.time.year) < new Date().getFullYear() || parseInt(inputs.time.year) > new Date().getFullYear() + 10) {
-            setInfo({ type: "error", message: "Year is invalid." });
-            return true;
-        }
-
-        return false;
-    }
-
-    function checkMedicationInputs() {
-        for(let i = 0; i < inputs.medication.length - 1; i++) {
-            if(
-                inputs.medication[i].name.length < 3 ||
-                inputs.medication[i].name.length > 64 ||
-                isNaN(parseInt(inputs.medication[i].amount)) ||
-                parseInt(inputs.medication[i].amount) < 0 ||
-                parseInt(inputs.medication[i].amount) > 100000 ||
-                amountUnits.indexOf(inputs.medication[i].amountUnit) === -1
-            ) return true;
-        }
-
-        return false;
-    }
     
     async function handleCreate() {
-        const isError = checkInputs();
+        const isError = CheckInputs.dose(inputs, setInfo);
         if(isError) return;
 
         setIsLoading(true);

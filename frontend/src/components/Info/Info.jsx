@@ -25,7 +25,7 @@ const Info = ({ info, setInfo }) => {
         infoRef.current.id = "";
         clearInterval(interval);
 
-        setInfo({ type: "", message: "" });
+        setTimeout(() => setInfo({ type: "", message: "" }), 300);
     }
     
     return(

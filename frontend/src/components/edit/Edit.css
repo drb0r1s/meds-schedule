@@ -1,29 +1,23 @@
-.schedules-create {
+.edit {
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 40px;
     background-color: var(--background);
     position: fixed;
     left: -100vw;
     transition: 300ms;
     overflow-y: hidden;
-    z-index: 2;
+    z-index: 3;
 }
 
-#schedules-create-active {
+#edit-active {
     left: 0;
 }
 
-.schedules-create .loading-holder {
-    position: fixed;
-    z-index: 2;
-}
-
-.schedules-create .x-button {
+.edit .x-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,13 +29,13 @@
     z-index: 2;
 }
 
-.schedules-create .x-button img {
+.edit .x-button img {
     height: 25px;
     width: 25px;
     object-fit: contain;
 }
 
-.schedules-create h2 {
+.edit h2 {
     height: 75px;
     width: 100%;
     color: white;
@@ -55,21 +49,21 @@
     padding: 20px;
 }
 
-.schedules-create h2 span {
+.edit h2 span {
     color: var(--red);
     font-family: Roboto-Bold;
 }
 
-.schedules-create form {
+.edit form {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 30px;
-    margin-top: 30px;
+    padding: 20px 0;
 }
 
-.schedules-create form .form-color {
+.edit form .form-color {
     height: 90px;
     width: 90px;
     display: flex;
@@ -78,7 +72,7 @@
     position: relative;
 }
 
-.schedules-create form .form-color .background {
+.edit form .form-color .background {
     height: 100%;
     width: 100%;
     display: flex;
@@ -88,28 +82,20 @@
     border-radius: 50%;
 }
 
-.schedules-create form .form-color .background img {
+.edit form .form-color .background img {
     height: 55px;
     width: 55px;
     object-fit: contain;
 }
 
-.schedules-create form .form-color input {
+.edit form .form-color input {
     height: 100%;
     width: 100%;
     position: absolute;
     opacity: 0;
 }
 
-.schedules-create form .form-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.schedules-create form .form-info fieldset {
+.edit form fieldset {
     width: 100%;
     display: flex;
     align-items: center;
@@ -117,8 +103,16 @@
     border: none;
 }
 
-.schedules-create form .form-info fieldset input,
-.schedules-create form .form-info fieldset textarea {
+.edit form .password-input {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit form fieldset input,
+.edit form fieldset textarea,
+.edit form fieldset select {
+    width: 100%;
     color: white;
     font-size: 18px;
     font-family: Roboto-Light;
@@ -127,29 +121,59 @@
     outline: none;
     border-bottom: 1px solid grey;
     padding: 10px 15px;
+    transition: 300ms;
 }
 
-.schedules-create form .form-info fieldset textarea {
+.edit form .time-inputs,
+.edit form .medication-inputs {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.edit form .time-inputs .time-inputs-first,
+.edit form .time-inputs .time-inputs-second {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.edit form .time-inputs input {
+    text-align: center;
+}
+
+.edit form .time-inputs .time-inputs-first span {
+    color: white;
+    font-size: 20px;
+}
+
+.edit form .time-inputs .time-inputs-second input:nth-child(1),
+.edit form .time-inputs .time-inputs-second input:nth-child(2) {
+    width: 50%;
+}
+
+.edit form fieldset textarea {
     width: 100%;
     resize: none;
 }
 
-.schedules-create form .form-info fieldset input:focus,
-.schedules-create form .form-info fieldset textarea:focus {
+.edit form fieldset input:focus,
+.edit form fieldset textarea:focus {
     border-bottom: 1px solid white;
 }
 
-.schedules-create form .form-info fieldset input::placeholder,
-.schedules-create form .form-info fieldset textarea::placeholder {
+.edit form fieldset input::placeholder,
+.edit form fieldset textarea::placeholder {
     font-family: Roboto-Light;
 }
 
-.schedules-create .create-button {
+.edit .edit-button {
     color: white;
     font-size: 15px;
     background-color: var(--red);
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
-    margin-top: 20px;
+    margin-top: 30px;
 }

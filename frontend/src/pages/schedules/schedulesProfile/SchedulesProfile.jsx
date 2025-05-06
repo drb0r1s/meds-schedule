@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./SchedulesProfile.css";
+import Edit from "../../../components/edit/Edit";
 import { images } from "../../../data/images";
 
 const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disableProfileModal }) => {
+    const [isEditModalActive, setIsEditModalActive] = useState(false);
+    const editModalRef = useRef(null);
+    
     const navigate = useNavigate();
     
     const buttons = {
@@ -16,12 +20,23 @@ const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disa
         second: [images.penIcon, images.signOutIcon]
     };
 
+    useEffect(() => {
+        if(isEditModalActive) setTimeout(() => { editModalRef.current.id = "edit-active" });
+    }, [isEditModalActive]);
+
+    function disableEditModal() {
+        editModalRef.current.id = "";
+        setTimeout(() => setIsEditModalActive(false), 300);
+    }
+
     function handleButton(button) {
         switch(button) {
             case "inventory": break;
             case "notifications": break;
             case "history": break;
-            case "edit": break;
+            case "edit":
+                setIsEditModalActive(true);
+                break;
             case "sign out":
                 localStorage.removeItem("token");
                 navigate("/");
@@ -39,6 +54,13 @@ const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disa
                 if(e.target.classList.contains("schedules-profile-holder")) disableProfileModal();
             }}
         >
+            {isEditModalActive && <Edit
+                type="Family"
+                editModalRef={editModalRef}
+                disableEditModal={disableEditModal}
+                values={family}
+            />}
+            
             <div className="schedules-profile" ref={profileModalRef}>
                 <div
                     className="background"

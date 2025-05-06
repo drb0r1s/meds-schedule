@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./SchedulesCreate.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
+import { CheckInputs } from "../../../functions/CheckInputs";
 import { images } from "../../../data/images";
 
 const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedules, setInfo }) => {
@@ -9,16 +10,17 @@ const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedu
     const [isLoading, setIsLoading] = useState(false);
 
     async function handleCreate() {
+        const isError = CheckInputs.schedule(inputs, setInfo);
+        if(isError) return;
+        
         setIsLoading(true);
         const result = await DB.schedule.create({ family_id: family.id, ...inputs });
         setIsLoading(false);
 
-        if(result.message) setInfo({ type: "error", message: result.message });
+        if(result.message) return;
 
-        else {
-            setSchedules(prevSchedules => [...prevSchedules, result]);
-            setInfo({ type: "success", message: `Schedule ${inputs.name} was created successfully!` });
-        }
+        setSchedules(prevSchedules => [...prevSchedules, result]);
+        setInfo({ type: "success", message: `Schedule ${inputs.name} was created successfully!` });
         
         disableCreateModal();
     }
