@@ -77,6 +77,38 @@
     gap: 30px;
 }
 
+.doses-create form .form-color {
+    height: 90px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.doses-create form .form-color .background {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--red);
+    border-radius: 50%;
+}
+
+.doses-create form .form-color .background img {
+    height: 55px;
+    width: 55px;
+    object-fit: contain;
+}
+
+.doses-create form .form-color input {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0;
+}
+
 .doses-create form fieldset {
     width: 100%;
     display: flex;

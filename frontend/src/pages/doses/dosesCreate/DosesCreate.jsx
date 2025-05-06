@@ -149,6 +149,21 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
 
             <div className="form-holder">
                 <form>
+                    <div className="form-color">
+                        <div
+                            className="background"
+                            style={inputs.color ? { backgroundColor: inputs.color } : {}}
+                        >
+                            <img src={images.pillIcon} alt="PILL" />
+                        </div>
+                                        
+                        <input
+                            type="color"
+                            value={inputs.color}
+                            onChange={e => setInputs({...inputs, color: e.target.value})}
+                        />
+                    </div>
+                    
                     <fieldset>
                         <input
                             type="text"

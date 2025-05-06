@@ -156,6 +156,7 @@ const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance }) => {
                                     ) return <div
                                         key={index}
                                         className={`dose ${dose.status === "taken" ? "dose-taken" : ""}`}
+                                        style={dose.color ? { backgroundColor: dose.color } : {}}
                                     >{dose.name}</div>;
 
                                     return <React.Fragment key={index}></React.Fragment>;
