@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./Edit.css";
+import Info from "../../components/Info/Info";
 import Checkbox from "../../components/checkbox/Checkbox";
+import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
 const Edit = ({ type, editModalRef, disableEditModal, values }) => {
     const [inputs, setInputs] = useState(setInitialValues());
+    const [info, setInfo] = useState({ type: "", message: "" });
     const [showPassword, setShowPassword] = useState(false);
 
     function setInitialValues() {
@@ -22,11 +25,18 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
     }
 
     async function handleEdit() {
-        
+        switch(type) {
+            case "Family":
+                // Third parameter (isLogin) is false, because we want to check if password and confirmation password are equal, just like while registering.
+                if(CheckInputs.family(inputs, setInfo, false)) return;
+            default:
+        }
     }
     
     return(
         <div className="edit" ref={editModalRef}>
+            {info.message && <Info info={info} setInfo={setInfo} />}
+            
             <div
                 className="x-button"
                 onClick={disableEditModal}
