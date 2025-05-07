@@ -62,6 +62,10 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}schedule/create`, value);
         },
 
+        update: async (id, value) => {
+            return await DB.postRequest(`${DB.URL}schedule/update`, { id, value });
+        },
+
         getDoses: async id => {
             return await DB.postRequest(`${DB.URL}schedule/get-doses`, { id });
         }

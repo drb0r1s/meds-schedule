@@ -4,7 +4,7 @@ import "./SchedulesProfile.css";
 import Edit from "../../../components/edit/Edit";
 import { images } from "../../../data/images";
 
-const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disableProfileModal }) => {
+const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
     const [isEditModalActive, setIsEditModalActive] = useState(false);
     const editModalRef = useRef(null);
     
@@ -55,10 +55,11 @@ const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disa
             }}
         >
             {isEditModalActive && <Edit
-                type="Family"
+                type="family"
                 editModalRef={editModalRef}
                 disableEditModal={disableEditModal}
                 values={family}
+                setForeignInfo={setInfo}
             />}
             
             <div className="schedules-profile" ref={profileModalRef}>

@@ -121,6 +121,7 @@ const Doses = () => {
                     schedule={schedule}
                     dosesScheduleModalRef={dosesScheduleModalRef}
                     disableDosesScheduleModal={disableDosesScheduleModal}
+                    setInfo={setInfo}
                 />}
 
                 {info.message && <Info info={info} setInfo={setInfo} />}

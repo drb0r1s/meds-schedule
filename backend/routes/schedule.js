@@ -44,6 +44,33 @@ schedule.post("/create", async (req, res) => {
     }
 });
 
+schedule.post("/update", async (req, res) => {
+    const { id, value } = req.body;
+
+    let updateObject = {};
+    const blockKeys = [];
+
+    Object.values(value).forEach((prop, index) => {
+        const key = Object.keys(value)[index];
+        if(blockKeys.indexOf(key) > -1) return;
+
+        if(prop) updateObject = {...updateObject, [key]: prop};
+    });
+
+    const isError = CheckInputs.schedule(updateObject, res);
+    if(isError) return;
+
+    try {
+        const queryResult = await DB.schedule.update({ id, updateObject });
+        if(queryResult.affectedRows) console.log("Row has been updated in Schedule table.");
+
+        res.status(200).json(updateObject);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 schedule.post("/get-doses", async (req, res) => {
     const { id } = req.body;
 

@@ -7,7 +7,7 @@ import { DB } from "../../functions/DB";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
-const Edit = ({ type, editModalRef, disableEditModal, values }) => {
+const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) => {
     const [inputs, setInputs] = useState(setInitialValues());
     const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
@@ -15,7 +15,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
 
     function setInitialValues() {
         switch(type) {
-            case "Family":
+            case "family":
                 return {
                     name: values.name,
                     password: "",
@@ -23,33 +23,76 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
                     description: values.description,
                     color: values.color
                 };
+
+            case "schedule":
+                return {
+                    name: values.name,
+                    description: values.description,
+                    color: values.color
+                };
+
             default:
         }
     }
 
     async function handleEdit() {
-        switch(type) {
-            case "Family":
-                let valueInputs = {};
+        let valueInputs = {};
 
-                Object.values(inputs).forEach((prop, index) => {
-                    const key = Object.keys(inputs)[index];
-                    if(prop) valueInputs = {...valueInputs, [key]: prop};
-                });
-            
+        Object.values(inputs).forEach((prop, index) => {
+            const key = Object.keys(inputs)[index];
+            if(prop) valueInputs = {...valueInputs, [key]: prop};
+        });
+
+        let nothingChanged = true;
+                
+        Object.keys(values).forEach((key, index) => {
+            const prop = Object.values(values)[index];
+
+            Object.keys(valueInputs).forEach((valueKey, valueIndex) => {
+                const valueProp = Object.values(valueInputs)[valueIndex];
+                if(key === valueKey && prop !== valueProp) return nothingChanged = false;
+            });
+        });
+
+        if(nothingChanged) {
+            setInfo({ type: "error", message: "Nothing was updated." });
+            return;
+        }
+        
+        switch(type) {
+            case "family":
                 // Third parameter (isLogin) is false, because we want to check if password and confirmation password are equal, just like while registering.
                 if(CheckInputs.family(valueInputs, setInfo, false)) return;
 
                 setIsLoading(true);
-                const result = await DB.family.update(values.id, inputs);
+                const familyResult = await DB.family.update(values.id, inputs);
                 setIsLoading(false);
 
-                if(result.message) {
-                    setInfo({ type: "error", message: result.message });
+                if(familyResult.message) {
+                    setInfo({ type: "error", message: familyResult.message });
                     return;
                 }
 
-                setInfo({ type: "success", message: `Family ${values.name} was updated successfully!` });
+                setForeignInfo({ type: "success", message: `Family ${values.name} was updated successfully!` });
+                disableEditModal();
+
+                break;
+            case "schedule":
+                if(CheckInputs.schedule(valueInputs, setInfo)) return;
+
+                setIsLoading(true);
+                const scheduleResult = await DB.schedule.update(values.id, inputs);
+                setIsLoading(false);
+
+                if(scheduleResult.message) {
+                    setInfo({ type: "error", message: scheduleResult.message });
+                    return;
+                }
+
+                setForeignInfo({ type: "success", message: `Schedule ${values.name} was updated successfully!` });
+                disableEditModal();
+
+                break;
             default:
         }
     }
@@ -93,7 +136,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
                     />
                 </fieldset>
 
-                <fieldset className="password-input">
+                {type === "family" && <fieldset className="password-input">
                     <input
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
@@ -117,7 +160,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
                         value={showPassword}
                         setValue={setShowPassword}
                     />
-                </fieldset>
+                </fieldset>}
 
                 <fieldset>
                     <textarea
