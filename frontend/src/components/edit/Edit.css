@@ -17,6 +17,11 @@
     left: 0;
 }
 
+.edit .loading-holder {
+    position: fixed;
+    z-index: 2;
+}
+
 .edit .x-button {
     display: flex;
     align-items: center;

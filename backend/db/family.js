@@ -29,6 +29,23 @@ dataPool.register = ({ name, password, description, color, created_at, updated_a
     });
 }
 
+dataPool.update = ({ id, updateObject }) => {
+    const values = Object.values(updateObject);
+    let set = "";
+
+    Object.keys(updateObject).forEach((key, index) => {
+        if(index === values.length - 1) set += `SET ${key} = ?`;
+        else set += `SET ${key} = ?, `;
+    });
+    
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE Family ${set} WHERE id = ?`, [...values, id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(err);
+        });
+    });
+}
+
 dataPool.getSchedules = ({ id }) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Schedule WHERE family_id = ?", [id], (err, res) => {

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "./Edit.css";
+import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Checkbox from "../../components/checkbox/Checkbox";
+import { DB } from "../../functions/DB";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
 const Edit = ({ type, editModalRef, disableEditModal, values }) => {
     const [inputs, setInputs] = useState(setInitialValues());
+    const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
     const [showPassword, setShowPassword] = useState(false);
 
@@ -29,12 +32,24 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
             case "Family":
                 // Third parameter (isLogin) is false, because we want to check if password and confirmation password are equal, just like while registering.
                 if(CheckInputs.family(inputs, setInfo, false)) return;
+
+                setIsLoading(true);
+                const result = await DB.family.update(values.id, inputs);
+                setIsLoading(false);
+
+                if(result.message) {
+                    setInfo({ type: "error", message: result.message });
+                    return;
+                }
+
+                setInfo({ type: "success", message: `Family ${values.name} was updated successfully!` });
             default:
         }
     }
     
     return(
         <div className="edit" ref={editModalRef}>
+            {isLoading && <Loading />}
             {info.message && <Info info={info} setInfo={setInfo} />}
             
             <div

@@ -40,16 +40,16 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}family/register`, value);
         },
 
+        update: async (id, value) => {
+            return await DB.postRequest(`${DB.URL}family/update`, { id, value });
+        },
+
         getSchedules: async id => {
             return await DB.postRequest(`${DB.URL}family/get-schedules`, { id });
         },
 
         getMedications: async id => {
             return await DB.postRequest(`${DB.URL}family/get-medications`, { id });
-        },
-
-        update: async value => {
-            return await DB.postRequest(`${DB.URL}family/update`, { value });
         }
     },
 

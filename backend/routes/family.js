@@ -70,6 +70,35 @@ family.post("/register", async (req, res) => {
     }
 });
 
+family.post("/update", async (req, res) => {
+    const { id, value } = req.body;
+
+    if(value.password && value.repeatPassword !== undefined) return error(res, { message: "Repeat password wasn't provided." });
+
+    let updateObject = {};
+    const blockKeys = ["repeatPassword"];
+
+    Object.values(value).forEach((prop, index) => {
+        const key = Object.keys(value)[index];
+        if(blockKeys.indexOf(key) > -1) return;
+
+        if(prop) updateObject = {...updateObject, [key]: prop};
+    });
+
+    const isError = CheckInputs.family(updateObject, res, updateObject.password);
+    if(isError) return;
+
+    try {
+        const queryResult = await DB.family.update({ id, updateObject });
+        if(queryResult.affectedRows) console.log("Row has been updated in Family table.");
+
+        res.status(200).json(updateObject);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 family.post("/get-schedules", async (req, res) => {
     const { id } = req.body;
 
@@ -92,10 +121,6 @@ family.post("/get-medications", async (req, res) => {
         console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
     }
-});
-
-family.post("/update", async (req, res) => {
-
 });
 
 module.exports = family;
