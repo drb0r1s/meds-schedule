@@ -85,7 +85,8 @@ family.post("/update", async (req, res) => {
         if(prop) updateObject = {...updateObject, [key]: prop};
     });
 
-    const isError = CheckInputs.family(updateObject, res, updateObject.password);
+    // !updateObject.password because we want to check if password is equal to confirmation password (which is achieved by checking if password exists, statement returns false, so isLogin = false).
+    const isError = CheckInputs.family(updateObject, res, !updateObject.password);
     if(isError) return;
 
     try {

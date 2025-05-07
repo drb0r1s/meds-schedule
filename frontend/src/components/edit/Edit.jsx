@@ -30,8 +30,15 @@ const Edit = ({ type, editModalRef, disableEditModal, values }) => {
     async function handleEdit() {
         switch(type) {
             case "Family":
+                let valueInputs = {};
+
+                Object.values(inputs).forEach((prop, index) => {
+                    const key = Object.keys(inputs)[index];
+                    if(prop) valueInputs = {...valueInputs, [key]: prop};
+                });
+            
                 // Third parameter (isLogin) is false, because we want to check if password and confirmation password are equal, just like while registering.
-                if(CheckInputs.family(inputs, setInfo, false)) return;
+                if(CheckInputs.family(valueInputs, setInfo, false)) return;
 
                 setIsLoading(true);
                 const result = await DB.family.update(values.id, inputs);
