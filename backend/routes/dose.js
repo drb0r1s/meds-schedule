@@ -34,4 +34,31 @@ dose.post("/create", async (req, res) => {
     }
 });
 
+dose.post("/update", async (req, res) => {
+    const { id, value } = req.body;
+
+    let updateObject = {};
+    const blockKeys = [];
+
+    Object.values(value).forEach((prop, index) => {
+        const key = Object.keys(value)[index];
+        if(blockKeys.indexOf(key) > -1) return;
+
+        if(prop) updateObject = {...updateObject, [key]: prop};
+    });
+
+    const isError = CheckInputs.dose(updateObject, res);
+    if(isError) return;
+
+    try {
+        const queryResult = await DB.dose.update({ id, updateObject });
+        if(queryResult.affectedRows) console.log("Row has been updated in Dose table.");
+
+        res.status(200).json(updateObject);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 module.exports = dose;

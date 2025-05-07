@@ -31,6 +31,11 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                     color: values.color
                 };
 
+            case "dose":
+                return {
+                    
+                };
+
             default:
         }
     }
@@ -90,6 +95,22 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                 }
 
                 setForeignInfo({ type: "success", message: `Schedule ${values.name} was updated successfully!` });
+                disableEditModal();
+
+                break;
+            case "dose":
+                if(CheckInputs.dose(valueInputs, setInfo)) return;
+
+                setIsLoading(true);
+                const doseResult = await DB.dose.update(values.id, inputs);
+                setIsLoading(false);
+
+                if(doseResult.message) {
+                    setInfo({ type: "error", message: doseResult.message });
+                    return;
+                }
+
+                setForeignInfo({ type: "success", message: `Dose ${values.name} was updated successfully!` });
                 disableEditModal();
 
                 break;

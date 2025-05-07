@@ -11,6 +11,23 @@ dataPool.create = ({ schedule_id, name, description, time, status, color, create
     });
 }
 
+dataPool.update = ({ id, updateObject }) => {
+    const values = Object.values(updateObject);
+    let set = "SET ";
+
+    Object.keys(updateObject).forEach((key, index) => {
+        if(index === values.length - 1) set += `${key} = ?`;
+        else set += `${key} = ?, `;
+    });
+    
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE Dose ${set} WHERE id = ?`, [...values, id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 dataPool.setStatusTaken = ({ dose }) => {
     return new Promise((resolve, reject) => {
         connection.query(`UPDATE Dose SET status = 'taken' WHERE id = ?`, [dose.id], (err, res) => {

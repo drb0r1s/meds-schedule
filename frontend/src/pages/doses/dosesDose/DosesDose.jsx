@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./DosesDose.css";
 import Loading from "../../../components/loading/Loading";
+import Edit from "../../../components/edit/Edit";
 import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
@@ -8,6 +9,9 @@ import { images } from "../../../data/images";
 const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isEditModalActive, setIsEditModalActive] = useState(false);
+
+    const editModalRef = useRef(null);
 
     useEffect(() => {
         const getDoseMedications = async () => {
@@ -20,6 +24,15 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
 
         getDoseMedications();
     }, []);
+
+    useEffect(() => {
+        if(isEditModalActive) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
+    }, [isEditModalActive]);
+
+    function disableEditModal() {
+        editModalRef.current.id = "";
+        setTimeout(() => setIsEditModalActive(false), 300);
+    }
 
     function checkAmount() {
         let status = false;
@@ -69,6 +82,14 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
             <div className="doses-dose" ref={dosesDoseModalRef}>
                 {isLoading && <Loading />}
 
+                {isEditModalActive && <Edit
+                    type="dose"
+                    editModalRef={editModalRef}
+                    disableEditModal={disableEditModal}
+                    values={dose}
+                    setForeignInfo={setInfo}
+                />}
+                
                 <div className="title-holder">
                     <button
                         className="x-button"
@@ -118,7 +139,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                 </div>
 
                 <div className="menu">
-                    <button>
+                    <button onClick={() => setIsEditModalActive(true)}>
                         <img src={images.penIcon} alt="EDIT" />
                         <span>Edit</span>
                     </button>
