@@ -73,7 +73,7 @@ family.post("/register", async (req, res) => {
 family.post("/update", async (req, res) => {
     const { id, value } = req.body;
 
-    if(value.password && value.repeatPassword !== undefined) return error(res, { message: "Repeat password wasn't provided." });
+    if(value.password && value.repeatPassword === undefined) return error(res, { message: "Repeat password wasn't provided." });
 
     let updateObject = {};
     const blockKeys = ["repeatPassword"];
