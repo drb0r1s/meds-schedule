@@ -46,6 +46,10 @@ export const DB = {
 
         getMedications: async id => {
             return await DB.postRequest(`${DB.URL}family/get-medications`, { id });
+        },
+
+        update: async value => {
+            return await DB.postRequest(`${DB.URL}family/update`, { value });
         }
     },
 

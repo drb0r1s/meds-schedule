@@ -80,7 +80,7 @@ export const CheckInputs = {
             return true;
         }
 
-        else if(checkMedicationInputs()) {
+        else if(inputs.medication !== undefined && checkMedicationInputs()) {
             setInfo({ type: "error", message: "Medications are invalid." });
             return true;
         }

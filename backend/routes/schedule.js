@@ -2,6 +2,7 @@ const express = require("express");
 const error = require("../functions/error");
 const DB = require("../db/index");
 const ExtendedDate = require("../functions/ExtendedDate");
+const CheckInputs = require("../functions/CheckInputs");
 
 const schedule = express.Router();
 
@@ -20,7 +21,7 @@ schedule.post("/get", async (req, res) => {
 schedule.post("/create", async (req, res) => {
     const { family_id, name, description, color } = req.body;
 
-    const isError = checkInputs({ name }, res);
+    const isError = CheckInputs.schedule({ name }, res);
     if(isError) return;
 
     const createObject = {
@@ -54,12 +55,5 @@ schedule.post("/get-doses", async (req, res) => {
         return error(res, { message: err.sqlMessage });
     }
 });
-
-function checkInputs(inputs, res) {
-    if(!inputs.name.length) return error(res, { message: "Name field is empty." });
-    else if(inputs.name.length < 3 || inputs.name.length > 64) return error(res, { message: "Name length should be greater than 2 or less than 64!" });
-
-    return false;
-}
 
 module.exports = schedule;
