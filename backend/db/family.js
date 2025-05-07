@@ -31,11 +31,11 @@ dataPool.register = ({ name, password, description, color, created_at, updated_a
 
 dataPool.update = ({ id, updateObject }) => {
     const values = Object.values(updateObject);
-    let set = "";
+    let set = "SET ";
 
     Object.keys(updateObject).forEach((key, index) => {
-        if(index === values.length - 1) set += `SET ${key} = ?`;
-        else set += `SET ${key} = ?, `;
+        if(index === values.length - 1) set += `${key} = ?`;
+        else set += `${key} = ?, `;
     });
     
     return new Promise((resolve, reject) => {
