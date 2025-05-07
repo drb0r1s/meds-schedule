@@ -89,9 +89,9 @@ family.post("/update", async (req, res) => {
     const isError = CheckInputs.family(updateObject, res, !updateObject.password);
     if(isError) return;
 
-    if(updateObject.password) {
+    if(updateObject?.password) {
         const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const hashedPassword = await bcrypt.hash(updateObject.password, saltRounds);
 
         updateObject.password = hashedPassword;
     }
