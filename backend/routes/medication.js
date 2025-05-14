@@ -35,6 +35,37 @@ medication.post("/create", async (req, res) => {
     }
 });
 
+medication.post("/update", async (req, res) => {
+    const { id, value } = req.body;
+
+    const parsedExpirationDate = `${value.expirationDate.year}-${value.expirationDate.month >= 10 ? value.expirationDate.month : `0${value.expirationDate.month}`}-${value.expirationDate.day >= 10 ? value.expirationDate.day : `0${value.expirationDate.day}`}`;
+    const parsedValue = {...value, expiration_date: parsedExpirationDate, amount_unit: value.amountUnit};
+
+    let updateObject = {};
+    // We want to block "expirationDate" and "amountUnit" keys (camelCase) from being sent to the server, because properties are saved as "expiration_date" and "amount_unit" on the server (snake_case).
+    const blockKeys = ["expirationDate", "amountUnit"];
+
+    Object.values(parsedValue).forEach((prop, index) => {
+        const key = Object.keys(parsedValue)[index];
+        if(blockKeys.indexOf(key) > -1) return;
+
+        if(prop) updateObject = {...updateObject, [key]: prop};
+    });
+
+    const isError = CheckInputs.medication(updateObject, res);
+    if(isError) return;
+
+    try {
+        const queryResult = await DB.medication.update({ id, updateObject });
+        if(queryResult.affectedRows) console.log("Row has been updated in Medication table.");
+
+        res.status(200).json(updateObject);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 medication.post("/check-existence", async (req, res) => {
     const { family_id, medications } = req.body;
 

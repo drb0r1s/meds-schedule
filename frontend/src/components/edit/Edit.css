@@ -19,6 +19,7 @@
 }
 
 .edit .loading-holder {
+    height: 100% !important;
     position: fixed;
     z-index: 2;
 }

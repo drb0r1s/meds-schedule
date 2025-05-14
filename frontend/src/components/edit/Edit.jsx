@@ -4,6 +4,8 @@ import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Checkbox from "../../components/checkbox/Checkbox";
 import TimeInputs from "../timeInputs/TimeInputs";
+import ExpirationDateInputs from "../expirationDateInputs/ExpirationDateInputs";
+import AmountInputs from "../amountInputs/AmountInputs";
 import { DB } from "../../functions/DB";
 import { ExtendedDate } from "../../functions/ExtendedDate";
 import { CheckInputs } from "../../functions/CheckInputs";
@@ -34,13 +36,25 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                 };
 
             case "dose":
-                const { hours, minutes, day, month, year } = ExtendedDate.parseTime(values.time);
+                const parsedTime = ExtendedDate.parseTime(values.time);
             
                 return {
                     name: values.name,
                     description: values.description,
-                    time: { hours: ExtendedDate.leadingZero(hours), minutes: ExtendedDate.leadingZero(minutes), day: ExtendedDate.leadingZero(day), month: ExtendedDate.leadingZero(month), year },
+                    time: { hours: ExtendedDate.leadingZero(parsedTime.hours), minutes: ExtendedDate.leadingZero(parsedTime.minutes), day: ExtendedDate.leadingZero(parsedTime.day), month: ExtendedDate.leadingZero(parsedTime.month), year: parsedTime.year },
                     color: values.color
+                };
+
+            case "medication":
+                const parsedExpirationDate = ExtendedDate.parseTime(values.expiration_date);
+
+                return {
+                    name: values.name,
+                    description: values.description,
+                    substance: values.substance,
+                    expirationDate: { day: ExtendedDate.leadingZero(parsedExpirationDate.day), month: ExtendedDate.leadingZero(parsedExpirationDate.month), year: parsedExpirationDate.year },
+                    amount: values.amount,
+                    amountUnit: values.amount_unit
                 };
 
             default:
@@ -121,6 +135,20 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                 disableEditModal();
 
                 break;
+            case "medication":
+                if(CheckInputs.medication(valueInputs, setInfo)) return;
+
+                setIsLoading(true);
+                const medicationResult = await DB.medication.update(values.id, inputs);
+                setIsLoading(false);
+
+                if(medicationResult.message) {
+                    setInfo({ type: "error", message: medicationResult.message });
+                    return;
+                }
+
+                setForeignInfo({ type: "success", message: `Medication ${values.name} was updated successfully!` });
+                disableEditModal();
             default:
         }
     }
@@ -190,8 +218,6 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                     />
                 </fieldset>}
 
-                {type === "dose" && <TimeInputs inputs={inputs} setInputs={setInputs} />}
-
                 <fieldset>
                     <textarea
                         type="text"
@@ -201,6 +227,13 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                         onChange={e => setInputs({...inputs, description: e.target.value})}
                     />
                 </fieldset>
+
+                {type === "dose" && <TimeInputs inputs={inputs} setInputs={setInputs} />}
+                
+                {type === "medication" && <>
+                    <ExpirationDateInputs inputs={inputs} setInputs={setInputs} />
+                    <AmountInputs inputs={inputs} setInputs={setInputs} />
+                </>}
             </form>
 
             <button

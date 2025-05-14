@@ -17,6 +17,10 @@
     left: 0;
 }
 
+.schedules-inventory .loading-holder {
+    position: fixed;
+}
+
 .schedules-inventory .info {
     z-index: 4;
 }

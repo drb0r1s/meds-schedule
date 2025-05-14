@@ -1,0 +1,12 @@
+.expiration-date-inputs {
+    gap: 10px;
+}
+
+.expiration-date-inputs input {
+    text-align: center;
+}
+
+.expiration-date-inputs input:nth-child(1),
+.expiration-date-inputs input:nth-child(2) {
+    width: 50%;
+}

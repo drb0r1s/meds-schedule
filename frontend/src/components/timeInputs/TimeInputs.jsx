@@ -1,5 +1,5 @@
 import React from "react";
-import "./TimeInputs";
+import "./TimeInputs.css";
 
 const TimeInputs = ({ inputs, setInputs }) => {
     return(

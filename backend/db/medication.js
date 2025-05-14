@@ -11,6 +11,23 @@ dataPool.create = ({ family_id, name, description, substance, expiration_date, a
     });
 }
 
+dataPool.update = ({ id, updateObject }) => {
+    const values = Object.values(updateObject);
+    let set = "SET ";
+
+    Object.keys(updateObject).forEach((key, index) => {
+        if(index === values.length - 1) set += `${key} = ?`;
+        else set += `${key} = ?, `;
+    });
+    
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE Medication ${set} WHERE id = ?`, [...values, id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 dataPool.getSpecific = ({ family_id, names }) => {
     let questionmarks = "";
 

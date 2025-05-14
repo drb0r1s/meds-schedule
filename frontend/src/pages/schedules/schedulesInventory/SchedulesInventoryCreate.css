@@ -84,19 +84,6 @@
     transition: 300ms;
 }
 
-.schedules-inventory-create form .expiration-date-inputs {
-    gap: 10px;
-}
-
-.schedules-inventory-create form .expiration-date-inputs input {
-    text-align: center;
-}
-
-.schedules-inventory-create form .expiration-date-inputs input:nth-child(1),
-.schedules-inventory-create form .expiration-date-inputs input:nth-child(2) {
-    width: 50%;
-}
-
 .schedules-inventory-create form fieldset textarea {
     width: 100%;
     resize: none;

@@ -66,6 +66,7 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
                 medication={modals.medication}
                 inventoryMedicationModalRef={inventoryMedicationModalRef}
                 disableInventoryMedicationModal={disableInventoryMedicationModal}
+                setInfo={setInfo}
             />}
             
             <button
@@ -99,10 +100,10 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
                 </>}
             </div>}
 
-            <button
+            {!isLoading && <button
                 className="create-button"
                 onClick={() => setModals({...modals, create: true})}
-            ><img src={images.plusIcon} alt="CREATE" /></button>
+            ><img src={images.plusIcon} alt="CREATE" /></button>}
         </section>
     );
 }
