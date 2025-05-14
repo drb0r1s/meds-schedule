@@ -1,14 +1,9 @@
 export const ExtendedDate = {
     monthLengths: [31, isLeapYear() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-    
-    display: date => {
-        const [year, month, day] = date.split("T")[0].split("-");
-        return `${day}.${month}.${year}.`;
-    },
 
-    displayDatetime: (datetime, noDate = false) => {
+    display: (datetime, props) => {
         const { year, month, day, hours, minutes } = ExtendedDate.parseTime(datetime);
-        return `${leadingZero(hours)}:${leadingZero(minutes)}${noDate ? "" : ` ${leadingZero(day)}.${leadingZero(month)}.${year}.`}`;
+        return `${props?.noTime ? "" : `${leadingZero(hours)}:${leadingZero(minutes)} `}${props?.noDate ? "" : `${leadingZero(day)}.${leadingZero(month)}.${year}.`}`;
     },
 
     parseTime: string => {

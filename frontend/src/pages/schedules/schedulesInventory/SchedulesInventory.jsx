@@ -92,7 +92,7 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
                                 <div className="info-inner-holder">
                                     <p>Amount: <span>{medication.amount} {medication.amount_unit}</span></p>
-                                    <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date)}</span></p>
+                                    <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date, { noTime: true })}</span></p>
                                 </div>
                             </div>
                         </div>;

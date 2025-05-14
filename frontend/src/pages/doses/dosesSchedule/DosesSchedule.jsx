@@ -46,8 +46,8 @@ const DosesSchedule = ({ schedule, dosesScheduleModalRef, disableDosesScheduleMo
             <div className="info-holder">
                 {!schedule.description ? <strong>This schedule doesn't have description.</strong> : <p>{schedule.description}</p>}
             
-                <p>Created at: <span>{ExtendedDate.displayDatetime(schedule.created_at)}</span></p>
-                {(schedule.created_at !== schedule.updated_at) && <p>Last update: <span>{ExtendedDate.displayDatetime(schedule.updated_at)}</span></p>}
+                <p>Created at: <span>{ExtendedDate.display(schedule.created_at)}</span></p>
+                {(schedule.created_at !== schedule.updated_at) && <p>Last update: <span>{ExtendedDate.display(schedule.updated_at)}</span></p>}
             </div>
 
             <div className="button-holder">

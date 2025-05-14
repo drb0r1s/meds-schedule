@@ -166,7 +166,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
             <h2>Edit <span>{type}</span></h2>
 
             <form>
-                <div className="form-color">
+                {type !== "medication" && <div className="form-color">
                     <div
                         className="background"
                         style={inputs.color ? { backgroundColor: inputs.color } : {}}
@@ -179,7 +179,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                         value={inputs.color}
                         onChange={e => setInputs({...inputs, color: e.target.value})}
                     />
-                </div>
+                </div>}
 
                 <fieldset>
                     <input
@@ -229,8 +229,19 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                 </fieldset>
 
                 {type === "dose" && <TimeInputs inputs={inputs} setInputs={setInputs} />}
-                
+
                 {type === "medication" && <>
+                    <fieldset>
+                        <input
+                            type="text"
+                            placeholder="Substance"
+                            minLength="3"
+                            maxLength="64"
+                            value={inputs.substance}
+                            onChange={e => setInputs({...inputs, substance: e.target.value})}
+                        />
+                    </fieldset>
+                    
                     <ExpirationDateInputs inputs={inputs} setInputs={setInputs} />
                     <AmountInputs inputs={inputs} setInputs={setInputs} />
                 </>}

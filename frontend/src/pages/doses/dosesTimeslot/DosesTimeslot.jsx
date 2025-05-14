@@ -73,7 +73,7 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
                                 <strong>{dose.name}</strong>
                                 
                                 <div className="dose-info-time">
-                                    <p>{ExtendedDate.displayDatetime(dose.time, true)}</p>
+                                    <p>{ExtendedDate.display(dose.time, { noDate: true })}</p>
                                     <p>{dose.status}</p>
                                 </div>
                             </div>

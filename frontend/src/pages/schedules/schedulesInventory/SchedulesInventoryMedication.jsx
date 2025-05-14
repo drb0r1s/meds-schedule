@@ -7,6 +7,7 @@ import { images } from "../../../data/images";
 const SchedulesInventoryMedication = ({ medication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo }) => {
     const [isEditModalActive, setIsEditModalActive] = useState(false);
     const editModalRef = useRef(null);
+    console.log(medication)
 
     useEffect(() => {
         if(isEditModalActive) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
@@ -40,7 +41,7 @@ const SchedulesInventoryMedication = ({ medication, inventoryMedicationModalRef,
             <div className="info-holder">
                 <p>Active substance: <span>{medication.substance}</span></p>
                 <p>Amount: <span>{medication.amount} {medication.amount_unit}</span></p>
-                <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date)}</span></p>
+                <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date, { noTime: true })}</span></p>
                 {medication.description && <p className="description">{medication.description}</p>}
             </div>
 

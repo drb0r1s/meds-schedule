@@ -109,8 +109,8 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                 <div className="info-holder">
                     {!dose.description ? <strong>This dose doesn't have description.</strong> : <p>{dose.description}</p>}
                 
-                    <p>Created at: <span>{ExtendedDate.displayDatetime(dose.created_at)}</span></p>
-                    {(dose.created_at !== dose.updated_at) && <p>Last update: <span>{ExtendedDate.displayDatetime(dose.updated_at)}</span></p>}
+                    <p>Created at: <span>{ExtendedDate.display(dose.created_at)}</span></p>
+                    {(dose.created_at !== dose.updated_at) && <p>Last update: <span>{ExtendedDate.display(dose.updated_at)}</span></p>}
                 </div>
 
                 <div className="medication-holder">
