@@ -158,21 +158,6 @@ export const CheckInputs = {
             return true;
         }
 
-        else if(inputs.expirationDate.day !== undefined && !inputs.expirationDate.day.length) {
-            setInfo({ type: "error", message: "Day field is empty." });
-            return true;
-        }
-
-        else if(inputs.expirationDate.month !== undefined && !inputs.expirationDate.month.length) {
-            setInfo({ type: "error", message: "Month field is empty." });
-            return true;
-        }
-
-        else if(inputs.expirationDate.year !== undefined && !inputs.expirationDate.year.length) {
-            setInfo({ type: "error", message: "Year field is empty." });
-            return true;
-        }
-
         else if(inputs.amount !== undefined && !inputs.amount.length) {
             setInfo({ type: "error", message: "Amount field is empty." });
             return true;

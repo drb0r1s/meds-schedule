@@ -64,9 +64,6 @@ const CheckInputs = {
         
         if(inputs.name !== undefined && !inputs.name.length) return error(res, { message: "Name field is empty." });
         else if(inputs.substance !== undefined && !inputs.substance.length) return error(res, { message: "Substance field is empty." });
-        else if(inputs.expirationDate.day !== undefined && !inputs.expirationDate.day.length) return error(res, { message: "Day field is empty." });
-        else if(inputs.expirationDate.month !== undefined && !inputs.expirationDate.month.length) return error(res, { message: "Month field is empty." });
-        else if(inputs.expirationDate.year !== undefined && !inputs.expirationDate.year.length) return error(res, { message: "Year field is empty." });
         else if(inputs.amount !== undefined && !inputs.amount.length) return error(res, { message: "Amount field is empty." });
         else if(inputs.amountUnit !== undefined && !inputs.amountUnit.length) return error(res, { message: "Amount unit field is empty." });
         else if(inputs.name !== undefined && (inputs.name.length < 3 || inputs.name.length > 64)) return error(res, { message: "Name length should be greater than 2 or less than 64!" });
