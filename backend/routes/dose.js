@@ -37,11 +37,14 @@ dose.post("/create", async (req, res) => {
 dose.post("/update", async (req, res) => {
     const { id, value } = req.body;
 
+    const parsedTime = `${value.time.year}-${value.time.month >= 10 ? time.month : `0${value.time.month}`}-${value.time.day >= 10 ? value.time.day : `0${value.time.day}`} ${value.time.hours >= 10 ? value.time.hours : `0${value.time.hours}`}:${value.time.minutes >= 10 ? value.time.minutes : `0${value.time.minutes}`}:00`;
+    const parsedValue = {...value, time: parsedTime};
+
     let updateObject = {};
     const blockKeys = [];
 
-    Object.values(value).forEach((prop, index) => {
-        const key = Object.keys(value)[index];
+    Object.values(parsedValue).forEach((prop, index) => {
+        const key = Object.keys(parsedValue)[index];
         if(blockKeys.indexOf(key) > -1) return;
 
         if(prop) updateObject = {...updateObject, [key]: prop};

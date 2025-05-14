@@ -14,7 +14,8 @@ const ExtendedDate = {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     },
 
-    isLeapYear
+    isLeapYear,
+    leadingZero
 };
 
 function isLeapYear(year) {
