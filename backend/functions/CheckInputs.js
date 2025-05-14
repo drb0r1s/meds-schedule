@@ -26,8 +26,6 @@ const CheckInputs = {
 
     dose: (inputs, res) => {
         if(inputs.name !== undefined && !inputs.name.length) return error(res, { message: "Name field is empty." });
-        else if(inputs.time.hours !== undefined && !inputs.time.hours.length) return error(res, { message: "Hours field is empty." });
-        else if(inputs.time.minutes !== undefined && !inputs.time.minutes.length) return error(res, { message: "Minutes field is empty." });
         else if(inputs.name !== undefined && (inputs.name.length < 3 || inputs.name.length > 64)) return error(res, { message: "Name length should be greater than 2 or less than 64!" });
         else if(inputs.medication !== undefined && checkMedicationInputs()) return error(res, { message: "Medications are invalid." });
         else if(inputs.time.hours !== undefined && isNaN(parseInt(inputs.time.hours))) return error(res, { message: "Hours field is invalid." });

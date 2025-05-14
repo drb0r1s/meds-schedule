@@ -132,33 +132,9 @@
     transition: 300ms;
 }
 
-.doses-create form .time-inputs,
 .doses-create form .medication-inputs {
     flex-direction: column;
     gap: 10px;
-}
-
-.doses-create form .time-inputs .time-inputs-first,
-.doses-create form .time-inputs .time-inputs-second {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.doses-create form .time-inputs input {
-    text-align: center;
-}
-
-.doses-create form .time-inputs .time-inputs-first span {
-    color: white;
-    font-size: 20px;
-}
-
-.doses-create form .time-inputs .time-inputs-second input:nth-child(1),
-.doses-create form .time-inputs .time-inputs-second input:nth-child(2) {
-    width: 50%;
 }
 
 .doses-create form fieldset textarea {

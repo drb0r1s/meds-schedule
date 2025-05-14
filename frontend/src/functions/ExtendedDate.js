@@ -23,7 +23,8 @@ export const ExtendedDate = {
         return { year, month, day, hours, minutes };
     },
 
-    isLeapYear
+    isLeapYear,
+    leadingZero
 };
 
 function isLeapYear(year) {

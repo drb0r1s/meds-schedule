@@ -1,0 +1,27 @@
+.time-inputs {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.time-inputs .time-inputs-first,
+.time-inputs .time-inputs-second {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.time-inputs input {
+    text-align: center;
+}
+
+.time-inputs .time-inputs-first span {
+    color: white;
+    font-size: 20px;
+}
+
+.time-inputs .time-inputs-second input:nth-child(1),
+.time-inputs .time-inputs-second input:nth-child(2) {
+    width: 50%;
+}

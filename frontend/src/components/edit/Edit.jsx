@@ -3,7 +3,9 @@ import "./Edit.css";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Checkbox from "../../components/checkbox/Checkbox";
+import TimeInputs from "../timeInputs/TimeInputs";
 import { DB } from "../../functions/DB";
+import { ExtendedDate } from "../../functions/ExtendedDate";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
@@ -32,8 +34,13 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                 };
 
             case "dose":
+                const { hours, minutes, day, month, year } = ExtendedDate.parseTime(values.time);
+            
                 return {
-                    
+                    name: values.name,
+                    description: values.description,
+                    time: { hours: ExtendedDate.leadingZero(hours), minutes: ExtendedDate.leadingZero(minutes), day: ExtendedDate.leadingZero(day), month: ExtendedDate.leadingZero(month), year },
+                    color: values.color
                 };
 
             default:
@@ -182,6 +189,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                         setValue={setShowPassword}
                     />
                 </fieldset>}
+
+                {type === "dose" && <TimeInputs inputs={inputs} setInputs={setInputs} />}
 
                 <fieldset>
                     <textarea

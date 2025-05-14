@@ -60,17 +60,7 @@ export const CheckInputs = {
             return true;
         }
 
-        else if(inputs.time.hours !== undefined && !inputs.time.hours.length) {
-            setInfo({ type: "error", message: "Hours field is empty." });
-            return true;
-        }
-        
-        else if(inputs.time.minutes !== undefined && !inputs.time.minutes.length) {
-            setInfo({ type: "error", message: "Minutes field is empty." });
-            return true;
-        }
-
-        else if(!inputs.medication[0].name.length) {
+        else if(inputs.medication !== undefined && !inputs.medication[0].name.length) {
             setInfo({ type: "error", message: "Medication field is empty." });
             return true;
         }
