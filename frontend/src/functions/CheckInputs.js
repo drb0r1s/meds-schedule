@@ -158,16 +158,6 @@ export const CheckInputs = {
             return true;
         }
 
-        else if(inputs.amount !== undefined && !inputs.amount.length) {
-            setInfo({ type: "error", message: "Amount field is empty." });
-            return true;
-        }
-
-        else if(inputs.amountUnit !== undefined && !inputs.amountUnit.length) {
-            setInfo({ type: "error", message: "Amount unit field is empty." });
-            return true;
-        }
-
         else if(inputs.name !== undefined && (inputs.name.length < 3 || inputs.name.length > 64)) {
             setInfo({ type: "error", message: "Name length should be greater than 2 or less than 64!" });
             return true;

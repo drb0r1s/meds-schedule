@@ -8,6 +8,7 @@ import ExpirationDateInputs from "../expirationDateInputs/ExpirationDateInputs";
 import AmountInputs from "../amountInputs/AmountInputs";
 import { DB } from "../../functions/DB";
 import { ExtendedDate } from "../../functions/ExtendedDate";
+import { ExtendedString } from "../../functions/ExtendedString";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
@@ -76,7 +77,30 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
 
             Object.keys(valueInputs).forEach((valueKey, valueIndex) => {
                 const valueProp = Object.values(valueInputs)[valueIndex];
-                if(key === valueKey && prop !== valueProp) return nothingChanged = false;
+                
+                // For nested objects that contains inputs ("time" and "expirationDate") we need to check inner input values.
+                // We need to convert key to camelCase (e.g. expiration_date => expirationDate), otherwise property won't be checked.
+                if(ExtendedString.toCamelCase(key) === valueKey && typeof valueProp === "object") {
+                    let innerNothingChanged = true;
+
+                    Object.keys(valueProp).forEach((innerKey, innerIndex) => {
+                        const innerProp = parseInt(Object.values(valueProp)[innerIndex]);
+                        const parsedTime = ExtendedDate.parseTime(prop);
+
+                        if(
+                            (innerKey === "hours" && innerProp !== parsedTime.hours) ||
+                            (innerKey === "minutes" && innerProp !== parsedTime.minutes) ||
+                            (innerKey === "day" && innerProp !== parsedTime.day) ||
+                            (innerKey === "month" && innerProp !== parsedTime.month) ||
+                            (innerKey === "year" && innerProp !== parsedTime.year)
+                        ) return innerNothingChanged = false;
+                    });
+
+                    if(!innerNothingChanged) return nothingChanged = false;
+                }
+
+                // We need to convert key to camelCase (e.g. expiration_date => expirationDate), otherwise property won't be checked.
+                else if(ExtendedString.toCamelCase(key) === valueKey && prop !== valueProp) return nothingChanged = false;
             });
         });
 

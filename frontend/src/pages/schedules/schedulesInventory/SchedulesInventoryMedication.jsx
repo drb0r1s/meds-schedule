@@ -7,7 +7,6 @@ import { images } from "../../../data/images";
 const SchedulesInventoryMedication = ({ medication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo }) => {
     const [isEditModalActive, setIsEditModalActive] = useState(false);
     const editModalRef = useRef(null);
-    console.log(medication)
 
     useEffect(() => {
         if(isEditModalActive) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
