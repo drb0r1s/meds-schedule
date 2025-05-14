@@ -52,7 +52,7 @@ medication.post("/update", async (req, res) => {
         if(prop) updateObject = {...updateObject, [key]: prop};
     });
 
-    const isError = CheckInputs.medication(updateObject, res);
+    const isError = CheckInputs.medication(value, res);
     if(isError) return;
 
     try {
