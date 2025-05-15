@@ -70,6 +70,8 @@ dose.post("/delete", async (req, res) => {
     try {
         const queryResult = await DB.dose.delete({ id });
         if(queryResult.affectedRows) console.log("Row has been deleted from Dose table.")
+    
+        res.status(200).json({ success: true });
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });

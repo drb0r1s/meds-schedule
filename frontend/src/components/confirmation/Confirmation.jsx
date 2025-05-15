@@ -12,7 +12,7 @@ const Confirmation = ({ title, confirmationModalHolderRef, confirmationModalRef,
                 <strong>{title}</strong>
 
                 <div className="confirmation-buttons">
-                    <button onClick={onConfirm}>Yes</button>
+                    <button onClick={() => { disableConfirmationModal(); onConfirm() }}>Yes</button>
                     <button onClick={disableConfirmationModal}>No</button>
                 </div>
             </div>

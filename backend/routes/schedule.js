@@ -77,6 +77,8 @@ schedule.post("/delete", async (req, res) => {
     try {
         const queryResult = await DB.schedule.delete({ id });
         if(queryResult.affectedRows) console.log("Row has been deleted from Schedule table.")
+    
+        res.status(200).json({ success: true });
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
