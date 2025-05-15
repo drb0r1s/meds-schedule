@@ -46,15 +46,6 @@ dataPool.update = ({ id, updateObject }) => {
     });
 }
 
-dataPool.delete = ({ id }) => {
-    return new Promise((resolve, reject) => {
-        connection.query("DELETE FROM Family WHERE id = ?", [id], (err, res) => {
-            if(err) return reject(err);
-            return resolve(res);
-        });
-    });
-}
-
 dataPool.getSchedules = ({ id }) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Schedule WHERE family_id = ?", [id], (err, res) => {

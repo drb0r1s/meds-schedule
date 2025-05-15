@@ -44,10 +44,6 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}family/update`, { id, value });
         },
 
-        delete: async id => {
-            return await DB.postRequest(`${DB.URL}family/delete`, { id });
-        },
-
         getSchedules: async id => {
             return await DB.postRequest(`${DB.URL}family/get-schedules`, { id });
         },
