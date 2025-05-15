@@ -10,6 +10,7 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
     const [year, month, day, weekDay, hour] = id.split("-");
     
     const [timeslotDoses, setTimeslotDoses] = useState(dosesMatrix[coordinates.y][coordinates.x]);
+    const [dose, setDose] = useState({});
     const [isDoseModalActive, setIsDoseModalActive] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
 
@@ -19,6 +20,22 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
     useEffect(() => {
         setTimeslotDoses(dosesMatrix[coordinates.y][coordinates.x]);
     }, [dosesMatrix]);
+
+    useEffect(() => {
+        // Checking !isDoseModalActive ensures that doses are only updated when dose was actually changed (avoiding updating doses while opening dose modal).
+        if(!Object.keys(dose).length || !isDoseModalActive) return;
+
+        setDoses(prevDoses => {
+            const newDoses = [];
+
+            for(let i = 0; i < prevDoses.length; i++) {
+                if(prevDoses[i].id === dose.id) newDoses.push(dose);
+                else newDoses.push(prevDoses[i]);
+            }
+
+            return newDoses;
+        });
+    }, [dose]);
 
     useEffect(() => {
         if(isDoseModalActive) setTimeout(() => {
@@ -32,7 +49,10 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
         
         setTimeout(() => {
             dosesDoseModalHolderRef.current.id = "";
-            setTimeout(() => setIsDoseModalActive(false), 300);
+            setTimeout(() => {
+                setDose({});
+                setIsDoseModalActive(false);
+            }, 300);
         }, 300);
     }
     
@@ -41,8 +61,8 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
             {info.message && <Info info={info} setInfo={setInfo} />}
             
             {isDoseModalActive && <DosesDose
-                dose={isDoseModalActive}
-                setDose={setIsDoseModalActive}
+                dose={dose}
+                setDose={setDose}
                 dosesDoseModalHolderRef={dosesDoseModalHolderRef}
                 dosesDoseModalRef={dosesDoseModalRef}
                 disableDosesDoseModal={disableDosesDoseModal}
@@ -66,7 +86,10 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
                         return <div
                             key={index}
                             className="dose"
-                            onClick={() => setIsDoseModalActive(dose)}
+                            onClick={() => {
+                                setDose(dose);
+                                setIsDoseModalActive(true);
+                            }}
                         >
                             <img src={images.pillIcon} alt="PILL" />
 
