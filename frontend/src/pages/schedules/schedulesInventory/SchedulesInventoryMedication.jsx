@@ -8,7 +8,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const SchedulesInventoryMedication = ({ medication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo, setMedications }) => {
+const SchedulesInventoryMedication = ({ medication, setMedication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo, setMedications }) => {
     const [modals, setModals] = useState({ edit: false, confirmation: false });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -85,6 +85,7 @@ const SchedulesInventoryMedication = ({ medication, inventoryMedicationModalRef,
                 editModalRef={editModalRef}
                 disableEditModal={disableEditModal}
                 values={medication}
+                setValues={setMedication}
                 setForeignInfo={setInfo}
             />}
 

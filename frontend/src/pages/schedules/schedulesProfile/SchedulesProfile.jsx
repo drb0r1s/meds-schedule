@@ -3,10 +3,9 @@ import { useNavigate } from "react-router";
 import "./SchedulesProfile.css";
 import Edit from "../../../components/edit/Edit";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
-import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
+const SchedulesProfile = ({ family, setFamily, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
     const [isEditModalActive, setIsEditModalActive] = useState(false);
     const editModalRef = useRef(null);
     
@@ -61,6 +60,7 @@ const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disa
                 editModalRef={editModalRef}
                 disableEditModal={disableEditModal}
                 values={family}
+                setValues={setFamily}
                 setForeignInfo={setInfo}
             />}
             

@@ -132,6 +132,7 @@ const Schedules = () => {
                 
                 {modals.profile && <SchedulesProfile
                     family={family}
+                    setFamily={setFamily}
                     profileModalHolderRef={profileModalHolderRef}
                     profileModalRef={profileModalRef}
                     disableProfileModal={disableProfileModal}

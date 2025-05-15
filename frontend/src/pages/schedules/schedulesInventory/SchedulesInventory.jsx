@@ -10,6 +10,7 @@ import { images } from "../../../data/images";
 
 const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }) => {    
     const [medications, setMedications] = useState([]);
+    const [medication, setMedication] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [noMedications, setNoMedications] = useState(false);
     const [modals, setModals] = useState({ create: false, medication: false });
@@ -37,6 +38,20 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
     }, [medications]);
 
     useEffect(() => {
+        // Checking !modals.medication ensures that medications are only updated when medication was actually changed (avoiding updating medications while opening medication modal).
+        if(!Object.keys(medication).length || !modals.medication) return;
+
+        const newMedications = [];
+
+        for(let i = 0; i < medications.length; i++) {
+            if(medications[i].id === medication.id) newMedications.push(medication);
+            else newMedications.push(medications[i]);
+        }
+
+        setMedications(newMedications);
+    }, [medication]);
+
+    useEffect(() => {
         if(modals.create) setTimeout(() => { inventoryCreateModalRef.current.id = "schedules-inventory-create-active" }, 10);
     }, [modals.create]);
 
@@ -51,7 +66,10 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
     function disableInventoryMedicationModal() {
         inventoryMedicationModalRef.current.id = "";
-        setTimeout(() => setModals({...modals, medication: false}), 300);
+        setTimeout(() => {
+            setMedication({});
+            setModals({...modals, medication: false});
+        }, 300);
     }
     
     return(
@@ -68,7 +86,8 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
             />}
 
             {modals.medication && <SchedulesInventoryMedication
-                medication={modals.medication}
+                medication={medication}
+                setMedication={setMedication}
                 inventoryMedicationModalRef={inventoryMedicationModalRef}
                 disableInventoryMedicationModal={disableInventoryMedicationModal}
                 setInfo={setInfo}
@@ -91,7 +110,10 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
                         return <div
                             key={index}
                             className="medication"
-                            onClick={() => setModals({...modals, medication})}
+                            onClick={() => {
+                                setMedication(medication);
+                                setModals({...modals, medication: true});
+                            }}
                         >
                             <img src={images.pillIcon} alt={medication.name} />
 

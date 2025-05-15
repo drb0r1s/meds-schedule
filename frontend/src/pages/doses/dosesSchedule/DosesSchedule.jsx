@@ -8,7 +8,7 @@ import Confirmation from "../../../components/confirmation/Confirmation";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesSchedule = ({ schedule, dosesScheduleModalRef, disableDosesScheduleModal, setInfo }) => {
+const DosesSchedule = ({ schedule, setSchedule, dosesScheduleModalRef, disableDosesScheduleModal, setInfo }) => {
     const [modals, setModals] = useState({ edit: false, confirmation: false });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -63,6 +63,7 @@ const DosesSchedule = ({ schedule, dosesScheduleModalRef, disableDosesScheduleMo
                 editModalRef={editModalRef}
                 disableEditModal={disableEditModal}
                 values={schedule}
+                setValues={setSchedule}
                 setForeignInfo={setInfo}
             />}
 

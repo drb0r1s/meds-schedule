@@ -12,7 +12,7 @@ import { ExtendedString } from "../../functions/ExtendedString";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
-const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) => {
+const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setForeignInfo }) => {
     const [inputs, setInputs] = useState(setInitialValues());
     const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
@@ -123,7 +123,11 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                     return;
                 }
 
-                setForeignInfo({ type: "success", message: `Family ${values.name} was updated successfully!` });
+                const newValuesFamily = {...values, ...familyResult};
+
+                setValues(newValuesFamily);
+                setForeignInfo({ type: "success", message: `Family ${newValuesFamily.name} was updated successfully!` });
+                
                 disableEditModal();
 
                 break;
@@ -139,7 +143,11 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                     return;
                 }
 
-                setForeignInfo({ type: "success", message: `Schedule ${values.name} was updated successfully!` });
+                const newValuesSchedule = {...values, ...scheduleResult};
+
+                setValues(newValuesSchedule);
+                setForeignInfo({ type: "success", message: `Schedule ${newValuesSchedule.name} was updated successfully!` });
+                
                 disableEditModal();
 
                 break;
@@ -155,7 +163,11 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                     return;
                 }
 
-                setForeignInfo({ type: "success", message: `Dose ${values.name} was updated successfully!` });
+                const newValuesDose = {...values, ...doseResult};
+
+                setValues(newValuesDose);
+                setForeignInfo({ type: "success", message: `Dose ${newValuesDose.name} was updated successfully!` });
+                
                 disableEditModal();
 
                 break;
@@ -171,7 +183,11 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setForeignInfo }) 
                     return;
                 }
 
+                const newValuesMedication = {...values, ...medicationResult};
+
+                setValues(newValuesMedication);
                 setForeignInfo({ type: "success", message: `Medication ${values.name} was updated successfully!` });
+                
                 disableEditModal();
             default:
         }

@@ -119,6 +119,7 @@ const Doses = () => {
 
                 {modals.schedule && <DosesSchedule
                     schedule={schedule}
+                    setSchedule={setSchedule}
                     dosesScheduleModalRef={dosesScheduleModalRef}
                     disableDosesScheduleModal={disableDosesScheduleModal}
                     setInfo={setInfo}

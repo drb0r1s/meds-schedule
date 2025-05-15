@@ -17,7 +17,7 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
     const dosesDoseModalRef = useRef(null);
 
     useEffect(() => {
-        setTimeslotDoses(dosesMatrix[coordinates.y][coordinates.x])
+        setTimeslotDoses(dosesMatrix[coordinates.y][coordinates.x]);
     }, [dosesMatrix]);
 
     useEffect(() => {
@@ -42,6 +42,7 @@ const DosesTimeslot = ({ timeslot, dosesTimeslotModalRef, disableDosesTimeslotMo
             
             {isDoseModalActive && <DosesDose
                 dose={isDoseModalActive}
+                setDose={setIsDoseModalActive}
                 dosesDoseModalHolderRef={dosesDoseModalHolderRef}
                 dosesDoseModalRef={dosesDoseModalRef}
                 disableDosesDoseModal={disableDosesDoseModal}

@@ -7,7 +7,7 @@ import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
+const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [modals, setModals] = useState({ edit: false, confirmation: false });
@@ -120,6 +120,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                 editModalRef={editModalRef}
                 disableEditModal={disableEditModal}
                 values={dose}
+                setValues={setDose}
                 setForeignInfo={setInfo}
             />}
 
