@@ -37,6 +37,15 @@ dataPool.update = ({ id, updateObject }) => {
     });
 }
 
+dataPool.delete = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("DELETE FROM Schedule WHERE id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 dataPool.getDoses = ({ id }) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Dose WHERE schedule_id = ?", [id], (err, res) => {

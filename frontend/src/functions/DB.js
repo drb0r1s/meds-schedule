@@ -44,6 +44,10 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}family/update`, { id, value });
         },
 
+        delete: async id => {
+            return await DB.postRequest(`${DB.URL}family/delete`, { id });
+        },
+
         getSchedules: async id => {
             return await DB.postRequest(`${DB.URL}family/get-schedules`, { id });
         },
@@ -66,6 +70,10 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}schedule/update`, { id, value });
         },
 
+        delete: async id => {
+            return await DB.postRequest(`${DB.URL}schedule/delete`, { id });
+        },
+
         getDoses: async id => {
             return await DB.postRequest(`${DB.URL}schedule/get-doses`, { id });
         }
@@ -78,7 +86,11 @@ export const DB = {
 
         update: async (id, value) => {
             return await DB.postRequest(`${DB.URL}dose/update`, { id, value });
-        }
+        },
+
+        delete: async id => {
+            return await DB.postRequest(`${DB.URL}dose/delete`, { id });
+        },
     },
 
     medication: {
@@ -88,6 +100,10 @@ export const DB = {
 
         update: async (id, value) => {
             return await DB.postRequest(`${DB.URL}medication/update`, { id, value });
+        },
+
+        delete: async id => {
+            return await DB.postRequest(`${DB.URL}medication/delete`, { id });
         },
 
         checkExistence: async (family_id, medications) => {

@@ -67,6 +67,10 @@ const Schedules = () => {
     }, [family]);
 
     useEffect(() => {
+        if(schedules.length && noSchedules) setNoSchedules(false);
+    }, [schedules]);
+
+    useEffect(() => {
         if(modals.profile) setTimeout(() => {
             profileModalHolderRef.current.id = "schedules-profile-holder-active";
             setTimeout(() => { profileModalRef.current.id = "schedules-profile-active" }, 300);

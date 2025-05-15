@@ -28,6 +28,15 @@ dataPool.update = ({ id, updateObject }) => {
     });
 }
 
+dataPool.delete = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("DELETE FROM Dose WHERE id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 dataPool.setStatusTaken = ({ dose }) => {
     return new Promise((resolve, reject) => {
         connection.query(`UPDATE Dose SET status = 'taken' WHERE id = ?`, [dose.id], (err, res) => {

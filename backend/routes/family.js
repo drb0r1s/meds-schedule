@@ -107,6 +107,18 @@ family.post("/update", async (req, res) => {
     }
 });
 
+family.post("/delete", async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const queryResult = await DB.family.delete({ id });
+        if(queryResult.affectedRows) console.log("Row has been deleted from Family table.")
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 family.post("/get-schedules", async (req, res) => {
     const { id } = req.body;
 

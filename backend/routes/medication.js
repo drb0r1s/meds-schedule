@@ -66,6 +66,18 @@ medication.post("/update", async (req, res) => {
     }
 });
 
+medication.post("/delete", async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const queryResult = await DB.medication.delete({ id });
+        if(queryResult.affectedRows) console.log("Row has been deleted from Medication table.")
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 medication.post("/check-existence", async (req, res) => {
     const { family_id, medications } = req.body;
 

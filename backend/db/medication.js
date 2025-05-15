@@ -28,6 +28,15 @@ dataPool.update = ({ id, updateObject }) => {
     });
 }
 
+dataPool.delete = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("DELETE FROM Medication WHERE id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 dataPool.getSpecific = ({ family_id, names }) => {
     let questionmarks = "";
 
