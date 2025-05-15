@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./DosesSchedule.css";
 import Edit from "../../../components/edit/Edit";
+import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
@@ -43,12 +44,7 @@ const DosesSchedule = ({ schedule, dosesScheduleModalRef, disableDosesScheduleMo
                 <h2>{schedule.name}</h2>
             </div>
 
-            <div className="info-holder">
-                {!schedule.description ? <strong>This schedule doesn't have description.</strong> : <p>{schedule.description}</p>}
-            
-                <p>Created at: <span>{ExtendedDate.display(schedule.created_at)}</span></p>
-                {(schedule.created_at !== schedule.updated_at) && <p>Last update: <span>{ExtendedDate.display(schedule.updated_at)}</span></p>}
-            </div>
+            <GeneralInfo type="schedule" values={schedule} />
 
             <div className="button-holder">
                 <button onClick={() => setIsEditModalActive(true)}>

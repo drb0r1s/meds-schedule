@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./DosesDose.css";
 import Loading from "../../../components/loading/Loading";
 import Edit from "../../../components/edit/Edit";
+import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
@@ -106,12 +107,7 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                     <h2>{dose.name}</h2>
                 </div>
 
-                <div className="info-holder">
-                    {!dose.description ? <strong>This dose doesn't have description.</strong> : <p>{dose.description}</p>}
-                
-                    <p>Created at: <span>{ExtendedDate.display(dose.created_at)}</span></p>
-                    {(dose.created_at !== dose.updated_at) && <p>Last update: <span>{ExtendedDate.display(dose.updated_at)}</span></p>}
-                </div>
+                <GeneralInfo type="dose" values={dose} />
 
                 <div className="medication-holder">
                     <h3>Your medication{doseMedications.length > 1 ? "s" : ""}:</h3>

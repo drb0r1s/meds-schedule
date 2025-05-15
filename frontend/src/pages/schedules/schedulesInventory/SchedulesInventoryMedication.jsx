@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./SchedulesInventoryMedication.css";
 import Edit from "../../../components/edit/Edit";
+import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
@@ -37,11 +38,12 @@ const SchedulesInventoryMedication = ({ medication, inventoryMedicationModalRef,
                 <h2>{medication.name}</h2>
             </div>
 
-            <div className="info-holder">
+            <div className="medication-info-holder">
                 <p>Active substance: <span>{medication.substance}</span></p>
                 <p>Amount: <span>{medication.amount} {medication.amount_unit}</span></p>
                 <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date, { noTime: true })}</span></p>
-                {medication.description && <p className="description">{medication.description}</p>}
+            
+                <GeneralInfo type="medication" values={medication} />
             </div>
 
             <div className="menu">

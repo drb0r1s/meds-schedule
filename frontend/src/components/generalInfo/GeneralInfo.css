@@ -1,0 +1,34 @@
+.general-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    border-left: 3px solid white;
+    margin-left: calc(35px - 3px);
+    padding: 20px;
+}
+
+.general-info strong {
+    color: grey;
+    font-size: 18px;
+    font-family: Roboto-Thin;
+    font-style: italic;
+    padding-bottom: 15px;
+}
+
+.general-info p {
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Light;
+    margin: 0;
+}
+
+.general-info p span {
+    color: var(--red);
+    font-family: Roboto-Medium;
+}
+
+.general-info .general-info-description {
+    padding-bottom: 15px;
+}

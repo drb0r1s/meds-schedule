@@ -81,26 +81,11 @@
     padding: 0;
 }
 
-.schedules-profile-holder .schedules-profile .info-holder {
+.schedules-profile-holder .schedules-profile .general-info {
     width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-    padding: 0 20px;
+    border-left: none;
+    margin-left: 0;
     padding-top: 50px;
-}
-
-.schedules-profile-holder .schedules-profile .info-holder p {
-    color: white;
-    font-size: 17px;
-    font-family: Roboto-Regular;
-    margin: 0;
-}
-
-.schedules-profile-holder .schedules-profile .info-holder p span {
-    color: var(--red);
 }
 
 .schedules-profile-holder .schedules-profile .menu {
@@ -114,7 +99,7 @@
     border: none;
     position: static;
     padding: 0 20px;
-    padding-top: 30px;
+    padding-top: 15px;
 }
 
 .schedules-profile-holder .schedules-profile .menu .first-group,

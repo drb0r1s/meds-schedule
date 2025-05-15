@@ -65,36 +65,6 @@
     font-family: Roboto-Regular;
 }
 
-.doses-schedule .info-holder {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-    border-left: 3px solid white;
-    margin-left: calc(35px - 3px);
-    padding: 20px;
-}
-
-.doses-schedule .info-holder strong {
-    color: grey;
-    font-size: 18px;
-    font-family: Roboto-Thin;
-    font-style: italic;
-}
-
-.doses-schedule .info-holder p {
-    color: white;
-    font-size: 18px;
-    font-family: Roboto-Light;
-    margin: 0;
-}
-
-.doses-schedule .info-holder p span {
-    color: var(--red);
-    font-family: Roboto-Medium;
-}
-
 .doses-schedule .button-holder {
     display: flex;
     align-items: center;

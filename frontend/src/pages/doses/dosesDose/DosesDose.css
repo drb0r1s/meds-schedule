@@ -97,33 +97,12 @@
     padding: 0;
 }
 
-.doses-dose .info-holder {
+.doses-dose .general-info {
     width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px 20px;
-}
-
-.doses-dose .info-holder strong {
-    color: grey;
-    font-size: 18px;
-    font-family: Roboto-Thin;
-    font-style: italic;
-}
-
-.doses-dose .info-holder p {
-    color: white;
-    font-size: 18px;
-    font-family: Roboto-Light;
-    margin: 0;
-}
-
-.doses-dose .info-holder p span {
-    color: var(--red);
-    font-family: Roboto-Medium;
+    border-left: 0;
+    margin-left: 0;
+    padding: 10px 15px;
+    padding-top: 15px;
 }
 
 .doses-dose .medication-holder {

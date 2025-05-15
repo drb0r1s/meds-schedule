@@ -58,7 +58,7 @@
     padding: 0;
 }
 
-.schedules-inventory-medication .info-holder {
+.schedules-inventory-medication .medication-info-holder {
     width: 100%;
     display: flex;
     align-items: flex-start;
@@ -70,15 +70,22 @@
     padding: 15px;
 }
 
-.schedules-inventory-medication .info-holder p {
+.schedules-inventory-medication .medication-info-holder p {
     color: white;
     font-size: 16px;
     font-family: Roboto-Regular;
 }
 
-.schedules-inventory-medication .info-holder p span {
+.schedules-inventory-medication .medication-info-holder p span {
     color: var(--red);
     font-style: italic;
+}
+
+.schedules-inventory-medication .medication-info-holder .general-info {
+    border-left: none;
+    margin-left: 0;
+    padding: 0;
+    padding-top: 20px;
 }
 
 .schedules-inventory-medication .menu {
