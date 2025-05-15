@@ -32,6 +32,11 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
     }, []);
 
     useEffect(() => {
+        if(medications.length && noMedications) setNoMedications(false);
+        else if(!medications.length && !noMedications) setNoMedications(true);
+    }, [medications]);
+
+    useEffect(() => {
         if(modals.create) setTimeout(() => { inventoryCreateModalRef.current.id = "schedules-inventory-create-active" }, 10);
     }, [modals.create]);
 
@@ -67,6 +72,7 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
                 inventoryMedicationModalRef={inventoryMedicationModalRef}
                 disableInventoryMedicationModal={disableInventoryMedicationModal}
                 setInfo={setInfo}
+                setMedications={setMedications}
             />}
             
             <button
@@ -76,7 +82,10 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
             <h2>Inventory</h2>
 
-            {isLoading ? <Loading /> : <div className="list">
+            {isLoading ? <Loading /> : <div
+                className="list"
+                style={noMedications ? { justifyContent: "center" } : {}}
+            >
                 {!isLoading && noMedications ? <strong>There are no medications.</strong> : <>
                     {medications.map((medication, index) => {
                         return <div

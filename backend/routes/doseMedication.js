@@ -5,10 +5,10 @@ const DB = require("../db/index");
 const doseMedication = express.Router();
 
 doseMedication.post("/get", async (req, res) => {
-    const { dose_id } = req.body;
+    const { id, type } = req.body;
 
     try {
-        const queryResult = await DB.doseMedication.get({ dose_id });
+        const queryResult = await DB.doseMedication.get({ id, type });
         res.status(200).json(queryResult);
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);

@@ -46,4 +46,13 @@ dataPool.setStatusTaken = ({ dose }) => {
     });
 }
 
+dataPool.deleteMultiple = ({ ids }) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`DELETE FROM Dose WHERE id IN (${ids.join(", ")})`, (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;

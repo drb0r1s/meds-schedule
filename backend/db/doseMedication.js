@@ -2,9 +2,12 @@ const connection = require("./connection");
 
 const dataPool = {};
 
-dataPool.get = ({ dose_id }) => {
+dataPool.get = ({ id, type }) => {
+    const joinMedication = "SELECT m.id AS medication_id, m.family_id, m.name, m.description, m.substance, m.expiration_date, m.amount, m.amount_unit, dm.id, dm.dose_id, dm.amount AS amount_to_take FROM DoseMedication dm JOIN Medication m ON dm.medication_id = m.id WHERE dm.dose_id = ?";
+    const joinDose = "SELECT d.id AS dose_id, d.schedule_id, d.name, d.description, d.time, d.status, d.color, dm.id, dm.medication_id, dm.amount AS amount_to_take, dm.amount_unit FROM DoseMedication dm JOIN Dose d ON dm.dose_id = d.id WHERE dm.medication_id = ?";
+    
     return new Promise((resolve, reject) => {
-        connection.query("SELECT m.id AS medication_id, m.family_id, m.name, m.description, m.substance, m.expiration_date, m.amount, m.amount_unit, dm.id, dm.dose_id, dm.amount AS amount_to_take FROM DoseMedication dm JOIN Medication m ON dm.medication_id = m.id WHERE dm.dose_id = ?", [dose_id], (err, res) => {
+        connection.query(type === "dose" ? joinMedication : joinDose, [id], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });

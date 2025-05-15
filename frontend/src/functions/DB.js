@@ -91,6 +91,10 @@ export const DB = {
         delete: async id => {
             return await DB.postRequest(`${DB.URL}dose/delete`, { id });
         },
+
+        deleteMultiple: async ids => {
+            return await DB.postRequest(`${DB.URL}dose/delete-multiple`, { ids });
+        }
     },
 
     medication: {
@@ -112,8 +116,8 @@ export const DB = {
     },
 
     doseMedication: {
-        get: async dose_id => {
-            return await DB.postRequest(`${DB.URL}dose-medication/get`, { dose_id });
+        get: async (id, type) => {
+            return await DB.postRequest(`${DB.URL}dose-medication/get`, { id, type });
         },
         
         create: async value => {

@@ -2,21 +2,23 @@ import React, { useState, useEffect, useRef } from "react";
 import "./DosesDose.css";
 import Loading from "../../../components/loading/Loading";
 import Edit from "../../../components/edit/Edit";
+import Confirmation from "../../../components/confirmation/Confirmation";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
-import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
 const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isEditModalActive, setIsEditModalActive] = useState(false);
+    const [modals, setModals] = useState({ edit: false, confirmation: false });
 
     const editModalRef = useRef(null);
+    const confirmationModalHolderRef = useRef(null);
+    const confirmationModalRef = useRef(null);
 
     useEffect(() => {
         const getDoseMedications = async () => {
-            const result = await DB.doseMedication.get(dose.id);
+            const result = await DB.doseMedication.get(dose.id, "dose");
             if(result.message) return;
 
             setDoseMedications(result);
@@ -27,12 +29,28 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
     }, []);
 
     useEffect(() => {
-        if(isEditModalActive) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
-    }, [isEditModalActive]);
+        if(modals.edit) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
+    }, [modals.edit]);
+
+    useEffect(() => {
+        if(modals.confirmation) setTimeout(() => {
+            confirmationModalHolderRef.current.id = "confirmation-holder-active";
+            confirmationModalRef.current.id = "confirmation-active";
+        });
+    }, [modals.confirmation]);
 
     function disableEditModal() {
         editModalRef.current.id = "";
-        setTimeout(() => setIsEditModalActive(false), 300);
+        setTimeout(() => setModals({...modals, edit: false}), 300);
+    }
+
+    function disableConfirmationModal() {
+        confirmationModalRef.current.id = "";
+
+        setTimeout(() => {
+            confirmationModalHolderRef.current.id = "";
+            setTimeout(() => setModals({...modals, confirmation: false}), 300);
+        }, 300);
     }
 
     function checkAmount() {
@@ -73,6 +91,23 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
         setInfo({ type: "success", message: `${dose.name} was marked as taken.` });
         disableDosesDoseModal();
     }
+
+    async function deleteDose() {
+        setIsLoading(true);
+        const result = await DB.dose.delete(dose.id);
+        setIsLoading(false);
+    
+        if(result.message) return;
+    
+        setInfo({ type: "success", message: `Dose ${dose.name} was deleted successfully!` });
+        
+        setDoses(prevDoses => {
+            const newDoses = prevDoses.filter(prevDose => prevDose.id !== dose.id);
+            return newDoses;
+        });
+
+        disableDosesDoseModal();
+    }
     
     return(
         <div
@@ -80,16 +115,24 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
             ref={dosesDoseModalHolderRef}
             onClick={e => { if(e.target.classList.contains("doses-dose-holder")) disableDosesDoseModal() }}
         >
+            {modals.edit && <Edit
+                type="dose"
+                editModalRef={editModalRef}
+                disableEditModal={disableEditModal}
+                values={dose}
+                setForeignInfo={setInfo}
+            />}
+
+            {modals.confirmation && <Confirmation
+                title={`Are you sure you want to delete ${dose.name}?`}
+                confirmationModalHolderRef={confirmationModalHolderRef}
+                confirmationModalRef={confirmationModalRef}
+                disableConfirmationModal={disableConfirmationModal}
+                onConfirm={deleteDose}
+            />}
+            
             <div className="doses-dose" ref={dosesDoseModalRef}>
                 {isLoading && <Loading />}
-
-                {isEditModalActive && <Edit
-                    type="dose"
-                    editModalRef={editModalRef}
-                    disableEditModal={disableEditModal}
-                    values={dose}
-                    setForeignInfo={setInfo}
-                />}
                 
                 <div className="title-holder">
                     <button
@@ -135,12 +178,12 @@ const DosesDose = ({ dose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDo
                 </div>
 
                 <div className="menu">
-                    <button onClick={() => setIsEditModalActive(true)}>
+                    <button onClick={() => setModals({...modals, edit: true})}>
                         <img src={images.penIcon} alt="EDIT" />
                         <span>Edit</span>
                     </button>
                         
-                    <button>
+                    <button onClick={() => setModals({...modals, confirmation: true})}>
                         <img src={images.deleteIcon} alt="DELETE" />
                         <span>Delete</span>
                     </button>
