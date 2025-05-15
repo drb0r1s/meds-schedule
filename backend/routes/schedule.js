@@ -47,7 +47,7 @@ schedule.post("/create", async (req, res) => {
 schedule.post("/update", async (req, res) => {
     const { id, value } = req.body;
 
-    let updateObject = {};
+    let updateObject = { updated_at: ExtendedDate.now() };
     const blockKeys = [];
 
     Object.values(value).forEach((prop, index) => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./SchedulesProfile.css";
 import Edit from "../../../components/edit/Edit";
+import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
 const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
@@ -69,6 +70,13 @@ const SchedulesProfile = ({ family, profileModalHolderRef, profileModalRef, disa
                 >
                     <button onClick={disableProfileModal}><img src={images.xIcon} alt="X" /></button>
                     <h2>{family.name}</h2>
+                </div>
+
+                <div className="info-holder">
+                    <p>{family.description}</p>
+                    
+                    <p>Created at: <span>{ExtendedDate.display(family.created_at)}</span></p>
+                    {family.created_at !== family.updated_at && <p>Updated at: <span>{ExtendedDate.display(family.updated_at)}</span></p>}
                 </div>
 
                 <div className="menu">

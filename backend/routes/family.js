@@ -75,7 +75,7 @@ family.post("/update", async (req, res) => {
 
     if(value.password && value.repeatPassword === undefined) return error(res, { message: "Repeat password wasn't provided." });
 
-    let updateObject = {};
+    let updateObject = { updated_at: ExtendedDate.now() };
     const blockKeys = ["repeatPassword"];
 
     Object.values(value).forEach((prop, index) => {
