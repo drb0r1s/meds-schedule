@@ -77,3 +77,40 @@
     font-family: Roboto-Thin;
     font-style: italic;
 }
+
+.schedules-history .list .event {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-left: 20px;
+}
+
+.schedules-history .list .event img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.schedules-history .list .event .event-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.schedules-history .list .event .event-info strong {
+    color: var(--red);
+    font-size: 18px;
+    font-family: Roboto-Bold;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.schedules-history .list .event .event-info p {
+    color: white;
+    font-size: 14px;
+    font-family: Roboto-Light;
+    margin: 0;
+}

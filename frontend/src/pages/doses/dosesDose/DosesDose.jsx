@@ -95,7 +95,7 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
             dose_id: dose.id,
             medication_id: null,
             name: "Dose Taken",
-            description: `{dose.name} was marked as {dose.status}.`,
+            description: `{dose.name} was marked as ${type === "take" ? "taken" : "missed"}.`,
             type: "dose"
         });
         

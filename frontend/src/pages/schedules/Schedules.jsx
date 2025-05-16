@@ -170,6 +170,7 @@ const Schedules = () => {
                     family={family}
                     historyModalRef={historyModalRef}
                     disableHistoryModal={disableHistoryModal}
+                    setInfo={setInfo}
                 />}
                 
                 <h2>Welcome back to <span>{family.name}</span>!</h2>

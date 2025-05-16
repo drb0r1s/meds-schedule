@@ -24,4 +24,16 @@ event.post("/create", async (req, res) => {
     }
 });
 
+event.post("/get-all", async (req, res) => {
+    const { family_id } = req.body;
+
+    try {
+        const queryResult = await DB.event.getAll({ family_id });
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 module.exports = event;

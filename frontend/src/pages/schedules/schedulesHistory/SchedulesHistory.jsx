@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./SchedulesHistory.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal }) => {
+const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInfo }) => {
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [noEvents, setNoEvents] = useState(false);
 
     useEffect(() => {
         const getEvents = async () => {
-            const result = await DB.family.getEvents(family.id);
+            const result = await DB.event.getAll(family.id);
             setIsLoading(false);
 
-            if(result.message) return;
+            if(result.message) {
+                setInfo({ type: "error", message: result.message });
+                return;
+            }
 
             if(!result.length) {
                 setNoEvents(true);
@@ -47,7 +50,17 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal }) => {
             >
                 {!isLoading && noEvents ? <strong>History is empty.</strong> : <>
                     {events.map((event, index) => {
-                        
+                        return <div
+                            key={index}
+                            className="event"
+                        >
+                            <img src={images.historyIcon} alt="EVENT" />
+
+                            <div className="event-info">
+                                <strong>{event.name}</strong>
+                                <p>{event.description}</p>
+                            </div>
+                        </div>;
                     })}
                 </>}
             </div>}

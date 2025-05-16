@@ -50,10 +50,6 @@ export const DB = {
 
         getMedications: async id => {
             return await DB.postRequest(`${DB.URL}family/get-medications`, { id });
-        },
-
-        getEvents: async id => {
-            return await DB.postRequest(`${DB.URL}family/get-events`, { id });
         }
     },
 
@@ -136,6 +132,10 @@ export const DB = {
     event: {
         create: async value => {
             return await DB.postRequest(`${DB.URL}event/create`, { value });
+        },
+
+        getAll: async family_id => {
+            return await DB.postRequest(`${DB.URL}event/get-all`, { family_id });
         }
     }
 };
