@@ -81,15 +81,27 @@ const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, 
         const doseMedicationResult = await DB.doseMedication.take(dose, doseMedications);
         if(doseMedicationResult.message) return;
 
-        const doseResult = await DB.schedule.getDoses(dose.schedule_id);
-        if(doseResult.message) return;
-
         setIsLoading(false);
 
-        setDoses(doseResult);
+        const newDose = {...dose, status: "taken"};
+
+        setDose(newDose);
+
+        setDoses(prevDoses => {
+            const newDoses = [];
+
+            for(let i = 0; i < prevDoses.length; i++) {
+                if(prevDoses[i].id === dose.id) newDoses.push(newDose);
+                else newDoses.push(prevDoses[i]);
+            }
+        });
 
         setInfo({ type: "success", message: `${dose.name} was marked as taken.` });
         disableDosesDoseModal();
+    }
+
+    async function handleMissed() {
+
     }
 
     async function deleteDose() {
@@ -171,11 +183,20 @@ const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, 
                         })}
                     </div>
 
-                    <button
+                    <div
+                        className="button-holder"
                         style={dose.status !== "pending" ? { opacity: .5, position: "static" } : {}}
-                        disabled={dose.status !== "pending"}
-                        onClick={handleTake}
-                    >{dose.status === "pending" ? "Take" : dose.status === "taken" ? "Taken" : "Missed"}</button>
+                    >
+                        <button
+                            disabled={dose.status !== "pending"}
+                            onClick={handleTake}
+                        >{dose.status === "pending" ? "Take" : dose.status === "taken" ? "Taken" : "Missed"}</button>
+                    
+                        {dose.status === "pending" && <button
+                            className="button-missed"
+                            onClick={handleMissed}
+                        >Missed</button>}
+                    </div>
                 </div>
 
                 <div className="menu">

@@ -183,6 +183,17 @@
     font-style: normal;
 }
 
+.doses-dose .medication-holder .button-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: sticky;
+    bottom: 15px;
+    margin-top: 20px;
+}
+
 .doses-dose .medication-holder button {
     color: var(--red);
     font-size: 20px;
@@ -190,10 +201,13 @@
     background-color: white;
     border: none;
     border-radius: 5px;
-    margin-top: 20px;
-    position: sticky;
-    bottom: 10px;
     padding: 10px 15px;
+}
+
+.doses-dose .medication-holder .button-missed {
+    color: white;
+    font-family: Roboto-Light;
+    background-color: transparent;
 }
 
 .doses-dose .menu {

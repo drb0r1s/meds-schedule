@@ -35,6 +35,9 @@ doseMedication.post("/take", async (req, res) => {
 
     if(dose.status !== "pending") return;
 
+    const isError = checkAmount(doseMedications);
+    if(isError) return error(res, { message: "Not enough medications in the inventory." });
+
     try {
         const doseQueryResult = await DB.dose.setStatusTaken({ dose });
         if(doseQueryResult.affectedRows) console.log("Rows have been updated in Dose table.");
@@ -48,5 +51,18 @@ doseMedication.post("/take", async (req, res) => {
         return error(res, { message: err.sqlMessage });
     }
 });
+
+function checkAmount(doseMedications) {
+    let status = false;
+
+    for(let i = 0; i < doseMedications.length; i++) {
+        if(doseMedications[i].amount < doseMedications[i].amount_to_take) {
+            status = true;
+            break;
+        }
+    }
+
+    return status;
+}
 
 module.exports = doseMedication;
