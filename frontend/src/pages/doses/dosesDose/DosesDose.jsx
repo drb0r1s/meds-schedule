@@ -7,7 +7,7 @@ import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
+const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [modals, setModals] = useState({ edit: false, confirmation: false });
@@ -79,11 +79,30 @@ const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, 
         }
 
         setIsLoading(true);
-        const result = type === "take" ? await DB.doseMedication.take(dose, doseMedications) : await DB.doseMedication.missed(dose);
+        
+        const doseMedicationResult = type === "take" ? await DB.doseMedication.take(dose, doseMedications) : await DB.doseMedication.missed(dose);
+        
+        if(doseMedicationResult.message) {
+            setIsLoading(false);
+            setInfo({ type: "error", message: doseMedicationResult.message });
+
+            return;
+        }
+
+        const eventResult = await DB.event.create({
+            family_id: schedule.family_id,
+            schedule_id: schedule.id,
+            dose_id: dose.id,
+            medication_id: null,
+            name: "Dose Taken",
+            description: `{dose.name} was marked as {dose.status}.`,
+            type: "dose"
+        });
+        
         setIsLoading(false);
 
-        if(result.message) {
-            setInfo({ type: "error", message: result.message });
+        if(eventResult.message) {
+            setInfo({ type: "error", message: eventResult.message });
             return;
         }
 

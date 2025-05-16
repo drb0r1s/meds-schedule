@@ -102,3 +102,7 @@
 .calendar .timeslots-holder .timeslots .dose-taken {
     opacity: .3;
 }
+
+.calendar .timeslots-holder .timeslots .dose-missed {
+    opacity: .3;
+}

@@ -110,6 +110,7 @@ const Doses = () => {
                 />}
 
                 {modals.timeslot && <DosesTimeslot
+                    schedule={schedule}
                     timeslot={modals.timeslot}
                     dosesTimeslotModalRef={dosesTimeslotModalRef}
                     disableDosesTimeslotModal={disableDosesTimeslotModal}

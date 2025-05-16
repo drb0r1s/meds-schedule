@@ -134,6 +134,8 @@ export const DB = {
     },
 
     event: {
-
+        create: async value => {
+            return await DB.postRequest(`${DB.URL}event/create`, { value });
+        }
     }
 };

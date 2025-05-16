@@ -155,7 +155,7 @@ const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance }) => {
                                         doseTime.hours === hourIndex
                                     ) return <div
                                         key={index}
-                                        className={`dose ${dose.status === "taken" ? "dose-taken" : ""}`}
+                                        className={`dose ${dose.status !== "pending" ? `dose-${dose.status}`: ""}`}
                                         style={dose.color ? { backgroundColor: dose.color } : {}}
                                     >{dose.name}</div>;
 
