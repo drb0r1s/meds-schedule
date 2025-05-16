@@ -66,24 +66,28 @@ const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, 
         return status;
     }
 
-    async function handleTake() {
+    async function handleButton(type) {
         if(dose.status !== "pending") return;
-        
-        const isError = checkAmount();
 
-        if(isError) {
-            setInfo({ type: "error", message: "Not enough medications in the inventory." });
-            return;
+        if(type === "take") {
+            const isError = checkAmount();
+
+            if(isError) {
+                setInfo({ type: "error", message: "Not enough medications in the inventory." });
+                return;
+            }
         }
 
         setIsLoading(true);
-
-        const doseMedicationResult = await DB.doseMedication.take(dose, doseMedications);
-        if(doseMedicationResult.message) return;
-
+        const result = type === "take" ? await DB.doseMedication.take(dose, doseMedications) : await DB.doseMedication.missed(dose);
         setIsLoading(false);
 
-        const newDose = {...dose, status: "taken"};
+        if(result.message) {
+            setInfo({ type: "error", message: result.message });
+            return;
+        }
+
+        const newDose = {...dose, status: type === "take" ? "taken" : "missed"};
 
         setDose(newDose);
 
@@ -94,14 +98,12 @@ const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, 
                 if(prevDoses[i].id === dose.id) newDoses.push(newDose);
                 else newDoses.push(prevDoses[i]);
             }
+
+            return newDoses;
         });
 
-        setInfo({ type: "success", message: `${dose.name} was marked as taken.` });
+        setInfo({ type: "success", message: `${dose.name} was marked as ${type === "take" ? "taken" : "missed"}.` });
         disableDosesDoseModal();
-    }
-
-    async function handleMissed() {
-
     }
 
     async function deleteDose() {
@@ -189,12 +191,12 @@ const DosesDose = ({ dose, setDose, dosesDoseModalHolderRef, dosesDoseModalRef, 
                     >
                         <button
                             disabled={dose.status !== "pending"}
-                            onClick={handleTake}
+                            onClick={() => handleButton("take")}
                         >{dose.status === "pending" ? "Take" : dose.status === "taken" ? "Taken" : "Missed"}</button>
                     
                         {dose.status === "pending" && <button
                             className="button-missed"
-                            onClick={handleMissed}
+                            onClick={() => handleButton("missed")}
                         >Missed</button>}
                     </div>
                 </div>

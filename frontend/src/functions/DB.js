@@ -126,6 +126,10 @@ export const DB = {
 
         take: async (dose, doseMedications) => {
             return await DB.postRequest(`${DB.URL}dose-medication/take`, { dose, doseMedications });
+        },
+
+        missed: async dose => {
+            return await DB.postRequest(`${DB.URL}dose-medication/missed`, { dose });
         }
     },
 
