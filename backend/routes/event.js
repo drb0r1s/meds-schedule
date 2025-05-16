@@ -14,7 +14,7 @@ event.post("/create", async (req, res) => {
     };
 
     try {
-        const queryResult = await DB.event.create(value);
+        const queryResult = await DB.event.create(createObject);
         if(queryResult.affectedRows) console.log("New row has been inserted in Event table.");
         
         res.status(200).json({ ...createObject, id: queryResult.insertId });
