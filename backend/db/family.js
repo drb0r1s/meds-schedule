@@ -64,4 +64,13 @@ dataPool.getMedications = ({ id }) => {
     });
 }
 
+dataPool.getEvents = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Event WHERE family_id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;

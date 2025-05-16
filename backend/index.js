@@ -29,3 +29,6 @@ app.use("/medication", medication);
 
 const doseMedication = require("./routes/doseMedication.js");
 app.use("/dose-medication", doseMedication);
+
+const event = require("./routes/event.js");
+app.use("/event", event);

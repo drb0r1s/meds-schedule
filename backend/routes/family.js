@@ -131,4 +131,16 @@ family.post("/get-medications", async (req, res) => {
     }
 });
 
+family.post("/get-events", async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const queryResult = await DB.family.getEvents({ id });
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 module.exports = family;

@@ -4,6 +4,7 @@ import "./Schedules.css";
 import SchedulesProfile from "./schedulesProfile/SchedulesProfile";
 import SchedulesInventory from "./schedulesInventory/SchedulesInventory";
 import SchedulesCreate from "./schedulesCreate/SchedulesCreate";
+import SchedulesHistory from "./schedulesHistory/SchedulesHistory";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
@@ -15,13 +16,14 @@ const Schedules = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [schedulesLoading, setSchedulesLoading] = useState(true);
     const [noSchedules, setNoSchedules] = useState(false);
-    const [modals, setModals] = useState({ profile: false, inventory: false, create: false });
+    const [modals, setModals] = useState({ profile: false, inventory: false, create: false, history: false });
     const [info, setInfo] = useState({ type: "", message: "" });
 
     const profileModalHolderRef = useRef(null);
     const profileModalRef = useRef(null);
     const inventoryModalRef = useRef(null);
     const createModalRef = useRef(null);
+    const historyModalRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -85,6 +87,10 @@ const Schedules = () => {
         if(modals.create) setTimeout(() => { createModalRef.current.id = "schedules-create-active" }, 10);
     }, [modals.create]);
 
+    useEffect(() => {
+        if(modals.history) setTimeout(() => { historyModalRef.current.id = "schedules-history-active" }, 10);
+    }, [modals.history]);
+
     function disableProfileModal() {
         profileModalRef.current.id = "";
         
@@ -104,6 +110,11 @@ const Schedules = () => {
         setTimeout(() => setModals({...modals, create: false}), 300);
     }
 
+    function disableHistoryModal() {
+        historyModalRef.current.id = "";
+        setTimeout(() => setModals({...modals, history: false}), 300);
+    }
+
     function getDosesURL(schedule) {
         const name = schedule.name.replaceAll(" ", "-");
         return `${name}-${schedule.id}`;
@@ -121,7 +132,9 @@ const Schedules = () => {
                 setModals({...modals, create: true});
                 break;
             case "notifications": break;
-            case "history": break;
+            case "history":
+                setModals({...modals, history: true});
+                break;
         }
     }
     
@@ -151,6 +164,12 @@ const Schedules = () => {
                     disableCreateModal={disableCreateModal}
                     setSchedules={setSchedules}
                     setInfo={setInfo}
+                />}
+
+                {modals.history && <SchedulesHistory
+                    family={family}
+                    historyModalRef={historyModalRef}
+                    disableHistoryModal={disableHistoryModal}
                 />}
                 
                 <h2>Welcome back to <span>{family.name}</span>!</h2>

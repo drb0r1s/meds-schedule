@@ -13,12 +13,12 @@
     z-index: 2;
 }
 
-.schedules-inventory::-webkit-scrollbar {
-    display: none;
-}
-
 #schedules-inventory-active {
     left: 0;
+}
+
+.schedules-inventory::-webkit-scrollbar {
+    display: none;
 }
 
 .schedules-inventory .loading-holder {
