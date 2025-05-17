@@ -9,10 +9,14 @@ import { images } from "../../../data/images";
 
 const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInfo }) => {
     const [events, setEvents] = useState([]);
+    const [filter, setFilter] = useState("");
+    const [filteredEvents, setFilteredEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [noEvents, setNoEvents] = useState(false);
 
     const navigate = useNavigate();
+
+    const menuButtons = ["family", "schedule", "dose", "medication"];
 
     useEffect(() => {
         const getEvents = async () => {
@@ -30,15 +34,35 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
             }
             
             setEvents(result);
+            setFilteredEvents(result);
         }
 
         getEvents();
     }, []);
 
     useEffect(() => {
-        if(events.length && noEvents) setNoEvents(false);
-        else if(!events.length && !noEvents) setNoEvents(true);
-    }, [events]);
+        if(filteredEvents.length && noEvents) setNoEvents(false);
+        else if(!filteredEvents.length && !noEvents) setNoEvents(true);
+    }, [filteredEvents]);
+    
+    function handleButton(button) {
+        // If already active filter is pressed again, cancel the filter.
+        if(filter === button) {
+            setFilter("");
+            setFilteredEvents(events);
+
+            return;
+        }
+
+        const newFilteredEvents = [];
+
+        for(let i = 0; i < events.length; i++) {
+            if(events[i].type === button) newFilteredEvents.push(events[i]);
+        }
+        
+        setFilter(button);
+        setFilteredEvents(newFilteredEvents);
+    }
     
     return(
         <div className="schedules-history" ref={historyModalRef}>
@@ -49,12 +73,22 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
 
             <h2>History</h2>
 
+            <div className="filters-menu">
+                {menuButtons.map((button, index) => {
+                    return <button
+                        key={index}
+                        id={filter === button ? "button-active" : ""}
+                        onClick={() => handleButton(button)}
+                    >{button}</button>
+                })}
+            </div>
+
             {isLoading ? <Loading /> : <div
                 className="list"
                 style={noEvents ? { justifyContent: "center" } : {}}
             >
                 {!isLoading && noEvents ? <strong>History is empty.</strong> : <>
-                    {events.map((event, index) => {
+                    {filteredEvents.map((event, index) => {
                         return <div
                             key={index}
                             className="event"

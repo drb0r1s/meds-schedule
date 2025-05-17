@@ -59,6 +59,31 @@
     z-index: 1;
 }
 
+.schedules-history .filters-menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 15px;
+}
+
+.schedules-history .filters-menu button {
+    color: white;
+    font-size: 15px;
+    font-family: Roboto-Medium;
+    text-transform: capitalize;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: 300ms;
+}
+
+.schedules-history .filters-menu #button-active {
+    color: var(--red);
+    background-color: white;
+}
+
 .schedules-history .list {
     height: auto;
     width: 100%;
