@@ -116,14 +116,23 @@
 }
 
 .schedules-history .list .event .event-info p span {
+    color: var(--red);
+    font-size: 14px;
     font-family: Roboto-Light;
     font-style: italic;
-    padding: 0;
 }
 
-.schedules-history .list .event .event-info span {
+.schedules-history .list .event .event-info .event-info-date-path {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 5px 0;
+}
+
+.schedules-history .list .event .event-info .event-info-date-path span {
     color: var(--red);
     font-size: 14px;
     font-family: Roboto-Medium;
-    padding: 5px 0;
 }

@@ -61,7 +61,11 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
                             <div className="event-info">
                                 <strong>{event.event_name}</strong>
                                 <p dangerouslySetInnerHTML={{ __html: ExtendedString.parsePlaceholders(event.description, event) }}></p>
-                                <span>{ExtendedDate.display(event.created_at)}</span>
+                                
+                                <div className="event-info-date-path">
+                                    <span>{ExtendedDate.display(event.created_at)}</span>
+                                    {event.type === "dose" && event.schedule_id && event.dose_id && <p className="path">{event.schedule_name} &gt; {event.dose_name}</p>}
+                                </div>
                             </div>
                         </div>;
                     })}
