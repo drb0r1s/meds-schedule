@@ -39,5 +39,10 @@ export const ExtendedString = {
         }
 
         return newString;
+    },
+
+    getDosesURL: (id, name) => {
+        const noSpaces = name.replaceAll(" ", "-");
+        return `${noSpaces}-${id}`;
     }
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SchedulesHistory.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
@@ -10,6 +11,8 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [noEvents, setNoEvents] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getEvents = async () => {
@@ -64,7 +67,15 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
                                 
                                 <div className="event-info-date-path">
                                     <span>{ExtendedDate.display(event.created_at)}</span>
-                                    {event.type === "dose" && event.schedule_id && event.dose_id && <p className="path">{event.schedule_name} &gt; {event.dose_name}</p>}
+                                    
+                                    {event.type === "dose" && event.schedule_id && event.dose_id && <div
+                                        className="path"
+                                        onClick={() => navigate(`/schedules/${ExtendedString.getDosesURL(event.schedule_id, event.schedule_name)}`)}
+                                    >
+                                        <p>{event.schedule_name}</p>
+                                        <img src={images.arrowPathIcon} alt=">" />
+                                        <p>{event.dose_name}</p>
+                                    </div>}
                                 </div>
                             </div>
                         </div>;

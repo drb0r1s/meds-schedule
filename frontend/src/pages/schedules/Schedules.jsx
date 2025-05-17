@@ -8,6 +8,7 @@ import SchedulesHistory from "./schedulesHistory/SchedulesHistory";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import { DB } from "../../functions/DB";
+import { ExtendedString } from "../../functions/ExtendedString";
 import { images } from "../../data/images";
 
 const Schedules = () => {
@@ -115,11 +116,6 @@ const Schedules = () => {
         setTimeout(() => setModals({...modals, history: false}), 300);
     }
 
-    function getDosesURL(schedule) {
-        const name = schedule.name.replaceAll(" ", "-");
-        return `${name}-${schedule.id}`;
-    }
-
     function handleMenuButton(button) {
         switch(button) {
             case "profile":
@@ -183,7 +179,7 @@ const Schedules = () => {
                         return <button
                             key={index}
                             className="schedule-button"
-                            onClick={() => navigate(`/schedules/${getDosesURL(schedule)}`, { state: { schedule } })}
+                            onClick={() => navigate(`/schedules/${ExtendedString.getDosesURL(schedule.id, schedule.name)}`, { state: { schedule } })}
                         >
                             <div
                                 className="background"
