@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Edit.css";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Checkbox from "../../components/checkbox/Checkbox";
+import Autocomplete from "../autocomplete/Autocomplete";
 import TimeInputs from "../timeInputs/TimeInputs";
 import ExpirationDateInputs from "../expirationDateInputs/ExpirationDateInputs";
 import AmountInputs from "../amountInputs/AmountInputs";
@@ -17,6 +18,20 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
     const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
     const [showPassword, setShowPassword] = useState(false);
+    const [isAutocompleteActive, setIsAutocompleteActive] = useState(false);
+    
+    const autocompleteRef = useRef(null);
+    
+    useEffect(() => {
+        if(isAutocompleteActive) setTimeout(() => { autocompleteRef.current.id = "autocomplete-active" }, 10);
+    }, [isAutocompleteActive]);
+    
+    function disableAutocomplete() {
+        if(!autocompleteRef.current) return;
+
+        autocompleteRef.current.id = "";
+        setTimeout(() => setIsAutocompleteActive(false), 300);
+    }
 
     function setInitialValues() {
         switch(type) {
@@ -298,13 +313,29 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 </div>}
 
                 <fieldset>
+                    {type === "medication" && isAutocompleteActive && <Autocomplete
+                        autocompleteRef={autocompleteRef}
+                        input={inputs.name}
+                        disableAutocomplete={disableAutocomplete}
+                        onSelect={selectedMedication => setInputs({
+                            ...inputs,
+                            name: selectedMedication.name,
+                            substance: selectedMedication.substance
+                        })}
+                    />}
+
                     <input
                         type="text"
                         placeholder="Name"
                         minLength="3"
                         maxLength="64"
                         value={inputs.name}
-                        onChange={e => setInputs({...inputs, name: e.target.value})}
+                        onChange={e => {
+                            setInputs({...inputs, name: e.target.value});
+
+                            if(e.target.value) setIsAutocompleteActive(true);
+                            else disableAutocomplete();
+                        }}
                     />
                 </fieldset>
 

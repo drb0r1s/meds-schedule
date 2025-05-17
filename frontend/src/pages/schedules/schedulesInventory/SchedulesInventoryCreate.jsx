@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./SchedulesInventoryCreate.css";
 import Loading from "../../../components/loading/Loading";
 import ExpirationDateInputs from "../../../components/expirationDateInputs/ExpirationDateInputs";
 import AmountInputs from "../../../components/amountInputs/AmountInputs";
+import Autocomplete from "../../../components/autocomplete/Autocomplete";
 import { DB } from "../../../functions/DB";
 import { CheckInputs } from "../../../functions/CheckInputs";
 import { images } from "../../../data/images";
@@ -10,6 +11,18 @@ import { images } from "../../../data/images";
 const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, setInfo, setMedications }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
     const [isLoading, setIsLoading] = useState(false);
+    const [isAutocompleteActive, setIsAutocompleteActive] = useState(false);
+
+    const autocompleteRef = useRef(null);
+
+    useEffect(() => {
+        if(isAutocompleteActive) setTimeout(() => { autocompleteRef.current.id = "autocomplete-active" }, 10);
+    }, [isAutocompleteActive]);
+
+    function disableAutocomplete() {
+        autocompleteRef.current.id = ""
+        setTimeout(() => setIsAutocompleteActive(false), 300);
+    }
     
     async function handleCreate() {
         const isError = CheckInputs.medication(inputs, setInfo);
@@ -63,13 +76,29 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
 
             <form>
                 <fieldset>
+                    {isAutocompleteActive && <Autocomplete
+                        autocompleteRef={autocompleteRef}
+                        input={inputs.name}
+                        disableAutocomplete={disableAutocomplete}
+                        onSelect={selectedMedication => setInputs({
+                            ...inputs,
+                            name: selectedMedication.name,
+                            substance: selectedMedication.substance
+                        })}
+                    />}
+
                     <input
                         type="text"
                         placeholder="Name"
                         minLength="3"
                         maxLength="64"
                         value={inputs.name}
-                        onChange={e => setInputs({...inputs, name: e.target.value})}
+                        onChange={e => {
+                            setInputs({...inputs, name: e.target.value});
+
+                            if(e.target.value) setIsAutocompleteActive(true);
+                            else disableAutocomplete();
+                        }}
                     />
                 </fieldset>
 
