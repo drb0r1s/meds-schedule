@@ -114,3 +114,16 @@
     font-family: Roboto-Light;
     margin: 0;
 }
+
+.schedules-history .list .event .event-info p span {
+    font-family: Roboto-Light;
+    font-style: italic;
+    padding: 0;
+}
+
+.schedules-history .list .event .event-info span {
+    color: var(--red);
+    font-size: 14px;
+    font-family: Roboto-Medium;
+    padding: 5px 0;
+}

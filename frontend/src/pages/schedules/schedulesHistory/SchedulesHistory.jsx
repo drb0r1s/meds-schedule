@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./SchedulesHistory.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
+import { ExtendedDate } from "../../../functions/ExtendedDate";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInfo }) => {
@@ -57,8 +59,9 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
                             <img src={images.historyIcon} alt="EVENT" />
 
                             <div className="event-info">
-                                <strong>{event.name}</strong>
-                                <p>{event.description}</p>
+                                <strong>{event.event_name}</strong>
+                                <p dangerouslySetInnerHTML={{ __html: ExtendedString.parsePlaceholders(event.description, event) }}></p>
+                                <span>{ExtendedDate.display(event.created_at)}</span>
                             </div>
                         </div>;
                     })}

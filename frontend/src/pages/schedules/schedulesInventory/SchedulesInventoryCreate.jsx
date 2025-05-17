@@ -16,16 +16,38 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
         if(isError) return;
 
         setIsLoading(true);
-        const result = await DB.medication.create({ family_id: family.id, ...inputs });
+        
+        const medicationResult = await DB.medication.create({ family_id: family.id, ...inputs });
+        
+        if(medicationResult.message) {
+            setIsLoading(false);
+            setInfo({ type: "error", message: medicationResult.message });
+
+            return;
+        }
+
+        const eventResult = await DB.event.create({
+            family_id: family.id,
+            schedule_id: null,
+            dose_id: null,
+            medication_id: medicationResult.id,
+            name: "Medication Created",
+            description: "{event.medication_name} was created.",
+            type: "medication"
+        });
+
         setIsLoading(false);
 
-        if(result.message) return setInfo({ type: "error", message: result.message });
+        if(eventResult.message) {
+            setInfo({ type: "error", message: eventResult.message });
+            return;
+        }
         
         setInfo({ type: "success", message: `${inputs.name} was successfully added to inventory.` });
         setInputs({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
         disableInventoryCreateModal();
 
-        setMedications(prevMedications => [...prevMedications, result]);
+        setMedications(prevMedications => [...prevMedications, medicationResult]);
     }
 
     return(

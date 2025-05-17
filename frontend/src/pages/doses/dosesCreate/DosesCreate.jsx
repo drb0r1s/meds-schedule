@@ -41,10 +41,39 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         
         else {
             const doseResult = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
-            if(doseResult.message) return setInfo({ type: "error", message: doseResult.message });
+            
+            if(doseResult.message) {
+                setIsLoading(false);
+                setInfo({ type: "error", message: doseResult.message });
+                
+                return;
+            }
 
             const doseMedicationResult = await DB.doseMedication.create({ dose_id: doseResult.id, medications: medicationsResult });
-            if(doseMedicationResult.message) return setInfo({ type: "error", message: doseMedicationResult.message });
+            
+            if(doseMedicationResult.message) {
+                setIsLoading(false);
+                setInfo({ type: "error", message: doseMedicationResult.message });
+                
+                return;
+            }
+
+            const eventResult = await DB.event.create({
+                family_id: schedule.family_id,
+                schedule_id: schedule.id,
+                dose_id: doseResult.id,
+                medication_id: null,
+                name: "Dose Created",
+                description: "{event.dose_name} was created in {event.schedule_name} schedule.",
+                type: "dose"
+            });
+
+            if(eventResult.message) {
+                setIsLoading(false);
+                setInfo({ type: "error", message: eventResult.message });
+
+                return;
+            }
 
             setInfo({ type: "success", message: `${inputs.name} was successfully added to schedule.` });
             setInputs({ name: "", description: "", medication: [{ name: "", amount: "", amountUnit: "" }], time: { hours: "", minutes: "", day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() }, color: "" });

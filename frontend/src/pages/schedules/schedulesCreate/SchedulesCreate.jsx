@@ -14,12 +14,34 @@ const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedu
         if(isError) return;
         
         setIsLoading(true);
-        const result = await DB.schedule.create({ family_id: family.id, ...inputs });
+        
+        const scheduleResult = await DB.schedule.create({ family_id: family.id, ...inputs });
+        
+        if(scheduleResult.message) {
+            setIsLoading(false);
+            setInfo({ type: "error", message: scheduleResult.message });
+
+            return;
+        }
+
+        const eventResult = await DB.event.create({
+            family_id: family.id,
+            schedule_id: scheduleResult.id,
+            dose_id: null,
+            medication_id: null,
+            name: "Schedule Created",
+            description: "{event.schedule_name} was created.",
+            type: "schedule"
+        });
+
         setIsLoading(false);
 
-        if(result.message) return;
+        if(eventResult.message) {
+            setInfo({ type: "error", message: eventResult.message });
+            return;
+        }
 
-        setSchedules(prevSchedules => [...prevSchedules, result]);
+        setSchedules(prevSchedules => [...prevSchedules, scheduleResult]);
         setInfo({ type: "success", message: `Schedule ${inputs.name} was created successfully!` });
         
         disableCreateModal();

@@ -48,6 +48,8 @@ const SchedulesInventoryMedication = ({ medication, setMedication, inventoryMedi
 
         if(doseMedicationResult.message) {
             setIsLoading(false);
+            setInfo({ type: "error", message: doseMedicationResult.message });
+
             return;
         }
 
@@ -58,13 +60,36 @@ const SchedulesInventoryMedication = ({ medication, setMedication, inventoryMedi
 
         if(doseResult.message) {
             setIsLoading(false);
+            setInfo({ type: "error", message: doseResult.message });
+
             return;
         }
 
         const medicationResult = await DB.medication.delete(medication.id);
+
+        if(medicationResult.message) {
+            setIsLoading(false);
+            setInfo({ type: "error", message: medicationResult.message });
+
+            return;
+        }
+
+        const eventResult = await DB.event.create({
+            family_id: medication.family_id,
+            schedule_id: null,
+            dose_id: null,
+            medication_id: null,
+            name: "Medication Deleted",
+            description: `${medication.name} was deleted.`,
+            type: "medication"
+        });
+
         setIsLoading(false);
 
-        if(medicationResult.message) return;
+        if(eventResult.message) {
+            setInfo({ type: "error", message: eventResult.message });
+            return;
+        }
     
         setInfo({ type: "success", message: `Medication ${medication.name} was deleted successfully!` });
         

@@ -12,7 +12,7 @@ import { ExtendedString } from "../../functions/ExtendedString";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
-const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setForeignInfo }) => {
+const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setForeignInfo, familyId }) => {
     const [inputs, setInputs] = useState(setInitialValues());
     const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
@@ -115,11 +115,30 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 if(CheckInputs.family(valueInputs, setInfo, false)) return;
 
                 setIsLoading(true);
+                
                 const familyResult = await DB.family.update(values.id, inputs);
+                
+                if(familyResult.message) {
+                    setIsLoading(false);
+                    setInfo({ type: "error", message: familyResult.message });
+
+                    return;
+                }
+
+                const eventFamilyResult = await DB.event.create({
+                    family_id: values.id,
+                    schedule_id: null,
+                    dose_id: null,
+                    medication_id: null,
+                    name: "Family Edited",
+                    description: "Family was edited.",
+                    type: "family"
+                });
+                
                 setIsLoading(false);
 
-                if(familyResult.message) {
-                    setInfo({ type: "error", message: familyResult.message });
+                if(eventFamilyResult.message) {
+                    setInfo({ type: "error", message: eventFamilyResult.message });
                     return;
                 }
 
@@ -135,11 +154,30 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 if(CheckInputs.schedule(valueInputs, setInfo)) return;
 
                 setIsLoading(true);
+                
                 const scheduleResult = await DB.schedule.update(values.id, inputs);
+                
+                if(scheduleResult.message) {
+                    setIsLoading(false);
+                    setInfo({ type: "error", message: scheduleResult.message });
+                    
+                    return;
+                }
+
+                const eventResult = await DB.event.create({
+                    family_id: values.family_id,
+                    schedule_id: values.id,
+                    dose_id: null,
+                    medication_id: null,
+                    name: "Schedule Edited",
+                    description: "{event.schedule_name} was edited.",
+                    type: "schedule"
+                });
+                
                 setIsLoading(false);
 
-                if(scheduleResult.message) {
-                    setInfo({ type: "error", message: scheduleResult.message });
+                if(eventResult.message) {
+                    setInfo({ type: "error", message: eventResult.message });
                     return;
                 }
 
@@ -155,11 +193,30 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 if(CheckInputs.dose(valueInputs, setInfo)) return;
 
                 setIsLoading(true);
+
                 const doseResult = await DB.dose.update(values.id, inputs);
+                
+                if(doseResult.message) {
+                    setIsLoading(false);
+                    setInfo({ type: "error", message: doseResult.message });
+
+                    return;
+                }
+
+                const eventDoseResult = await DB.event.create({
+                    family_id: familyId,
+                    schedule_id: doseResult.schedule_id,
+                    dose_id: values.id,
+                    medication_id: null,
+                    name: "Dose Edited",
+                    description: "{event.dose_name} was edited.",
+                    type: "dose"
+                });
+                
                 setIsLoading(false);
 
-                if(doseResult.message) {
-                    setInfo({ type: "error", message: doseResult.message });
+                if(eventDoseResult.message) {
+                    setInfo({ type: "error", message: eventDoseResult.message });
                     return;
                 }
 
@@ -175,11 +232,30 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 if(CheckInputs.medication(valueInputs, setInfo)) return;
 
                 setIsLoading(true);
+                
                 const medicationResult = await DB.medication.update(values.id, inputs);
+                
+                if(medicationResult.message) {
+                    setIsLoading(false);
+                    setInfo({ type: "error", message: medicationResult.message });
+                    
+                    return;
+                }
+
+                const eventMedicationResult = await DB.event.create({
+                    family_id: values.family_id,
+                    schedule_id: null,
+                    dose_id: null,
+                    medication_id: values.id,
+                    name: "Medication Edited",
+                    description: "{event.medication_name} was edited.",
+                    type: "medication"
+                });
+                
                 setIsLoading(false);
 
-                if(medicationResult.message) {
-                    setInfo({ type: "error", message: medicationResult.message });
+                if(eventMedicationResult.message) {
+                    setInfo({ type: "error", message: eventMedicationResult.result });
                     return;
                 }
 

@@ -45,10 +45,32 @@ const DosesSchedule = ({ schedule, setSchedule, dosesScheduleModalRef, disableDo
 
     async function deleteSchedule() {
         setIsLoading(true);
-        const result = await DB.schedule.delete(schedule.id);
+        
+        const scheduleResult = await DB.schedule.delete(schedule.id);
+
+        if(scheduleResult.message) {
+            setIsLoading(false);
+            setInfo({ type: "error", message: scheduleResult.message });
+
+            return;
+        }
+
+        const eventResult = await DB.event.create({
+            family_id: schedule.family_id,
+            schedule_id: null,
+            dose_id: null,
+            medication_id: null,
+            name: "Schedule Deleted",
+            description: `${schedule.name} was deleted.`,
+            type: "schedule"
+        });
+        
         setIsLoading(false);
 
-        if(result.message) return;
+        if(eventResult.message) {
+            setInfo({ type: "error", message: eventResult.message });
+            return;
+        }
 
         setInfo({ type: "success", message: `Schedule ${schedule.name} was deleted successfully!` });
         navigate("/schedules");

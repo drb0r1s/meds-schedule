@@ -94,8 +94,8 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
             schedule_id: schedule.id,
             dose_id: dose.id,
             medication_id: null,
-            name: "Dose Taken",
-            description: `{dose.name} was marked as ${type === "take" ? "taken" : "missed"}.`,
+            name: `Dose ${type === "take" ? "Taken" : "Missed"}`,
+            description: `{event.dose_name} was marked as ${type === "take" ? "taken" : "missed"}.`,
             type: "dose"
         });
         
@@ -127,10 +127,32 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
 
     async function deleteDose() {
         setIsLoading(true);
-        const result = await DB.dose.delete(dose.id);
+        
+        const doseResult = await DB.dose.delete(dose.id);
+
+        if(doseResult.message) {
+            setIsLoading(false);
+            setInfo({ type: "error", message: doseResult.message });
+
+            return;
+        }
+
+        const eventResult = await DB.event.create({
+            family_id: schedule.family_id,
+            schedule_id: schedule.id,
+            dose_id: null,
+            medication_id: null,
+            name: "Dose Deleted",
+            description: `${dose.name} was deleted from the schedule {event.schedule_name}.`,
+            type: "dose"
+        });
+
         setIsLoading(false);
     
-        if(result.message) return;
+        if(eventResult.message) {
+            setInfo({ type: "error", message: eventResult.message });
+            return;
+        }
     
         setInfo({ type: "success", message: `Dose ${dose.name} was deleted successfully!` });
         
@@ -155,6 +177,7 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
                 values={dose}
                 setValues={setDose}
                 setForeignInfo={setInfo}
+                familyId={schedule.family_id}
             />}
 
             {modals.confirmation && <Confirmation
