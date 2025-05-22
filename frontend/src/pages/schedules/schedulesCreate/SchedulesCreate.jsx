@@ -5,7 +5,7 @@ import { DB } from "../../../functions/DB";
 import { CheckInputs } from "../../../functions/CheckInputs";
 import { images } from "../../../data/images";
 
-const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedules, setInfo }) => {
+const SchedulesCreate = ({ account, createModalRef, disableCreateModal, setSchedules, setInfo }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", color: "" });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -15,7 +15,7 @@ const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedu
         
         setIsLoading(true);
         
-        const scheduleResult = await DB.schedule.create({ family_id: family.id, ...inputs });
+        const scheduleResult = await DB.schedule.create({ account_id: account.id, ...inputs });
         
         if(scheduleResult.message) {
             setIsLoading(false);
@@ -25,7 +25,7 @@ const SchedulesCreate = ({ family, createModalRef, disableCreateModal, setSchedu
         }
 
         const eventResult = await DB.event.create({
-            family_id: family.id,
+            account_id: account.id,
             schedule_id: scheduleResult.id,
             dose_id: null,
             medication_id: null,

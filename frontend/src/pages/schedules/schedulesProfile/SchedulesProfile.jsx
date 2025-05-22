@@ -5,7 +5,7 @@ import Edit from "../../../components/edit/Edit";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { images } from "../../../data/images";
 
-const SchedulesProfile = ({ family, setFamily, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
+const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
     const [isEditModalActive, setIsEditModalActive] = useState(false);
     const editModalRef = useRef(null);
     
@@ -56,24 +56,24 @@ const SchedulesProfile = ({ family, setFamily, profileModalHolderRef, profileMod
             }}
         >
             {isEditModalActive && <Edit
-                type="family"
+                type="account"
                 editModalRef={editModalRef}
                 disableEditModal={disableEditModal}
-                values={family}
-                setValues={setFamily}
+                values={account}
+                setValues={setAccount}
                 setForeignInfo={setInfo}
             />}
             
             <div className="schedules-profile" ref={profileModalRef}>
                 <div
                     className="background"
-                    style={family.color ? { background: `linear-gradient(${family.color} 0, #1c1a1a 95%)` } : {}}
+                    style={account.color ? { background: `linear-gradient(${account.color} 0, #1c1a1a 95%)` } : {}}
                 >
                     <button onClick={disableProfileModal}><img src={images.xIcon} alt="X" /></button>
-                    <h2>{family.name}</h2>
+                    <h2>{account.name}</h2>
                 </div>
 
-                <GeneralInfo type="family" values={family} />
+                <GeneralInfo type="account" values={account} />
 
                 <div className="menu">
                     <div className="first-group">

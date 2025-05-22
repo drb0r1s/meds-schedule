@@ -19,13 +19,13 @@ schedule.post("/get", async (req, res) => {
 });
 
 schedule.post("/create", async (req, res) => {
-    const { family_id, name, description, color } = req.body;
+    const { account_id, name, description, color } = req.body;
 
     const isError = CheckInputs.schedule({ name }, res);
     if(isError) return;
 
     const createObject = {
-        family_id,
+        account_id,
         name,
         description,
         color,

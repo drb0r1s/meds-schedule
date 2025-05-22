@@ -90,7 +90,7 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
         }
 
         const eventResult = await DB.event.create({
-            family_id: schedule.family_id,
+            account_id: schedule.account_id,
             schedule_id: schedule.id,
             dose_id: dose.id,
             medication_id: null,
@@ -138,7 +138,7 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
         }
 
         const eventResult = await DB.event.create({
-            family_id: schedule.family_id,
+            account_id: schedule.account_id,
             schedule_id: schedule.id,
             dose_id: null,
             medication_id: null,
@@ -177,7 +177,7 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
                 values={dose}
                 setValues={setDose}
                 setForeignInfo={setInfo}
-                familyId={schedule.family_id}
+                accountId={schedule.account_id}
             />}
 
             {modals.confirmation && <Confirmation

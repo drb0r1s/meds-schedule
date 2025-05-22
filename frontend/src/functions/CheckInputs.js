@@ -1,7 +1,7 @@
 import { ExtendedDate } from "./ExtendedDate";
 
 export const CheckInputs = {
-    family: (inputs, setInfo, isLogin) => {
+    account: (inputs, setInfo, isLogin) => {
         if(inputs.name !== undefined && !inputs.name.length) {
             setInfo({ type: "error", message: "Name field is empty." });
             return true;

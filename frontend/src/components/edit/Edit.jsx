@@ -13,7 +13,7 @@ import { ExtendedString } from "../../functions/ExtendedString";
 import { CheckInputs } from "../../functions/CheckInputs";
 import { images } from "../../data/images";
 
-const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setForeignInfo, familyId }) => {
+const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setForeignInfo, accountId }) => {
     const [inputs, setInputs] = useState(setInitialValues());
     const [isLoading, setIsLoading] = useState(false);
     const [info, setInfo] = useState({ type: "", message: "" });
@@ -35,7 +35,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
 
     function setInitialValues() {
         switch(type) {
-            case "family":
+            case "account":
                 return {
                     name: values.name,
                     password: "",
@@ -125,42 +125,42 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
         }
         
         switch(type) {
-            case "family":
+            case "account":
                 // Third parameter (isLogin) is false, because we want to check if password and confirmation password are equal, just like while registering.
-                if(CheckInputs.family(valueInputs, setInfo, false)) return;
+                if(CheckInputs.account(valueInputs, setInfo, false)) return;
 
                 setIsLoading(true);
                 
-                const familyResult = await DB.family.update(values.id, inputs);
+                const accountResult = await DB.account.update(values.id, inputs);
                 
-                if(familyResult.message) {
+                if(accountResult.message) {
                     setIsLoading(false);
-                    setInfo({ type: "error", message: familyResult.message });
+                    setInfo({ type: "error", message: accountResult.message });
 
                     return;
                 }
 
-                const eventFamilyResult = await DB.event.create({
-                    family_id: values.id,
+                const eventAccountResult = await DB.event.create({
+                    account_id: values.id,
                     schedule_id: null,
                     dose_id: null,
                     medication_id: null,
-                    name: "Family Edited",
-                    description: "Family was edited.",
-                    type: "family"
+                    name: "Account Edited",
+                    description: "Account was edited.",
+                    type: "account"
                 });
                 
                 setIsLoading(false);
 
-                if(eventFamilyResult.message) {
-                    setInfo({ type: "error", message: eventFamilyResult.message });
+                if(eventAccountResult.message) {
+                    setInfo({ type: "error", message: eventAccountResult.message });
                     return;
                 }
 
-                const newValuesFamily = {...values, ...familyResult};
+                const newValuesAccount = {...values, ...accountResult};
 
-                setValues(newValuesFamily);
-                setForeignInfo({ type: "success", message: `Family ${newValuesFamily.name} was updated successfully!` });
+                setValues(newValuesAccount);
+                setForeignInfo({ type: "success", message: `Account ${newValuesAccount.name} was updated successfully!` });
                 
                 disableEditModal();
 
@@ -180,7 +180,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 }
 
                 const eventResult = await DB.event.create({
-                    family_id: values.family_id,
+                    account_id: values.account_id,
                     schedule_id: values.id,
                     dose_id: null,
                     medication_id: null,
@@ -219,7 +219,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 }
 
                 const eventDoseResult = await DB.event.create({
-                    family_id: familyId,
+                    account_id: accountId,
                     schedule_id: doseResult.schedule_id,
                     dose_id: values.id,
                     medication_id: null,
@@ -258,7 +258,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 }
 
                 const eventMedicationResult = await DB.event.create({
-                    family_id: values.family_id,
+                    account_id: values.account_id,
                     schedule_id: null,
                     dose_id: null,
                     medication_id: values.id,
@@ -339,7 +339,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                     />
                 </fieldset>
 
-                {type === "family" && <fieldset className="password-input">
+                {type === "account" && <fieldset className="password-input">
                     <input
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"

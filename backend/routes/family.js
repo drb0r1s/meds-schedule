@@ -5,17 +5,17 @@ const DB = require("../db/index");
 const ExtendedDate = require("../functions/ExtendedDate");
 const CheckInputs = require("../functions/CheckInputs");
 
-const family = express.Router();
+const account = express.Router();
 
-family.post("/login", async (req, res) => {
+account.post("/login", async (req, res) => {
     const { name, password } = req.body;
 
-    const isError = CheckInputs.family({ name, password }, res, true);
+    const isError = CheckInputs.account({ name, password }, res, true);
     if(isError) return;
 
     try {
-        const queryResult = await DB.family.get({ name });
-        if(!queryResult) return error(res, { message: "Family not found." });
+        const queryResult = await DB.account.get({ name });
+        if(!queryResult) return error(res, { message: "Account not found." });
 
         const isMatch = await bcrypt.compare(password, queryResult.password);
         if(!isMatch) return error(res, { message: "Invalid password." });
@@ -27,12 +27,12 @@ family.post("/login", async (req, res) => {
     }
 });
 
-family.post("/loggedIn", async (req, res) => {
+account.post("/loggedIn", async (req, res) => {
     const { token } = req.body;
 
     try {
-        const queryResult = await DB.family.loggedIn({ token });
-        if(!queryResult) return error(res, { message: "Family not found." });
+        const queryResult = await DB.account.loggedIn({ token });
+        if(!queryResult) return error(res, { message: "Account not found." });
 
         res.status(200).json(queryResult);
     } catch(err) {
@@ -41,10 +41,10 @@ family.post("/loggedIn", async (req, res) => {
     }
 });
 
-family.post("/register", async (req, res) => {
+account.post("/register", async (req, res) => {
     const { name, password, repeatPassword } = req.body;
     
-    const isError = CheckInputs.family({ name, password, repeatPassword }, res, false);
+    const isError = CheckInputs.account({ name, password, repeatPassword }, res, false);
     if(isError.message) return;
 
     const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
@@ -60,8 +60,8 @@ family.post("/register", async (req, res) => {
     };
 
     try {
-        const queryResult = await DB.family.register(registerObject);
-        if(queryResult.affectedRows) console.log("New row has been inserted in Family table.");
+        const queryResult = await DB.account.register(registerObject);
+        if(queryResult.affectedRows) console.log("New row has been inserted in Account table.");
     
         res.status(200).json({ ...registerObject, id: queryResult.insertId });
     } catch(err) {
@@ -70,7 +70,7 @@ family.post("/register", async (req, res) => {
     }
 });
 
-family.post("/update", async (req, res) => {
+account.post("/update", async (req, res) => {
     const { id, value } = req.body;
 
     if(value.password && value.repeatPassword === undefined) return error(res, { message: "Repeat password wasn't provided." });
@@ -86,7 +86,7 @@ family.post("/update", async (req, res) => {
     });
 
     // !updateObject.password because we want to check if password is equal to confirmation password (which is achieved by checking if password exists, statement returns false, so isLogin = false).
-    const isError = CheckInputs.family(updateObject, res, !updateObject.password);
+    const isError = CheckInputs.account(updateObject, res, !updateObject.password);
     if(isError) return;
 
     if(updateObject?.password) {
@@ -97,8 +97,8 @@ family.post("/update", async (req, res) => {
     }
 
     try {
-        const queryResult = await DB.family.update({ id, updateObject });
-        if(queryResult.affectedRows) console.log("Row has been updated in Family table.");
+        const queryResult = await DB.account.update({ id, updateObject });
+        if(queryResult.affectedRows) console.log("Row has been updated in Account table.");
 
         res.status(200).json(updateObject);
     } catch(err) {
@@ -107,11 +107,11 @@ family.post("/update", async (req, res) => {
     }
 });
 
-family.post("/get-schedules", async (req, res) => {
+account.post("/get-schedules", async (req, res) => {
     const { id } = req.body;
 
     try {
-        const queryResult = await DB.family.getSchedules({ id });
+        const queryResult = await DB.account.getSchedules({ id });
         res.status(200).json(queryResult);
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
@@ -119,11 +119,11 @@ family.post("/get-schedules", async (req, res) => {
     }
 });
 
-family.post("/get-medications", async (req, res) => {
+account.post("/get-medications", async (req, res) => {
     const { id } = req.body;
 
     try {
-        const queryResult = await DB.family.getMedications({ id });
+        const queryResult = await DB.account.getMedications({ id });
         res.status(200).json(queryResult);
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
@@ -131,4 +131,4 @@ family.post("/get-medications", async (req, res) => {
     }
 });
 
-module.exports = family;
+module.exports = account;

@@ -8,7 +8,7 @@ import { DB } from "../../../functions/DB";
 import { CheckInputs } from "../../../functions/CheckInputs";
 import { images } from "../../../data/images";
 
-const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInventoryCreateModal, setInfo, setMedications }) => {
+const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInventoryCreateModal, setInfo, setMedications }) => {
     const [inputs, setInputs] = useState({ name: "", description: "", substance: "", expirationDate: { day: "", month: "", year: "" }, amount: "", amountUnit: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [isAutocompleteActive, setIsAutocompleteActive] = useState(false);
@@ -30,7 +30,7 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
 
         setIsLoading(true);
         
-        const medicationResult = await DB.medication.create({ family_id: family.id, ...inputs });
+        const medicationResult = await DB.medication.create({ account_id: account.id, ...inputs });
         
         if(medicationResult.message) {
             setIsLoading(false);
@@ -40,7 +40,7 @@ const SchedulesInventoryCreate = ({ family, inventoryCreateModalRef, disableInve
         }
 
         const eventResult = await DB.event.create({
-            family_id: family.id,
+            account_id: account.id,
             schedule_id: null,
             dose_id: null,
             medication_id: medicationResult.id,

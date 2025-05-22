@@ -15,8 +15,8 @@ app.get("/", (req, res) => {
     res.send("Hello world!");
 });
 
-const family = require("./routes/family.js");
-app.use("/family", family);
+const account = require("./routes/account.js");
+app.use("/account", account);
 
 const schedule = require("./routes/schedule.js");
 app.use("/schedule", schedule);

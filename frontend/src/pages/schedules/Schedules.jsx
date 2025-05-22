@@ -12,7 +12,7 @@ import { ExtendedString } from "../../functions/ExtendedString";
 import { images } from "../../data/images";
 
 const Schedules = () => {
-    const [family, setFamily] = useState({});
+    const [account, setAccount] = useState({});
     const [schedules, setSchedules] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [schedulesLoading, setSchedulesLoading] = useState(true);
@@ -37,27 +37,27 @@ const Schedules = () => {
         if(token === null) navigate("/");
 
         else {
-            const getFamily = async () => {
-                const result = await DB.family.loggedIn(token);
+            const getAccount = async () => {
+                const result = await DB.account.loggedIn(token);
                 
                 if(result.message) {
                     localStorage.removeItem("token");
                     navigate("/");
                 }
                 
-                setFamily(result);
+                setAccount(result);
                 setIsLoading(false);
             }
 
-            getFamily();
+            getAccount();
         }
     }, []);
 
     useEffect(() => {
-        if(!Object.keys(family).length) return;
+        if(!Object.keys(account).length) return;
 
         const getSchedules = async () => {
-            const result = await DB.family.getSchedules(family.id);
+            const result = await DB.account.getSchedules(account.id);
 
             if(result.message) return;
 
@@ -67,7 +67,7 @@ const Schedules = () => {
         }
 
         getSchedules();
-    }, [family]);
+    }, [account]);
 
     useEffect(() => {
         if(schedules.length && noSchedules) setNoSchedules(false);
@@ -140,8 +140,8 @@ const Schedules = () => {
                 {info.message && <Info info={info} setInfo={setInfo} />}
                 
                 {modals.profile && <SchedulesProfile
-                    family={family}
-                    setFamily={setFamily}
+                    account={account}
+                    setAccount={setAccount}
                     profileModalHolderRef={profileModalHolderRef}
                     profileModalRef={profileModalRef}
                     disableProfileModal={disableProfileModal}
@@ -149,13 +149,13 @@ const Schedules = () => {
                 />}
 
                 {modals.inventory && <SchedulesInventory
-                    family={family}
+                    account={account}
                     inventoryModalRef={inventoryModalRef}
                     disableInventoryModal={disableInventoryModal}
                 />}
                 
                 {modals.create && <SchedulesCreate
-                    family={family}
+                    account={account}
                     createModalRef={createModalRef}
                     disableCreateModal={disableCreateModal}
                     setSchedules={setSchedules}
@@ -163,13 +163,13 @@ const Schedules = () => {
                 />}
 
                 {modals.history && <SchedulesHistory
-                    family={family}
+                    account={account}
                     historyModalRef={historyModalRef}
                     disableHistoryModal={disableHistoryModal}
                     setInfo={setInfo}
                 />}
                 
-                <h2>Welcome back to <span>{family.name}</span>!</h2>
+                <h2>Welcome back to <span>{account.name}</span>!</h2>
 
                 {schedulesLoading && !noSchedules ? <Loading /> : <div
                     className="list"

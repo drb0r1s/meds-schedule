@@ -11,9 +11,9 @@ dataPool.get = ({ id }) => {
     });
 }
 
-dataPool.create = ({ family_id, name, description, color, created_at, updated_at }) => {
+dataPool.create = ({ account_id, name, description, color, created_at, updated_at }) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO Schedule (family_id, name, description, color, created_at, updated_at) VALUES (?,?,?,?,?,?)", [family_id, name, description, color, created_at, updated_at], (err, res) => {
+        connection.query("INSERT INTO Schedule (account_id, name, description, color, created_at, updated_at) VALUES (?,?,?,?,?,?)", [account_id, name, description, color, created_at, updated_at], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });

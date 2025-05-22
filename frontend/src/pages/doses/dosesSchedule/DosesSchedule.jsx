@@ -56,7 +56,7 @@ const DosesSchedule = ({ schedule, setSchedule, dosesScheduleModalRef, disableDo
         }
 
         const eventResult = await DB.event.create({
-            family_id: schedule.family_id,
+            account_id: schedule.account_id,
             schedule_id: null,
             dose_id: null,
             medication_id: null,

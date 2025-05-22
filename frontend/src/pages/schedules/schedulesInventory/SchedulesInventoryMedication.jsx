@@ -75,7 +75,7 @@ const SchedulesInventoryMedication = ({ medication, setMedication, inventoryMedi
         }
 
         const eventResult = await DB.event.create({
-            family_id: medication.family_id,
+            account_id: medication.account_id,
             schedule_id: null,
             dose_id: null,
             medication_id: null,

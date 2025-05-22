@@ -8,7 +8,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }) => {    
+const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal }) => {    
     const [medications, setMedications] = useState([]);
     const [medication, setMedication] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +21,7 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
 
     useEffect(() => {
         const getMedications = async () => {
-            const result = await DB.family.getMedications(family.id);
+            const result = await DB.account.getMedications(account.id);
             if(result.message) return;
 
             setMedications(result);
@@ -77,7 +77,7 @@ const SchedulesInventory = ({ family, inventoryModalRef, disableInventoryModal }
             {info.message && <Info info={info} setInfo={setInfo} />}
             
             {modals.create && <ScheduleInventoryCreate
-                family={family}
+                account={account}
                 inventoryCreateModalRef={inventoryCreateModalRef}
                 disableInventoryCreateModal={disableInventoryCreateModal}
                 info={info}

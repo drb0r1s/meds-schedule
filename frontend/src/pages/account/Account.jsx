@@ -23,12 +23,12 @@ const Account = () => {
     }
 
     async function handleContinue() {
-        const isError = CheckInputs.family(inputs, setInfo, isLogin);
+        const isError = CheckInputs.account(inputs, setInfo, isLogin);
         if(isError) return;
         
         if(isLogin) {
             setIsLoading(true);
-            const result = await DB.family.login(inputs);
+            const result = await DB.account.login(inputs);
             setIsLoading(false);
 
             if(result.message) return setInfo({ type: "error", message: result.message });
@@ -41,13 +41,13 @@ const Account = () => {
 
         else {
             setIsLoading(true);
-            const result = await DB.family.register(inputs);
+            const result = await DB.account.register(inputs);
             setIsLoading(false);
 
             if(result.message) return setInfo({ type: "error", message: result.message });
         
             else {
-                setInfo({ type: "success", message: `Family ${inputs.name} was created successfully!` });
+                setInfo({ type: "success", message: `Account ${inputs.name} was created successfully!` });
                 changePanel(true);
             }
         }

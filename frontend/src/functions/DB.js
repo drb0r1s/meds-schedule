@@ -27,29 +27,29 @@ export const DB = {
         }
     },
 
-    family: {
+    account: {
         login: async value => {
-            return await DB.postRequest(`${DB.URL}family/login`, value);
+            return await DB.postRequest(`${DB.URL}account/login`, value);
         },
     
         loggedIn: async token => {
-            return await DB.postRequest(`${DB.URL}family/loggedIn`, { token });
+            return await DB.postRequest(`${DB.URL}account/loggedIn`, { token });
         },
         
         register: async value => {
-            return await DB.postRequest(`${DB.URL}family/register`, value);
+            return await DB.postRequest(`${DB.URL}account/register`, value);
         },
 
         update: async (id, value) => {
-            return await DB.postRequest(`${DB.URL}family/update`, { id, value });
+            return await DB.postRequest(`${DB.URL}account/update`, { id, value });
         },
 
         getSchedules: async id => {
-            return await DB.postRequest(`${DB.URL}family/get-schedules`, { id });
+            return await DB.postRequest(`${DB.URL}account/get-schedules`, { id });
         },
 
         getMedications: async id => {
-            return await DB.postRequest(`${DB.URL}family/get-medications`, { id });
+            return await DB.postRequest(`${DB.URL}account/get-medications`, { id });
         }
     },
 
@@ -106,8 +106,8 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}medication/delete`, { id });
         },
 
-        checkExistence: async (family_id, medications) => {
-            return await DB.postRequest(`${DB.URL}medication/check-existence`, { family_id, medications });
+        checkExistence: async (account_id, medications) => {
+            return await DB.postRequest(`${DB.URL}medication/check-existence`, { account_id, medications });
         }
     },
 
@@ -134,8 +134,8 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}event/create`, { value });
         },
 
-        getAll: async family_id => {
-            return await DB.postRequest(`${DB.URL}event/get-all`, { family_id });
+        getAll: async account_id => {
+            return await DB.postRequest(`${DB.URL}event/get-all`, { account_id });
         }
     }
 };

@@ -7,7 +7,7 @@ import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
-const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInfo }) => {
+const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setInfo }) => {
     const [events, setEvents] = useState([]);
     const [filter, setFilter] = useState("");
     const [filteredEvents, setFilteredEvents] = useState([]);
@@ -16,11 +16,11 @@ const SchedulesHistory = ({ family, historyModalRef, disableHistoryModal, setInf
 
     const navigate = useNavigate();
 
-    const menuButtons = ["family", "schedule", "dose", "medication"];
+    const menuButtons = ["account", "schedule", "dose", "medication"];
 
     useEffect(() => {
         const getEvents = async () => {
-            const result = await DB.event.getAll(family.id);
+            const result = await DB.event.getAll(account.id);
             setIsLoading(false);
 
             if(result.message) {

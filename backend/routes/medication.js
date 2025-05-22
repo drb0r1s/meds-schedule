@@ -7,13 +7,13 @@ const CheckInputs = require("../functions/CheckInputs");
 const medication = express.Router();
 
 medication.post("/create", async (req, res) => {
-    const { family_id, name, description, substance, expirationDate, amount, amountUnit } = req.body;
+    const { account_id, name, description, substance, expirationDate, amount, amountUnit } = req.body;
 
     const isError = CheckInputs.medication({ name, description, substance, expirationDate, amount, amountUnit }, res);
     if(isError) return;
 
     const createObject = {
-        family_id,
+        account_id,
         name,
         description,
         substance,
@@ -81,14 +81,14 @@ medication.post("/delete", async (req, res) => {
 });
 
 medication.post("/check-existence", async (req, res) => {
-    const { family_id, medications } = req.body;
+    const { account_id, medications } = req.body;
 
     const medicationNames = [];
 
     for(let i = 0; i < medications.length; i++) medicationNames.push(medications[i].name);
 
     try {
-        const queryResult = await DB.medication.getSpecific({ family_id, names: medicationNames });
+        const queryResult = await DB.medication.getSpecific({ account_id, names: medicationNames });
         
         let status;
         const idMedications = [];

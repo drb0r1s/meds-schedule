@@ -2,7 +2,7 @@ const error = require("./error");
 const ExtendedDate = require("./ExtendedDate");
 
 const CheckInputs = {
-    family: (inputs, res, isLogin) => {
+    account: (inputs, res, isLogin) => {
         if(inputs.name !== undefined && !inputs.name.length) return error(res, { message: "Name field is empty." });
         else if(inputs.password !== undefined && !inputs.password.length) return error(res, { message: "Password field is empty." });
         else if(inputs.name !== undefined && (inputs.name.length < 3 || inputs.name.length > 64)) return error(res, { message: "Name length should be greater than 2 or less than 64!" });

@@ -36,7 +36,7 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         // Create a copy of inputs.medication array, but stop the last index, because we don't need empty input.
         const medications = inputs.medication.slice(0, -1);
 
-        const medicationsResult = await DB.medication.checkExistence(schedule.family_id, medications);
+        const medicationsResult = await DB.medication.checkExistence(schedule.account_id, medications);
         if(medicationsResult.message) setInfo({ type: "error", message: medicationsResult.message });
         
         else {
@@ -59,7 +59,7 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
             }
 
             const eventResult = await DB.event.create({
-                family_id: schedule.family_id,
+                account_id: schedule.account_id,
                 schedule_id: schedule.id,
                 dose_id: doseResult.id,
                 medication_id: null,
