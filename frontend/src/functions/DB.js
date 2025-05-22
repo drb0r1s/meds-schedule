@@ -4,8 +4,8 @@ export const DB = {
     getRequest: async URL => {
         try {
             const response = await fetch(URL);
-
             const result = await response.json();
+
             return result;
         } catch(err) {
             console.error(`ERROR: ${err}`);
@@ -31,9 +31,13 @@ export const DB = {
         login: async value => {
             return await DB.postRequest(`${DB.URL}account/login`, value);
         },
+
+        logout: async () => {
+            return await DB.getRequest(`${DB.URL}account/logout`);
+        },
     
-        loggedIn: async token => {
-            return await DB.postRequest(`${DB.URL}account/loggedIn`, { token });
+        loggedIn: async () => {
+            return await DB.getRequest(`${DB.URL}account/loggedIn`);
         },
         
         register: async value => {

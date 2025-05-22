@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import "./SchedulesProfile.css";
 import Edit from "../../../components/edit/Edit";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
+import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
 const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
@@ -30,7 +31,7 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
         setTimeout(() => setIsEditModalActive(false), 300);
     }
 
-    function handleButton(button) {
+    async function handleButton(button) {
         switch(button) {
             case "inventory": break;
             case "notifications": break;
@@ -39,7 +40,7 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
                 setIsEditModalActive(true);
                 break;
             case "sign out":
-                localStorage.removeItem("token");
+                await DB.account.logout();
                 navigate("/");
 
                 break;

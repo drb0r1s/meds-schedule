@@ -11,9 +11,9 @@ dataPool.get = ({ name }) => {
     });
 }
 
-dataPool.loggedIn = ({ token }) => {
+dataPool.loggedIn = ({ accountId }) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM Account WHERE password = ?", [token], (err, res) => {
+        connection.query("SELECT * FROM Account WHERE id = ?", [accountId], (err, res) => {
             if(err) return reject(err);
             return resolve(res[0]);
         });

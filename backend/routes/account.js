@@ -20,6 +20,9 @@ account.post("/login", async (req, res) => {
         const isMatch = await bcrypt.compare(password, queryResult.password);
         if(!isMatch) return error(res, { message: "Invalid password." });
 
+        req.session.loggedIn = true;
+        req.session.accountId = queryResult.id;
+
         res.status(200).json(queryResult);
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
@@ -27,11 +30,20 @@ account.post("/login", async (req, res) => {
     }
 });
 
-account.post("/loggedIn", async (req, res) => {
-    const { token } = req.body;
+account.get("/logout", async (req, res) => {
+    req.session.loggedIn = false;
+    req.session.accountId = null;
+
+    res.status(200).json({ success: true });
+});
+
+account.get("/loggedIn", async (req, res) => {
+    const { loggedIn, accountId } = req.session;
+
+    if(!loggedIn) return error(res, { message: "Not logged in." });
 
     try {
-        const queryResult = await DB.account.loggedIn({ token });
+        const queryResult = await DB.account.loggedIn({ accountId });
         if(!queryResult) return error(res, { message: "Account not found." });
 
         res.status(200).json(queryResult);

@@ -1,13 +1,28 @@
 const express = require("express");
 const cors = require("cors");
+const session = require("express-session");
 require("dotenv").config();
 
 const port = 9999;
 
 const app = express();
 
-app.use(cors());
+app.set("trust proxy", 1);
+
 app.use(express.json());
+
+app.use(session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+app.use(cors({
+    origin: "http://localhost:9998",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
+    credentials: true
+}));
 
 app.listen(port, () => console.log(`Server is listening on http://88.200.63.148:${port}/`));
 

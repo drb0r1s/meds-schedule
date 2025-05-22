@@ -32,11 +32,7 @@ const Account = () => {
             setIsLoading(false);
 
             if(result.message) return setInfo({ type: "error", message: result.message });
-            
-            else {
-                localStorage.setItem("token", result.password);
-                navigate("/schedules");
-            }
+            navigate("/schedules");
         }
 
         else {

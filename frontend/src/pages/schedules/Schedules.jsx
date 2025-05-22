@@ -32,25 +32,19 @@ const Schedules = () => {
     const menuButtonIcons = [images.profileIcon, images.medicationIcon, images.plusIcon, images.notificationIcon, images.historyIcon];
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-
-        if(token === null) navigate("/");
-
-        else {
-            const getAccount = async () => {
-                const result = await DB.account.loggedIn(token);
+        const getAccount = async () => {
+            const result = await DB.account.loggedIn();
                 
-                if(result.message) {
-                    localStorage.removeItem("token");
-                    navigate("/");
-                }
-                
-                setAccount(result);
-                setIsLoading(false);
+            if(result.message) {
+                navigate("/");
+                return;
             }
-
-            getAccount();
+                
+            setAccount(result);
+            setIsLoading(false);
         }
+
+        getAccount();
     }, []);
 
     useEffect(() => {
