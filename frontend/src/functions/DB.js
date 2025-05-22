@@ -3,7 +3,7 @@ export const DB = {
 
     getRequest: async URL => {
         try {
-            const response = await fetch(URL);
+            const response = await fetch(URL, { credentials: "include" });
             const result = await response.json();
 
             return result;
@@ -17,7 +17,8 @@ export const DB = {
             const response = await fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(value)
+                body: JSON.stringify(value),
+                credentials: "include"
             });
     
             const result = await response.json();

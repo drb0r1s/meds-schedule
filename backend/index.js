@@ -13,14 +13,13 @@ app.use(express.json());
 
 app.use(session({
     secret: process.env.SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: false }
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, sameSite: "lax" }
 }));
 
 app.use(cors({
     origin: "http://localhost:9998",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true
 }));
 

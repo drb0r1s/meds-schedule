@@ -34,6 +34,8 @@ const Schedules = () => {
     useEffect(() => {
         const getAccount = async () => {
             const result = await DB.account.loggedIn();
+
+            console.log(result)
                 
             if(result.message) {
                 navigate("/");
