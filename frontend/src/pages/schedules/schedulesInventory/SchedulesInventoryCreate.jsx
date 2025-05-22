@@ -16,10 +16,12 @@ const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInv
     const autocompleteRef = useRef(null);
 
     useEffect(() => {
-        if(isAutocompleteActive) setTimeout(() => { autocompleteRef.current.id = "autocomplete-active" }, 10);
+        if(isAutocompleteActive) setTimeout(() => { if(autocompleteRef.current) autocompleteRef.current.id = "autocomplete-active" }, 10);
     }, [isAutocompleteActive]);
 
     function disableAutocomplete() {
+        if(!autocompleteRef.current) return;
+        
         autocompleteRef.current.id = ""
         setTimeout(() => setIsAutocompleteActive(false), 300);
     }
@@ -99,6 +101,7 @@ const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInv
                             if(e.target.value) setIsAutocompleteActive(true);
                             else disableAutocomplete();
                         }}
+                        onBlur={disableAutocomplete}
                     />
                 </fieldset>
 

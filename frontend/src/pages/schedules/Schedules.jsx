@@ -169,7 +169,7 @@ const Schedules = () => {
                     setInfo={setInfo}
                 />}
                 
-                <h2>Welcome back to <span>{account.name}</span>!</h2>
+                <h2>Welcome back, <span>{account.name}</span>!</h2>
 
                 {schedulesLoading && !noSchedules ? <Loading /> : <div
                     className="list"

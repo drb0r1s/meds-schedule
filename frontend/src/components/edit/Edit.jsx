@@ -23,7 +23,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
     const autocompleteRef = useRef(null);
     
     useEffect(() => {
-        if(isAutocompleteActive) setTimeout(() => { autocompleteRef.current.id = "autocomplete-active" }, 10);
+        if(isAutocompleteActive) setTimeout(() => { if(autocompleteRef.current) autocompleteRef.current.id = "autocomplete-active" }, 10);
     }, [isAutocompleteActive]);
     
     function disableAutocomplete() {
@@ -336,6 +336,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                             if(e.target.value) setIsAutocompleteActive(true);
                             else disableAutocomplete();
                         }}
+                        onBlur={() => { if(type === "medication") disableAutocomplete() }}
                     />
                 </fieldset>
 

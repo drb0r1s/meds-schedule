@@ -11,7 +11,7 @@ import { CheckInputs } from "../../functions/CheckInputs";
 
 const Account = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "", type: "", adminPassword: "" });
+    const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "", type: "individual", adminPassword: "" });
     const [info, setInfo] = useState({ type: "", message: "" });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -19,7 +19,7 @@ const Account = () => {
 
     function changePanel(login) {
         setIsLogin(login);
-        setInputs({ name: "", password: "", repeatPassword: "" });
+        setInputs({ name: "", password: "", repeatPassword: "", type: "individual", adminPassword: "" });
     }
 
     async function handleContinue() {

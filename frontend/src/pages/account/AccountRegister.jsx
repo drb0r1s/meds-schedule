@@ -4,7 +4,6 @@ import Checkbox from "../../components/checkbox/Checkbox";
 
 const AccountRegister = ({ inputs, setInputs }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [accountType, setAccountType] = useState("individual");
     const [showAdminPassword, setShowAdminPassword] = useState(false);
     
     return(
@@ -53,21 +52,21 @@ const AccountRegister = ({ inputs, setInputs }) => {
                 <div className="account-type-checkboxes">
                     <Checkbox
                         title="Individual"
-                        value={accountType}
-                        isChecked={accountType === "individual"}
-                        onCheck={() => setAccountType("individual")}
+                        value={inputs.type}
+                        isChecked={inputs.type === "individual"}
+                        onCheck={() => setInputs({...inputs, type: "individual"})}
                     />
 
                     <Checkbox
                         title="Family"
-                        value={accountType}
-                        isChecked={accountType === "family"}
-                        onCheck={() => setAccountType("family")}
+                        value={inputs.type}
+                        isChecked={inputs.type === "family"}
+                        onCheck={() => setInputs({...inputs, type: "family"})}
                     />
                 </div>
             </fieldset>
 
-            {accountType === "family" && <fieldset>
+            {inputs.type === "family" && <fieldset>
                 <input
                     type={showAdminPassword ? "text" : "password"}
                     placeholder="Admin password"

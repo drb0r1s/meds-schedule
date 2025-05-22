@@ -9,9 +9,11 @@ const Info = ({ info, setInfo }) => {
     let interval;
 
     useEffect(() => {
-        setTimeout(() => { infoRef.current.id = "info-active" }, 10);
+        setTimeout(() => { if(infoRef.current) infoRef.current.id = "info-active" }, 10);
         
         interval = setInterval(() => {
+            if(!lineRef.current) return;
+            
             const lineRefWidth = parseInt(getComputedStyle(lineRef.current).getPropertyValue("width"));
             
             if(lineRefWidth <= 0) disableInfo();
@@ -22,6 +24,8 @@ const Info = ({ info, setInfo }) => {
     }, []);
 
     function disableInfo() {
+        if(!infoRef.current) return;
+        
         infoRef.current.id = "";
         clearInterval(interval);
 
