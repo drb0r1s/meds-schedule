@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Account.css";
 import Logo from "../../components/logo/Logo";
@@ -16,6 +16,18 @@ const Account = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const getAccount = async () => {
+            setIsLoading(true);
+            const result = await DB.account.loggedIn();
+            setIsLoading(false);
+
+            if(result.id) navigate("/schedules");
+        }
+
+        getAccount();
+    }, []);
 
     function changePanel(login) {
         setIsLogin(login);

@@ -15,11 +15,11 @@ app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, sameSite: "lax" }
+    cookie: { secure: false }
 }));
 
 app.use(cors({
-    origin: "http://localhost:9998",
+    origin: "http://88.200.63.148:9998",
     credentials: true
 }));
 

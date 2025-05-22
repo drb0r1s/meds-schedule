@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./SchedulesProfile.css";
+import Loading from "../../../components/loading/Loading";
 import Edit from "../../../components/edit/Edit";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
 const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [isEditModalActive, setIsEditModalActive] = useState(false);
+
     const editModalRef = useRef(null);
     
     const navigate = useNavigate();
@@ -40,7 +43,10 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
                 setIsEditModalActive(true);
                 break;
             case "sign out":
+                setIsLoading(true);
                 await DB.account.logout();
+                setIsLoading(false);
+
                 navigate("/");
 
                 break;
@@ -56,6 +62,8 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
                 if(e.target.classList.contains("schedules-profile-holder")) disableProfileModal();
             }}
         >
+            {isLoading && <Loading />}
+            
             {isEditModalActive && <Edit
                 type="account"
                 editModalRef={editModalRef}
