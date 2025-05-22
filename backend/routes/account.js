@@ -31,10 +31,15 @@ account.post("/login", async (req, res) => {
 });
 
 account.get("/logout", async (req, res) => {
-    req.session.loggedIn = false;
-    req.session.accountId = null;
+    req.session.destroy(err => {
+        if(err) {
+            console.error(`BACKEND ERROR: ${err}`);
+            return error(res, { message: err });
+        }
 
-    res.status(200).json({ success: true });
+        res.clearCookie("connect.sid", { path: "/" });
+        res.status(200).json({ success: true });
+    });
 });
 
 account.get("/loggedIn", async (req, res) => {
