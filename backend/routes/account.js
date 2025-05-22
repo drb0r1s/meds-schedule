@@ -42,17 +42,22 @@ account.post("/loggedIn", async (req, res) => {
 });
 
 account.post("/register", async (req, res) => {
-    const { name, password, repeatPassword } = req.body;
+    const { name, password, repeatPassword, type, adminPassword } = req.body;
     
-    const isError = CheckInputs.account({ name, password, repeatPassword }, res, false);
+    const isError = CheckInputs.account({ name, password, repeatPassword, type, adminPassword }, res, false);
     if(isError.message) return;
 
     const saltRounds = 10; // Hash complexity for the password (based on bcrypt library).
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    let hashedAdminPassword = null;
+    if(type === "family") hashedAdminPassword = await bcrypt.hash(adminPassword, saltRounds);
+
     const registerObject = {
         name,
         password: hashedPassword,
+        type,
+        admin_password: hashedAdminPassword,
         description: "",
         color: "",
         created_at: ExtendedDate.now(),

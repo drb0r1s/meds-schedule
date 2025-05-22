@@ -6,6 +6,11 @@
     gap: 10px;
 }
 
+.account-register {
+    height: 340px;
+    justify-content: flex-start;
+}
+
 .account-panel fieldset {
     display: flex;
     align-items: flex-start;
@@ -13,6 +18,30 @@
     flex-direction: column;
     gap: 10px;
     border: none;
+}
+
+.account-panel .account-type {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.account-panel .account-type p {
+    color: white;
+    font-size: 17px;
+    font-family: Roboto-Light;
+    margin: 0;
+}
+
+.account-panel .account-type .account-type-checkboxes {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .account-panel fieldset input {

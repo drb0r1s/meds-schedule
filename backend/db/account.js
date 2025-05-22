@@ -20,9 +20,9 @@ dataPool.loggedIn = ({ token }) => {
     });
 }
 
-dataPool.register = ({ name, password, description, color, created_at, updated_at }) => {
+dataPool.register = ({ name, password, type, admin_password, description, color, created_at, updated_at }) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO Account (name, password, description, color, created_at, updated_at) VALUES (?,?,?,?,?,?)", [name, password, description, color, created_at, updated_at], (err, res) => {
+        connection.query("INSERT INTO Account (name, password, type, admin_password, description, color, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)", [name, password, type, admin_password, description, color, created_at, updated_at], (err, res) => {
             if(err) return reject(err);
             return resolve(res);
         });

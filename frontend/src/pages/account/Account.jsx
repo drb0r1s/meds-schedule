@@ -11,7 +11,7 @@ import { CheckInputs } from "../../functions/CheckInputs";
 
 const Account = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "" });
+    const [inputs, setInputs] = useState({ name: "", password: "", repeatPassword: "", type: "", adminPassword: "" });
     const [info, setInfo] = useState({ type: "", message: "" });
     const [isLoading, setIsLoading] = useState(false);
 

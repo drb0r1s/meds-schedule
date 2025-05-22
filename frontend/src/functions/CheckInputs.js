@@ -37,6 +37,21 @@ export const CheckInputs = {
                 setInfo({ type: "error", message: "Password and confirmation password don't match!" });
                 return true;
             }
+
+            else if(inputs.type !== undefined && ["individual", "family"].indexOf(inputs.type) === -1) {
+                setInfo({ type: "error", message: "Account type is invalid." });
+                return true;
+            }
+
+            else if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) {
+                setInfo({ type: "error", message: "Admin password field is empty." });
+                return true;
+            }
+
+            else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) {
+                setInfo({ type: "error", message: "Admin password length should be greater than 7 or less than 64!" });
+                return true;
+            }
         }
 
         return false;

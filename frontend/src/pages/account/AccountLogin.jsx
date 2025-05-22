@@ -32,6 +32,7 @@ const AccountLogin = ({ inputs, setInputs }) => {
                     title="Show password"
                     value={showPassword}
                     setValue={setShowPassword}
+                    isChecked={showPassword}
                 />
             </fieldset>
         </form>

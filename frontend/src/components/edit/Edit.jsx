@@ -362,6 +362,7 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                         title="Show password"
                         value={showPassword}
                         setValue={setShowPassword}
+                        isChecked={showPassword}
                     />
                 </fieldset>}
 
