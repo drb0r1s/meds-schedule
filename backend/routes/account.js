@@ -22,6 +22,7 @@ account.post("/login", async (req, res) => {
 
         req.session.loggedIn = true;
         req.session.accountId = queryResult.id;
+        if(queryResult.type === "individual") req.session.admin = true;
 
         res.status(200).json(queryResult);
     } catch(err) {
@@ -43,15 +44,17 @@ account.get("/logout", async (req, res) => {
 });
 
 account.get("/loggedIn", async (req, res) => {
-    const { loggedIn, accountId } = req.session;
+    const { loggedIn, accountId, admin } = req.session;
 
     if(!loggedIn) return error(res, { message: "Not logged in." });
+
+    const isAdmin = admin !== undefined;
 
     try {
         const queryResult = await DB.account.loggedIn({ accountId });
         if(!queryResult) return error(res, { message: "Account not found." });
 
-        res.status(200).json(queryResult);
+        res.status(200).json({...queryResult, admin: isAdmin});
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });
@@ -86,6 +89,28 @@ account.post("/register", async (req, res) => {
         if(queryResult.affectedRows) console.log("New row has been inserted in Account table.");
     
         res.status(200).json({ ...registerObject, id: queryResult.insertId });
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
+account.post("/admin-login", async (req, res) => {
+    const { id, adminPassword } = req.body;
+
+    const isError = CheckInputs.admin({ adminPassword }, res);
+    if(isError.message) return;
+
+    try {
+        const queryResult = await DB.account.loggedIn({ accountId: id });
+        if(!queryResult) return error(res, { message: "Account not found." });
+
+        const isMatch = await bcrypt.compare(adminPassword, queryResult.admin_password);
+        if(!isMatch) return error(res, { message: "Invalid admin password." });
+
+        req.session.admin = true;
+
+        res.status(200).json({ admin: true });
     } catch(err) {
         console.error(`BACKEND ERROR: ${err}`);
         return error(res, { message: err.sqlMessage });

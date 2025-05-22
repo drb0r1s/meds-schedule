@@ -57,6 +57,18 @@ export const CheckInputs = {
         return false;
     },
 
+    admin: (inputs, setInfo) => {
+        if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) {
+            setInfo({ type: "error", message: "Admin password field is empty." });
+            return true;
+        }
+
+        else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) {
+            setInfo({ type: "error", message: "Admin password length should be greater than 7 or less than 64!" });
+            return true;
+        }
+    },
+
     schedule: (inputs, setInfo) => {
         if(inputs.name !== undefined && !inputs.name.length) {
             setInfo({ type: "error", message: "Name field is empty." });

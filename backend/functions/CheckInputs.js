@@ -20,6 +20,13 @@ const CheckInputs = {
         return false;
     },
 
+    admin: (inputs, res) => {
+        if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) return error(res, { message: "Admin password field is empty." });
+        else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) return error(res, { message: "Admin password length should be greater than 7 or less than 64!" });
+    
+        return false;
+    },
+
     schedule: (inputs, res) => {
         if(inputs.name !== undefined && !inputs.name.length) return error(res, { message: "Name field is empty." });
         else if(inputs.name !== undefined && (inputs.name.length < 3 || inputs.name.length > 64)) return error(res, { message: "Name length should be greater than 2 or less than 64!" });

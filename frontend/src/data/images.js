@@ -12,9 +12,10 @@ import penIcon from "../images/pen-icon.svg";
 import signOutIcon from "../images/sign-out-icon.svg";
 import deleteIcon from "../images/delete-icon.svg";
 import arrowPathIcon from "../images/arrow-path-icon.svg";
+import adminIcon from "../images/admin-icon.svg";
 
 export const images = {
     checkIcon, xIcon, plusIcon, profileIcon, medicationIcon,
     notificationIcon, historyIcon, pillIcon, arrowUpIcon, arrowDownIcon,
-    penIcon, signOutIcon, deleteIcon, arrowPathIcon
+    penIcon, signOutIcon, deleteIcon, arrowPathIcon, adminIcon
 };

@@ -1,0 +1,107 @@
+.schedules-profile-admin {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 40px;
+    background-color: var(--background);
+    position: fixed;
+    left: -100vw;
+    transition: 300ms;
+    overflow-y: hidden;
+    z-index: 2;
+}
+
+#schedules-profile-admin-active {
+    left: 0;
+}
+
+.schedules-profile-admin .loading-holder {
+    position: fixed;
+    z-index: 2;
+}
+
+.schedules-profile-admin .x-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 2;
+}
+
+.schedules-profile-admin .x-button img {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+}
+
+.schedules-profile-admin h2 {
+    height: 75px;
+    width: 100%;
+    color: var(--red);
+    font-size: 28px;
+    text-align: center;
+    font-family: Roboto-Bold;
+    background-color: var(--background);
+    border-bottom: 1px solid white;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+}
+
+.schedules-profile-admin form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.schedules-profile-admin form fieldset {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    border: none;
+    position: relative;
+}
+
+.schedules-profile-admin form fieldset input {
+    width: 100%;
+    color: white;
+    font-size: 18px;
+    font-family: Roboto-Light;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid grey;
+    padding: 10px 15px;
+    transition: 300ms;
+}
+
+.schedules-profile-admin form fieldset input:focus {
+    border-bottom: 1px solid white;
+}
+
+.schedules-profile-admin form fieldset input::placeholder {
+    font-family: Roboto-Light;
+}
+
+.schedules-profile-admin .continue-button {
+    color: white;
+    font-size: 15px;
+    background-color: var(--red);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 30px;
+}

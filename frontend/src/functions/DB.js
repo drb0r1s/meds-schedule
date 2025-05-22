@@ -45,6 +45,10 @@ export const DB = {
             return await DB.postRequest(`${DB.URL}account/register`, value);
         },
 
+        adminLogin: async (id, adminPassword) => {
+            return await DB.postRequest(`${DB.URL}account/admin-login`, { id, adminPassword });
+        },
+
         update: async (id, value) => {
             return await DB.postRequest(`${DB.URL}account/update`, { id, value });
         },
