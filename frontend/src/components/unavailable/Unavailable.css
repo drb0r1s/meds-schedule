@@ -1,0 +1,29 @@
+.unavailable {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-direction: column;
+}
+
+.unavailable .unavailable-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.unavailable .unavailable-content h2 {
+    color: var(--red);
+    font-size: 24px;
+    font-family: Roboto-Medium;
+}
+
+.unavailable .unavailable-content p {
+    color: white;
+    font-size: 17px;
+    font-family: Roboto-Regular;
+}
