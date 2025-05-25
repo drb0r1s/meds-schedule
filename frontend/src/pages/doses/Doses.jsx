@@ -15,6 +15,7 @@ const Doses = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const [account, setAccount] = useState({});
     const [schedule, setSchedule] = useState({});
     const [doses, setDoses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -32,11 +33,19 @@ const Doses = () => {
 
     useEffect(() => {
         if(location.state?.schedule) {
+            setAccount(location.state.account);
             setSchedule(location.state.schedule);
             setIsLoading(false);
         }
 
         else {
+            const getAccount = async () => {
+                const result = await DB.account.loggedIn();
+                if(result.message) return;
+
+                setAccount(result);
+            }
+            
             const getSchedule = async () => {
                 const result = await DB.schedule.get(scheduleId);
                 if(result.message) return;
@@ -45,6 +54,7 @@ const Doses = () => {
                 setIsLoading(false);
             }
 
+            getAccount();
             getSchedule();
         }
     }, []);
@@ -110,6 +120,7 @@ const Doses = () => {
                 />}
 
                 {modals.timeslot && <DosesTimeslot
+                    account={account}
                     schedule={schedule}
                     timeslot={modals.timeslot}
                     dosesTimeslotModalRef={dosesTimeslotModalRef}
@@ -119,6 +130,7 @@ const Doses = () => {
                 />}
 
                 {modals.schedule && <DosesSchedule
+                    account={account}
                     schedule={schedule}
                     setSchedule={setSchedule}
                     dosesScheduleModalRef={dosesScheduleModalRef}

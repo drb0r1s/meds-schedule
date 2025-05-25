@@ -8,7 +8,7 @@ import Confirmation from "../../../components/confirmation/Confirmation";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesSchedule = ({ schedule, setSchedule, dosesScheduleModalRef, disableDosesScheduleModal, setInfo }) => {
+const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, disableDosesScheduleModal, setInfo }) => {
     const [modals, setModals] = useState({ edit: false, confirmation: false });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -114,7 +114,11 @@ const DosesSchedule = ({ schedule, setSchedule, dosesScheduleModalRef, disableDo
                     <h2>{schedule.name}</h2>
                 </div>
 
-                <GeneralInfo type="schedule" values={schedule} />
+                <GeneralInfo
+                    type="schedule"
+                    account={account}
+                    values={schedule}
+                />
 
                 <div className="button-holder">
                     <button onClick={() => setModals({...modals, edit: true})}>

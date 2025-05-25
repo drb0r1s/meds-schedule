@@ -5,7 +5,7 @@ import DosesDose from "../dosesDose/DosesDose";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const DosesTimeslot = ({ schedule, timeslot, dosesTimeslotModalRef, disableDosesTimeslotModal, setDoses, dosesMatrix }) => {
+const DosesTimeslot = ({ account, schedule, timeslot, dosesTimeslotModalRef, disableDosesTimeslotModal, setDoses, dosesMatrix }) => {
     const [id, coordinates] = timeslot;
     const [year, month, day, weekDay, hour] = id.split("-");
     
@@ -61,6 +61,7 @@ const DosesTimeslot = ({ schedule, timeslot, dosesTimeslotModalRef, disableDoses
             {info.message && <Info info={info} setInfo={setInfo} />}
             
             {isDoseModalActive && <DosesDose
+                account={account}
                 dose={dose}
                 setDose={setDose}
                 schedule={schedule}

@@ -7,7 +7,7 @@ import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { images } from "../../../data/images";
 
-const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
+const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
     const [doseMedications, setDoseMedications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [modals, setModals] = useState({ edit: false, confirmation: false });
@@ -207,7 +207,11 @@ const DosesDose = ({ dose, setDose, schedule, dosesDoseModalHolderRef, dosesDose
                     <h2>{dose.name}</h2>
                 </div>
 
-                <GeneralInfo type="dose" values={dose} />
+                <GeneralInfo
+                    type="dose"
+                    account={account}
+                    values={dose}
+                />
 
                 <div className="medication-holder">
                     <h3>Your medication{doseMedications.length > 1 ? "s" : ""}:</h3>

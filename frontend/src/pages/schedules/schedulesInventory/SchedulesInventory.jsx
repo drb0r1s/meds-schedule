@@ -86,6 +86,7 @@ const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal 
             />}
 
             {modals.medication && <SchedulesInventoryMedication
+                account={account}
                 medication={medication}
                 setMedication={setMedication}
                 inventoryMedicationModalRef={inventoryMedicationModalRef}

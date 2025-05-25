@@ -173,7 +173,7 @@ const Schedules = () => {
                         return <button
                             key={index}
                             className="schedule-button"
-                            onClick={() => navigate(`/schedules/${ExtendedString.getDosesURL(schedule.id, schedule.name)}`, { state: { schedule } })}
+                            onClick={() => navigate(`/schedules/${ExtendedString.getDosesURL(schedule.id, schedule.name)}`, { state: { account, schedule } })}
                         >
                             <div
                                 className="background"

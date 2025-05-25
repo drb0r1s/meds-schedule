@@ -8,7 +8,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
-const SchedulesInventoryMedication = ({ medication, setMedication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo, setMedications }) => {
+const SchedulesInventoryMedication = ({ account, medication, setMedication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo, setMedications }) => {
     const [modals, setModals] = useState({ edit: false, confirmation: false });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -138,7 +138,11 @@ const SchedulesInventoryMedication = ({ medication, setMedication, inventoryMedi
                     <p>Amount: <span>{medication.amount} {medication.amount_unit}</span></p>
                     <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date, { noTime: true })}</span></p>
                 
-                    <GeneralInfo type="medication" values={medication} />
+                    <GeneralInfo
+                        type="medication"
+                        account={account}
+                        values={medication}
+                    />
                 </div>
 
                 <div className="menu">
