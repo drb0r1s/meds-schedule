@@ -19,12 +19,12 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
     
     const buttons = {
         first: ["inventory", "notifications", "history"],
-        second: ["admin mode", "sign out"]
+        second: [(account.type === "family" && !account.admin) ? "admin mode" : "edit", "sign out"]
     };
 
     const buttonIcons = {
         first: [images.medicationIcon, images.notificationIcon, images.historyIcon],
-        second: [images.adminIcon, images.signOutIcon]
+        second: [(account.type === "family" && !account.admin) ? images.adminIcon : images.penIcon, images.signOutIcon]
     };
 
     useEffect(() => {
@@ -67,8 +67,6 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
             default:
         }
     }
-
-    console.log(account)
     
     return(
         <div
@@ -106,12 +104,17 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
                     <h2>{account.name}</h2>
                 </div>
 
-                {account.admin && <div className="admin-info">
+                {account.type === "family" && account.admin && <div className="admin-info">
                     <img src={images.adminIcon} alt="ADMIN" />
                     <p>You're logged in as <span>Administrator</span></p>
                 </div>}
                 
-                <GeneralInfo type="account" values={account} />
+                <GeneralInfo
+                    type="account"
+                    account={account}
+                    values={account}
+                    style={!(account.type === "family" && account.admin) ? { paddingTop: "50px" } : {}}
+                />
 
                 <div className="menu">
                     <div className="first-group">

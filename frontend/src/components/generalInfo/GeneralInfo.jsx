@@ -2,9 +2,12 @@ import React from "react";
 import "./GeneralInfo.css";
 import { ExtendedDate } from "../../functions/ExtendedDate";
 
-const GeneralInfo = ({ type, values }) => {
+const GeneralInfo = ({ type, values, style }) => {
     return (
-        <div className="general-info">
+        <div
+            className="general-info"
+            style={style}
+        >
             {!values.description ? <strong>This {type} doesn't have a description.</strong> : <p className="general-info-description">{values.description}</p>}
 
             <p>Created at: <span>{ExtendedDate.display(values.created_at)}</span></p>
