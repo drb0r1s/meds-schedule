@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SchedulesHistory.css";
 import Loading from "../../../components/loading/Loading";
 import { DB } from "../../../functions/DB";
+import { isAdmin } from "../../../functions/isAdmin";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
@@ -32,9 +33,10 @@ const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setIn
                 setNoEvents(true);
                 return;
             }
-            
-            setEvents(result);
-            setFilteredEvents(result);
+
+            const notAdminEvents = isAdmin(account) ? result : getNotAdminEvents(result);
+            setEvents(notAdminEvents);
+            setFilteredEvents(notAdminEvents);
         }
 
         getEvents();
@@ -63,6 +65,17 @@ const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setIn
         setFilter(button);
         setFilteredEvents(newFilteredEvents);
     }
+
+    function getNotAdminEvents(allEvents) {
+        const newEvents = [];
+        const notAdminEventNames = ["Dose Taken", "Dose Missed"];
+
+        for(let i = 0; i < allEvents.length; i++) {
+            if(notAdminEventNames.indexOf(allEvents[i].event_name) > -1) newEvents.push(allEvents[i]);
+        }
+
+        return newEvents;
+    }
     
     return(
         <div className="schedules-history" ref={historyModalRef}>
@@ -73,7 +86,7 @@ const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setIn
 
             <h2>History</h2>
 
-            <div className="filters-menu">
+            {isAdmin(account) && <div className="filters-menu">
                 {menuButtons.map((button, index) => {
                     return <button
                         key={index}
@@ -81,7 +94,7 @@ const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setIn
                         onClick={() => handleButton(button)}
                     >{button}</button>
                 })}
-            </div>
+            </div>}
 
             {isLoading ? <Loading /> : <div
                 className="list"

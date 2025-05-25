@@ -5,6 +5,7 @@ import Edit from "../../../components/edit/Edit";
 import Confirmation from "../../../components/confirmation/Confirmation";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
+import { isAdmin } from "../../../functions/isAdmin";
 import { images } from "../../../data/images";
 
 const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
@@ -247,7 +248,7 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
                     </div>
                 </div>
 
-                <div className="menu">
+                {isAdmin(account) && <div className="menu">
                     <button onClick={() => setModals({...modals, edit: true})}>
                         <img src={images.penIcon} alt="EDIT" />
                         <span>Edit</span>
@@ -257,7 +258,7 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
                         <img src={images.deleteIcon} alt="DELETE" />
                         <span>Delete</span>
                     </button>
-                </div>
+                </div>}
             </div>
         </div>
     );

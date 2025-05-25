@@ -65,6 +65,8 @@
     align-items: center;
     justify-content: space-around;
     padding-top: 15px;
+    position: sticky;
+    top: 75px;
 }
 
 .schedules-history .filters-menu button {
@@ -72,7 +74,7 @@
     font-size: 15px;
     font-family: Roboto-Medium;
     text-transform: capitalize;
-    background-color: transparent;
+    background-color: var(--background);
     border: 1px solid white;
     border-radius: 5px;
     padding: 5px 10px;

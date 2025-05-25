@@ -5,6 +5,7 @@ import SchedulesInventoryMedication from "./SchedulesInventoryMedication";
 import Loading from "../../../components/loading/Loading";
 import Info from "../../../components/Info/Info";
 import { DB } from "../../../functions/DB";
+import { isAdmin } from "../../../functions/isAdmin";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
 import { images } from "../../../data/images";
 
@@ -132,7 +133,7 @@ const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal 
                 </>}
             </div>}
 
-            {!isLoading && <button
+            {isAdmin(account) && !isLoading && <button
                 className="create-button"
                 onClick={() => setModals({...modals, create: true})}
             ><img src={images.plusIcon} alt="CREATE" /></button>}

@@ -6,6 +6,7 @@ import Edit from "../../../components/edit/Edit";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import Confirmation from "../../../components/confirmation/Confirmation";
 import { DB } from "../../../functions/DB";
+import { isAdmin } from "../../../functions/isAdmin";
 import { images } from "../../../data/images";
 
 const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, disableDosesScheduleModal, setInfo }) => {
@@ -120,7 +121,7 @@ const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, 
                     values={schedule}
                 />
 
-                <div className="button-holder">
+                {isAdmin(account) && <div className="button-holder">
                     <button onClick={() => setModals({...modals, edit: true})}>
                         <img src={images.penIcon} alt="EDIT" />
                         <span>Edit</span>
@@ -130,7 +131,7 @@ const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, 
                         <img src={images.deleteIcon} alt="DELETE" />
                         <span>Delete</span>
                     </button>
-                </div>
+                </div>}
             </div>
         </div>
     );
