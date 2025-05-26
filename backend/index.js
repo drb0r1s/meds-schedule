@@ -49,3 +49,7 @@ app.use("/dose-medication", doseMedication);
 
 const event = require("./routes/event.js");
 app.use("/event", event);
+
+app.get(/(.*)/, (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+});

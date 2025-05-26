@@ -120,7 +120,8 @@ const Doses = () => {
             calendarTimeslotsRef.current.style.top = direction === "next" ? "-30px" : "30px";
             calendarTimeslotsRef.current.style.transition = "";
 
-            setWeekDistance(weekDistance - 1);
+            if(direction === "prev") setWeekDistance(weekDistance - 1);
+            else if(direction === "next") setWeekDistance(weekDistance + 1);
 
             setTimeout(() => {
                 calendarTimeslotsRef.current.style.top = "";

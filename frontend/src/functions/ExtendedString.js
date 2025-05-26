@@ -33,8 +33,8 @@ export const ExtendedString = {
             const objectProp = placeholders[i].substring(1, placeholders[i].length - 1);
             const prop = objectProp.split(".")[1];
 
-            const value = event[prop] === null ? "<span>DELETED</span>" : event[prop];
-            newString = newString.replace(placeholders[i], ExtendedString.cutText(value, 12));
+            const value = event[prop] === null ? "<span>DELETED</span>" : ExtendedString.cutText(event[prop], 12);
+            newString = newString.replace(placeholders[i], value);
         }
 
         return newString;
