@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import "./AccountPanel.css";
 import Checkbox from "../../components/checkbox/Checkbox";
 
-const AccountLogin = ({ inputs, setInputs }) => {
+const AccountLogin = ({ ref, inputs, setInputs }) => {
     const [showPassword, setShowPassword] = useState(false);
     
     return(
-        <form className="account-panel account-login">
+        <form
+            className="account-panel account-login"
+            
+            ref={ref}
+        >
             <fieldset>
                 <input
                     type="text"

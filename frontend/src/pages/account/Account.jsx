@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Account.css";
 import Logo from "../../components/logo/Logo";
@@ -15,6 +15,8 @@ const Account = () => {
     const [info, setInfo] = useState({ type: "", message: "" });
     const [isLoading, setIsLoading] = useState(false);
 
+    const accountPanelRef = useRef(null);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,9 +31,19 @@ const Account = () => {
         getAccount();
     }, []);
 
+    useEffect(() => {
+        if(accountPanelRef.current) setTimeout(() => { accountPanelRef.current.id = "account-panel-active" }, 100);
+    }, [isLogin]);
+
     function changePanel(login) {
-        setIsLogin(login);
-        setInputs({ name: "", password: "", repeatPassword: "", type: "individual", adminPassword: "" });
+        if(!accountPanelRef.current) return;
+        
+        accountPanelRef.current.id = "";
+
+        setTimeout(() => {
+            setIsLogin(login);
+            setInputs({ name: "", password: "", repeatPassword: "", type: "individual", adminPassword: "" });
+        }, 300);
     }
 
     async function handleContinue() {
@@ -73,13 +85,23 @@ const Account = () => {
             </div>
 
             {isLogin ? <>
-                <AccountLogin inputs={inputs} setInputs={setInputs} />
+                <AccountLogin
+                    ref={accountPanelRef}
+                    inputs={inputs}
+                    setInputs={setInputs}
+                />
+
                 <p>Don't have an account? <button
                     className="panel-button"
                     onClick={() => changePanel(false)}
                 >Register</button></p>
             </> : <>
-                <AccountRegister inputs={inputs} setInputs={setInputs} />
+                <AccountRegister
+                    ref={accountPanelRef}
+                    inputs={inputs}
+                    setInputs={setInputs}
+                />
+
                 <p>Already have an account? <button
                     className="panel-button"
                     onClick={() => changePanel(true)}
