@@ -4,6 +4,7 @@ import "./Schedules.css";
 import SchedulesProfile from "./schedulesProfile/SchedulesProfile";
 import SchedulesInventory from "./schedulesInventory/SchedulesInventory";
 import SchedulesCreate from "./schedulesCreate/SchedulesCreate";
+import SchedulesNotifications from "./schedulesNotifications/SchedulesNotifications";
 import SchedulesHistory from "./schedulesHistory/SchedulesHistory";
 import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
@@ -17,13 +18,14 @@ const Schedules = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [schedulesLoading, setSchedulesLoading] = useState(true);
     const [noSchedules, setNoSchedules] = useState(false);
-    const [modals, setModals] = useState({ profile: false, inventory: false, create: false, history: false });
+    const [modals, setModals] = useState({ profile: false, inventory: false, create: false, notifications: false, history: false });
     const [info, setInfo] = useState({ type: "", message: "" });
 
     const profileModalHolderRef = useRef(null);
     const profileModalRef = useRef(null);
     const inventoryModalRef = useRef(null);
     const createModalRef = useRef(null);
+    const notificationsModalRef = useRef(null);
     const historyModalRef = useRef(null);
 
     const navigate = useNavigate();
@@ -83,6 +85,10 @@ const Schedules = () => {
     }, [modals.create]);
 
     useEffect(() => {
+        if(modals.notifications) setTimeout(() => { notificationsModalRef.current.id = "schedules-notifications-active" });
+    }, [modals.notifications]);
+
+    useEffect(() => {
         if(modals.history) setTimeout(() => { historyModalRef.current.id = "schedules-history-active" }, 10);
     }, [modals.history]);
 
@@ -105,6 +111,11 @@ const Schedules = () => {
         setTimeout(() => setModals({...modals, create: false}), 300);
     }
 
+    function disableNotificationsModal() {
+        notificationsModalRef.current.id = "";
+        setTimeout(() => setModals({...modals, notifications: false}), 300);
+    }
+
     function disableHistoryModal() {
         historyModalRef.current.id = "";
         setTimeout(() => setModals({...modals, history: false}), 300);
@@ -121,10 +132,13 @@ const Schedules = () => {
             case "create":
                 setModals({...modals, create: true});
                 break;
-            case "notifications": break;
+            case "notifications":
+                setModals({...modals, notifications: true});
+                break;
             case "history":
                 setModals({...modals, history: true});
                 break;
+            default:
         }
     }
     
@@ -153,6 +167,13 @@ const Schedules = () => {
                     createModalRef={createModalRef}
                     disableCreateModal={disableCreateModal}
                     setSchedules={setSchedules}
+                    setInfo={setInfo}
+                />}
+
+                {modals.notifications && <SchedulesNotifications
+                    account={account}
+                    notificationsModalRef={notificationsModalRef}
+                    disableNotificationsModal={disableNotificationsModal}
                     setInfo={setInfo}
                 />}
 

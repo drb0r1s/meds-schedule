@@ -59,6 +59,10 @@ export const DB = {
 
         getMedications: async id => {
             return await DB.postRequest(`${DB.URL}account/get-medications`, { id });
+        },
+
+        getNotifications: async id => {
+            return await DB.postRequest(`${DB.URL}account/get-notifications`, { id });
         }
     },
 

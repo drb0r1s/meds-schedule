@@ -178,4 +178,16 @@ account.post("/get-medications", async (req, res) => {
     }
 });
 
+account.post("/get-notifications", async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const queryResult = await DB.account.getNotifications({ id });
+        res.status(200).json(queryResult);
+    } catch(err) {
+        console.error(`BACKEND ERROR: ${err}`);
+        return error(res, { message: err.sqlMessage });
+    }
+});
+
 module.exports = account;

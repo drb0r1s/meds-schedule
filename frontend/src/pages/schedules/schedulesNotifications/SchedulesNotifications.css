@@ -1,0 +1,79 @@
+.schedules-notifications {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: var(--background);
+    position: fixed;
+    left: -100vw;
+    transition: 300ms;
+    overflow-y: auto;
+    z-index: 2;
+}
+
+#schedules-notifications-active {
+    left: 0;
+}
+
+.schedules-notifications::-webkit-scrollbar {
+    display: none;
+}
+
+.schedules-notifications .loading-holder {
+    position: fixed;
+}
+
+.schedules-notifications .info {
+    z-index: 4;
+}
+
+.schedules-notifications .x-button {
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 2;
+}
+
+.schedules-notifications .x-button img {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+}
+
+.schedules-notifications h2 {
+    height: 75px;
+    width: 100%;
+    color: var(--red);
+    font-size: 28px;
+    text-align: center;
+    font-family: Roboto-Bold;
+    background-color: var(--background);
+    border-bottom: 1px solid white;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    z-index: 1;
+}
+
+.schedules-notifications .list {
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px 0;
+    overflow-y: visible;
+}
+
+.schedules-notifications .list strong {
+    color: grey;
+    font-size: 18px;
+    font-family: Roboto-Thin;
+    font-style: italic;
+}

@@ -64,4 +64,13 @@ dataPool.getMedications = ({ id }) => {
     });
 }
 
+dataPool.getNotifications = ({ id }) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Notification WHERE account_id = ?", [id], (err, res) => {
+            if(err) return reject(err);
+            return resolve(res);
+        });
+    });
+}
+
 module.exports = dataPool;
