@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./Calendar.css";
 import { ExtendedDate } from "../../functions/ExtendedDate";
+import { ExtendedString } from "../../functions/ExtendedString";
 import { images } from "../../data/images";
 
 const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance, calendarTimeslotsRef }) => {
@@ -157,7 +158,7 @@ const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance, calend
                                         key={index}
                                         className={`dose ${dose.status !== "pending" ? `dose-${dose.status}`: ""}`}
                                         style={dose.color ? { backgroundColor: dose.color } : {}}
-                                    >{dose.name}</div>;
+                                    >{ExtendedString.cutText(dose.name, 5)}</div>;
 
                                     return <React.Fragment key={index}></React.Fragment>;
                                 })}

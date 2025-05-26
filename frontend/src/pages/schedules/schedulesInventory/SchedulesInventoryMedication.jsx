@@ -7,6 +7,7 @@ import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { isAdmin } from "../../../functions/isAdmin";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const SchedulesInventoryMedication = ({ account, medication, setMedication, inventoryMedicationModalRef, disableInventoryMedicationModal, setInfo, setMedications }) => {
@@ -131,7 +132,7 @@ const SchedulesInventoryMedication = ({ account, medication, setMedication, inve
             <div className="medication-info-holder">
                 <div className="title">
                     <img src={images.pillIcon} alt="PILL" />
-                    <h2>{medication.name}</h2>
+                    <h2>{ExtendedString.cutText(medication.name, 10)}</h2>
                 </div>
 
                 <div className="info-holder">

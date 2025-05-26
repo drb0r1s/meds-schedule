@@ -8,6 +8,7 @@ import Loading from "../../components/loading/Loading";
 import Info from "../../components/Info/Info";
 import Calendar from "../../components/calendar/Calendar";
 import { DB } from "../../functions/DB";
+import { ExtendedString } from "../../functions/ExtendedString";
 import { images } from "../../data/images";
 
 const Doses = () => {
@@ -175,7 +176,7 @@ const Doses = () => {
                 </div>
                 
                 <div className="menu">
-                    <h2 onClick={() => setModals({...modals, schedule: true})}>{schedule.name}</h2>
+                    <h2 onClick={() => setModals({...modals, schedule: true})}>{ExtendedString.cutText(schedule.name, 10)}</h2>
 
                     <div className="center-group">
                         <button onClick={() => switchCalendarPage("prev")}><img src={images.arrowUpIcon} alt="UP" /></button>

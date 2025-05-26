@@ -6,6 +6,7 @@ import Confirmation from "../../../components/confirmation/Confirmation";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import { DB } from "../../../functions/DB";
 import { isAdmin } from "../../../functions/isAdmin";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, dosesDoseModalRef, disableDosesDoseModal, setInfo, setDoses }) => {
@@ -41,6 +42,8 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
     }, [modals.confirmation]);
 
     function disableEditModal() {
+        if(!editModalRef.current) return;
+
         editModalRef.current.id = "";
         setTimeout(() => setModals({...modals, edit: false}), 300);
     }
@@ -205,7 +208,7 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
                         <img src={images.pillIcon} alt="PILL" />
                     </div>
                 
-                    <h2>{dose.name}</h2>
+                    <h2>{ExtendedString.cutText(dose.name, 10)}</h2>
                 </div>
 
                 <GeneralInfo
@@ -223,7 +226,7 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
                                 <img src={images.pillIcon} alt={doseMedication.name} />
 
                                 <div className="medication-info">
-                                    <strong>{doseMedication.name}</strong>
+                                    <strong>{ExtendedString.cutText(doseMedication.name, 25)}</strong>
                                     <span>{doseMedication.substance}</span>
 
                                     <p>Amount to take: <span>{doseMedication.amount_to_take} {doseMedication.amount_unit}</span></p>

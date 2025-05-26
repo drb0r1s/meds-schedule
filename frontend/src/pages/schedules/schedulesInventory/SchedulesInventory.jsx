@@ -7,6 +7,7 @@ import Info from "../../../components/Info/Info";
 import { DB } from "../../../functions/DB";
 import { isAdmin } from "../../../functions/isAdmin";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal }) => {    
@@ -120,7 +121,7 @@ const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal 
                             <img src={images.pillIcon} alt={medication.name} />
 
                             <div className="info-holder">
-                                <strong>{medication.name}</strong>
+                                <strong>{ExtendedString.cutText(medication.name, 20)}</strong>
                                 <span>{medication.substance}</span>
 
                                 <div className="info-inner-holder">

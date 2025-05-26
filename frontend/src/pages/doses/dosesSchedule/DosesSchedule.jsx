@@ -7,6 +7,7 @@ import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import Confirmation from "../../../components/confirmation/Confirmation";
 import { DB } from "../../../functions/DB";
 import { isAdmin } from "../../../functions/isAdmin";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, disableDosesScheduleModal, setInfo }) => {
@@ -112,7 +113,7 @@ const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, 
                         <img src={images.pillIcon} alt="PILL" />
                     </div>
 
-                    <h2>{schedule.name}</h2>
+                    <h2>{ExtendedString.cutText(schedule.name, 15)}</h2>
                 </div>
 
                 <GeneralInfo

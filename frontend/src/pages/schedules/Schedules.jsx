@@ -184,7 +184,7 @@ const Schedules = () => {
                     setInfo={setInfo}
                 />}
                 
-                <h2>Welcome back, <span>{account.name}</span>!</h2>
+                <h2>Welcome back, <span>{ExtendedString.cutText(account.name, 12)}</span>!</h2>
 
                 {schedulesLoading && !noSchedules ? <Loading /> : <div
                     className="list"
@@ -203,7 +203,7 @@ const Schedules = () => {
                                 <img src={images.pillIcon} alt="PILL" />
                             </div>
 
-                            <p>{schedule.name}</p>
+                            <p>{ExtendedString.cutText(schedule.name, 37)}</p>
                         </button>;
                     })}
                 </div>}

@@ -38,8 +38,12 @@
 .doses-timeslot h2 {
     height: 75px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     color: white;
-    font-size: 28px;
+    font-size: 20px;
     text-align: center;
     font-family: Roboto-Light;
     background-color: var(--background);

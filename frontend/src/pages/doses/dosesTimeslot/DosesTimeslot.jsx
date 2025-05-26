@@ -3,6 +3,7 @@ import "./DosesTimeslot.css";
 import Info from "../../../components/Info/Info";
 import DosesDose from "../dosesDose/DosesDose";
 import { ExtendedDate } from "../../../functions/ExtendedDate";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const DosesTimeslot = ({ account, schedule, timeslot, dosesTimeslotModalRef, disableDosesTimeslotModal, setDoses, dosesMatrix }) => {
@@ -45,9 +46,12 @@ const DosesTimeslot = ({ account, schedule, timeslot, dosesTimeslotModalRef, dis
     }, [isDoseModalActive]);
 
     function disableDosesDoseModal() {
+        if(!dosesDoseModalRef.current) return;
         dosesDoseModalRef.current.id = "";
         
         setTimeout(() => {
+            if(!dosesDoseModalHolderRef.current) return;
+            
             dosesDoseModalHolderRef.current.id = "";
             setTimeout(() => {
                 setDose({});
@@ -96,7 +100,7 @@ const DosesTimeslot = ({ account, schedule, timeslot, dosesTimeslotModalRef, dis
                             <img src={images.pillIcon} alt="PILL" />
 
                             <div className="dose-info">
-                                <strong>{dose.name}</strong>
+                                <strong>{ExtendedString.cutText(dose.name, 20)}</strong>
                                 
                                 <div className="dose-info-time">
                                     <p>{ExtendedDate.display(dose.time, { noDate: true })}</p>

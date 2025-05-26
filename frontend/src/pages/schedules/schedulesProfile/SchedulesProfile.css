@@ -74,8 +74,9 @@
     width: auto;
     color: white;
     font-size: 40px;
-    text-align: center;
+    text-align: left;
     font-family: Roboto-Bold;
+    word-break: break-all;
     letter-spacing: 3px;
     background-color: transparent;
     border: none;

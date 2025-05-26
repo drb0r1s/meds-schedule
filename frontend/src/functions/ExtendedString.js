@@ -44,5 +44,12 @@ export const ExtendedString = {
     getDosesURL: (id, name) => {
         const noSpaces = name.replaceAll(" ", "-");
         return `${noSpaces}-${id}`;
+    },
+
+    cutText: (text, length) => {
+        let newText = text;
+        if(text.length > length) newText = `${text.substring(0, length)}...`;
+
+        return newText;
     }
 };

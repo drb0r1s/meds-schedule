@@ -6,6 +6,7 @@ import Edit from "../../../components/edit/Edit";
 import GeneralInfo from "../../../components/generalInfo/GeneralInfo";
 import SchedulesProfileAdmin from "./schedulesProfileAdmin/SchedulesProfileAdmin";
 import { DB } from "../../../functions/DB";
+import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
 const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
@@ -101,7 +102,7 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
                     style={account.color ? { background: `linear-gradient(${account.color} 0, #1c1a1a 95%)` } : {}}
                 >
                     <button onClick={disableProfileModal}><img src={images.xIcon} alt="X" /></button>
-                    <h2>{account.name}</h2>
+                    <h2>{ExtendedString.cutText(account.name, 15)}</h2>
                 </div>
 
                 {account.type === "family" && account.admin && <div className="admin-info">
