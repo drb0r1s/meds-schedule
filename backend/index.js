@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
+const path = require("path");
 require("dotenv").config();
 
 const port = 9999;
@@ -22,6 +23,8 @@ app.use(cors({
     origin: "http://88.200.63.148:9998",
     credentials: true
 }));
+
+app.use(express.static(path.join(__dirname, "build"))); 
 
 app.listen(port, () => console.log(`Server is listening on http://88.200.63.148:${port}/`));
 

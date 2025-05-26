@@ -25,6 +25,7 @@ const Account = () => {
             const result = await DB.account.loggedIn();
             setIsLoading(false);
 
+            if(result.message) return;
             if(result.id) navigate("/schedules");
         }
 
