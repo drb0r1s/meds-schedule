@@ -28,6 +28,7 @@ const Doses = () => {
     const dosesCreateModalRef = useRef(null);
     const dosesTimeslotModalRef = useRef(null);
     const dosesScheduleModalRef = useRef(null);
+    const calendarTimeslotsRef = useRef(null);
 
     const scheduleId = dosesURL.split("-")[dosesURL.split("-").length - 1];
 
@@ -107,6 +108,26 @@ const Doses = () => {
         return new Date().getTime() + distancedWeek;
     }
 
+    function switchCalendarPage(direction) {
+        if(!calendarTimeslotsRef.current) return;
+
+        calendarTimeslotsRef.current.style.top = direction === "next" ? "30px" : "-30px";
+        calendarTimeslotsRef.current.style.opacity = "0";
+
+        setTimeout(() => {
+            calendarTimeslotsRef.current.style.transition = "0";
+            calendarTimeslotsRef.current.style.top = direction === "next" ? "-30px" : "30px";
+            calendarTimeslotsRef.current.style.transition = "";
+
+            setWeekDistance(weekDistance - 1);
+
+            setTimeout(() => {
+                calendarTimeslotsRef.current.style.top = "";
+                calendarTimeslotsRef.current.style.opacity = "";
+            }, 100);
+        }, 200);
+    }
+
     return(
         <section className="doses">
             {isLoading ? <Loading /> : <>
@@ -149,6 +170,7 @@ const Doses = () => {
                         setModals={setModals}
                         setDosesMatrix={setDosesMatrix}
                         weekDistance={weekDistance}
+                        calendarTimeslotsRef={calendarTimeslotsRef}
                     />
                 </div>
                 
@@ -156,9 +178,9 @@ const Doses = () => {
                     <h2 onClick={() => setModals({...modals, schedule: true})}>{schedule.name}</h2>
 
                     <div className="center-group">
-                        <button onClick={() => setWeekDistance(weekDistance - 1)}><img src={images.arrowUpIcon} alt="UP" /></button>
+                        <button onClick={() => switchCalendarPage("prev")}><img src={images.arrowUpIcon} alt="UP" /></button>
                         <button onClick={() => setModals({...modals, create: true})}><img src={images.plusIcon} alt="CREATE" /></button>
-                        <button onClick={() => setWeekDistance(weekDistance + 1)}><img src={images.arrowDownIcon} alt="DOWN" /></button>
+                        <button onClick={() => switchCalendarPage("next")}><img src={images.arrowDownIcon} alt="DOWN" /></button>
                     </div>
 
                     <div className="right-group">

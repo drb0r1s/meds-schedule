@@ -3,7 +3,7 @@ import "./Calendar.css";
 import { ExtendedDate } from "../../functions/ExtendedDate";
 import { images } from "../../data/images";
 
-const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance }) => {
+const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance, calendarTimeslotsRef }) => {
     const date = time ? new Date(time) : new Date();
 
     const calendar = {
@@ -132,7 +132,7 @@ const Calendar = ({ time, doses, setModals, setDosesMatrix, weekDistance }) => {
                     })}
                 </div>
 
-                <div className="timeslots">
+                <div className="timeslots" ref={calendarTimeslotsRef}>
                     {timeslots.map((timeslotHour, hourIndex) => {
                         return timeslotHour.map((timeslotDay, dayIndex) => {
                             const timeslotId = `${week[dayIndex].year}-${week[dayIndex].month}-${week[dayIndex].day}-${dayIndex}-${hourIndex}`;

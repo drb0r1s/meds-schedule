@@ -6,11 +6,7 @@ const AccountLogin = ({ ref, inputs, setInputs }) => {
     const [showPassword, setShowPassword] = useState(false);
     
     return(
-        <form
-            className="account-panel account-login"
-            
-            ref={ref}
-        >
+        <form className="account-panel account-login" ref={ref}>
             <fieldset>
                 <input
                     type="text"

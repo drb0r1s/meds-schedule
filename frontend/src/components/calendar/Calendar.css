@@ -48,9 +48,11 @@
     align-items: center;
     justify-content: center;
     grid-template-columns: repeat(7, 1fr);
+    background-color: var(--background);
     border-left: 1px solid white;
     border-bottom: 1px solid white;
     padding: 5px;
+    z-index: 1;
 }
 
 .calendar .timeslots-holder .days .day {
@@ -67,6 +69,9 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(24, 1fr);
+    position: relative;
+    top: 0;
+    transition: 200ms;
 }
 
 .calendar .timeslots-holder .timeslots .timeslot {
