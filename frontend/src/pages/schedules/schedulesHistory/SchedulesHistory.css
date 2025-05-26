@@ -9,6 +9,7 @@
     position: fixed;
     left: -100vw;
     transition: 300ms;
+    overflow-x: hidden;
     overflow-y: auto;
     z-index: 2;
 }

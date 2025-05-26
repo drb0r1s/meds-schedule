@@ -119,9 +119,9 @@ const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setIn
                                         className="path"
                                         onClick={() => navigate(`/schedules/${ExtendedString.getDosesURL(event.schedule_id, event.schedule_name)}`)}
                                     >
-                                        <p>{event.schedule_name}</p>
+                                        <p>{ExtendedString.cutText(event.schedule_name, 10)}</p>
                                         <img src={images.arrowPathIcon} alt=">" />
-                                        <p>{event.dose_name}</p>
+                                        <p>{ExtendedString.cutText(event.dose_name, 10)}</p>
                                     </div>}
                                 </div>
                             </div>
