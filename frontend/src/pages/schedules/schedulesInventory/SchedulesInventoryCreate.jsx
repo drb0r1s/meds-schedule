@@ -34,6 +34,8 @@ const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInv
         
         const medicationResult = await DB.medication.create({ account_id: account.id, ...inputs });
         
+        if(medicationResult === null || medicationResult === undefined) return;
+
         if(medicationResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: medicationResult.message });
@@ -52,6 +54,8 @@ const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInv
         });
 
         setIsLoading(false);
+
+        if(eventResult === null || eventResult === undefined) return;
 
         if(eventResult.message) {
             setInfo({ type: "error", message: eventResult.message });

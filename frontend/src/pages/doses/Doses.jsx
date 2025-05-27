@@ -43,6 +43,8 @@ const Doses = () => {
         else {
             const getAccount = async () => {
                 const result = await DB.account.loggedIn();
+
+                if(result === null || result === undefined) return;
                 if(result.message) return;
 
                 setAccount(result);
@@ -50,6 +52,8 @@ const Doses = () => {
             
             const getSchedule = async () => {
                 const result = await DB.schedule.get(scheduleId);
+
+                if(result === null || result === undefined) return;
                 if(result.message) return;
 
                 setSchedule(result);
@@ -66,6 +70,8 @@ const Doses = () => {
 
         const getDoses = async () => {
             const result = await DB.schedule.getDoses(schedule.id);
+
+            if(result === null || result === undefined) return;
             if(result.message) return;
 
             setDoses(result);

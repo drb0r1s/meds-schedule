@@ -13,6 +13,8 @@ const SchedulesNotifications = ({ account, notificationsModalRef, disableNotific
         const getNotifications = async () => {
             const result = await DB.account.getNotifications(account.id);
             setIsLoading(false);
+
+            if(result === null || result == undefined) return;
             
             if(result.message) {
                 setInfo({ type: "error", message: result.message });

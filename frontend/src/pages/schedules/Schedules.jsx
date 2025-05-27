@@ -36,6 +36,8 @@ const Schedules = () => {
     useEffect(() => {
         const getAccount = async () => {
             const result = await DB.account.loggedIn();
+
+            if(result === null || result === undefined) return;
                 
             if(result.message) {
                 navigate("/");
@@ -55,6 +57,7 @@ const Schedules = () => {
         const getSchedules = async () => {
             const result = await DB.account.getSchedules(account.id);
 
+            if(result === null || result === undefined) return;
             if(result.message) return;
 
             setSchedules(result);

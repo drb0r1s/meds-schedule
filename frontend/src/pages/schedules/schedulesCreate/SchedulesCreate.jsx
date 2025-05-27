@@ -17,6 +17,8 @@ const SchedulesCreate = ({ account, createModalRef, disableCreateModal, setSched
         
         const scheduleResult = await DB.schedule.create({ account_id: account.id, ...inputs });
         
+        if(scheduleResult === null || scheduleResult === undefined) return;
+
         if(scheduleResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: scheduleResult.message });
@@ -35,6 +37,8 @@ const SchedulesCreate = ({ account, createModalRef, disableCreateModal, setSched
         });
 
         setIsLoading(false);
+
+        if(eventResult === null || eventResult === undefined) return;
 
         if(eventResult.message) {
             setInfo({ type: "error", message: eventResult.message });

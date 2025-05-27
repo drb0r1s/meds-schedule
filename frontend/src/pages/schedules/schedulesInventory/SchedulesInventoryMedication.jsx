@@ -56,6 +56,8 @@ const SchedulesInventoryMedication = ({ account, medication, setMedication, inve
 
         const doseMedicationResult = await DB.doseMedication.get(medication.id, "medication");
 
+        if(doseMedicationResult === null || doseMedicationResult === undefined) return;
+
         if(doseMedicationResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: doseMedicationResult.message });
@@ -68,6 +70,8 @@ const SchedulesInventoryMedication = ({ account, medication, setMedication, inve
 
         const doseResult = await DB.dose.deleteMultiple(doseIds);
 
+        if(doseResult === null || doseResult === undefined) return;
+
         if(doseResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: doseResult.message });
@@ -76,6 +80,8 @@ const SchedulesInventoryMedication = ({ account, medication, setMedication, inve
         }
 
         const medicationResult = await DB.medication.delete(medication.id);
+
+        if(medicationResult === null || medicationResult === undefined) return;
 
         if(medicationResult.message) {
             setIsLoading(false);
@@ -95,6 +101,8 @@ const SchedulesInventoryMedication = ({ account, medication, setMedication, inve
         });
 
         setIsLoading(false);
+
+        if(eventResult === null || eventResult === undefined) return;
 
         if(eventResult.message) {
             setInfo({ type: "error", message: eventResult.message });

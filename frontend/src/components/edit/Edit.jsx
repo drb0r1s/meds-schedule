@@ -132,6 +132,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 setIsLoading(true);
                 
                 const accountResult = await DB.account.update(values.id, inputs);
+
+                if(accountResult === null || accountResult === undefined) return;
                 
                 if(accountResult.message) {
                     setIsLoading(false);
@@ -151,6 +153,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 });
                 
                 setIsLoading(false);
+
+                if(eventAccountResult === null || eventAccountResult === undefined) return;
 
                 if(eventAccountResult.message) {
                     setInfo({ type: "error", message: eventAccountResult.message });
@@ -172,6 +176,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 
                 const scheduleResult = await DB.schedule.update(values.id, inputs);
                 
+                if(scheduleResult === null || scheduleResult === undefined) return;
+                
                 if(scheduleResult.message) {
                     setIsLoading(false);
                     setInfo({ type: "error", message: scheduleResult.message });
@@ -190,6 +196,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 });
                 
                 setIsLoading(false);
+
+                if(eventResult === null || eventResult === undefined) return;
 
                 if(eventResult.message) {
                     setInfo({ type: "error", message: eventResult.message });
@@ -210,6 +218,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 setIsLoading(true);
 
                 const doseResult = await DB.dose.update(values.id, inputs);
+
+                if(doseResult === null || doseResult === undefined) return;
                 
                 if(doseResult.message) {
                     setIsLoading(false);
@@ -229,6 +239,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 });
                 
                 setIsLoading(false);
+
+                if(eventDoseResult === null || eventDoseResult === undefined) return;
 
                 if(eventDoseResult.message) {
                     setInfo({ type: "error", message: eventDoseResult.message });
@@ -250,6 +262,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 
                 const medicationResult = await DB.medication.update(values.id, inputs);
                 
+                if(medicationResult === null || medicationResult === undefined) return;
+                
                 if(medicationResult.message) {
                     setIsLoading(false);
                     setInfo({ type: "error", message: medicationResult.message });
@@ -268,6 +282,8 @@ const Edit = ({ type, editModalRef, disableEditModal, values, setValues, setFore
                 });
                 
                 setIsLoading(false);
+
+                if(eventMedicationResult === null || eventMedicationResult === undefined) return;
 
                 if(eventMedicationResult.message) {
                     setInfo({ type: "error", message: eventMedicationResult.result });

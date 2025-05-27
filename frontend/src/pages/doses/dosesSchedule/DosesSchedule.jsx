@@ -57,6 +57,8 @@ const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, 
         
         const scheduleResult = await DB.schedule.delete(schedule.id);
 
+        if(scheduleResult === null || scheduleResult === undefined) return;
+
         if(scheduleResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: scheduleResult.message });
@@ -75,6 +77,8 @@ const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, 
         });
         
         setIsLoading(false);
+
+        if(eventResult === null || eventResult === undefined) return;
 
         if(eventResult.message) {
             setInfo({ type: "error", message: eventResult.message });

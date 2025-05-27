@@ -21,6 +21,8 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
     useEffect(() => {
         const getDoseMedications = async () => {
             const result = await DB.doseMedication.get(dose.id, "dose");
+
+            if(result === null || result === undefined) return;
             if(result.message) return;
 
             setDoseMedications(result);
@@ -91,6 +93,8 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
         
         const doseMedicationResult = type === "take" ? await DB.doseMedication.take(dose, doseMedications) : await DB.doseMedication.missed(dose);
         
+        if(doseMedicationResult === null || doseMedicationResult === undefined) return;
+
         if(doseMedicationResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: doseMedicationResult.message });
@@ -109,6 +113,8 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
         });
         
         setIsLoading(false);
+
+        if(eventResult === null || eventResult === undefined) return;
 
         if(eventResult.message) {
             setInfo({ type: "error", message: eventResult.message });
@@ -139,6 +145,8 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
         
         const doseResult = await DB.dose.delete(dose.id);
 
+        if(doseResult === null || doseResult === undefined) return;
+
         if(doseResult.message) {
             setIsLoading(false);
             setInfo({ type: "error", message: doseResult.message });
@@ -157,6 +165,8 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
         });
 
         setIsLoading(false);
+
+        if(eventResult === null || eventResult === undefined) return;
     
         if(eventResult.message) {
             setInfo({ type: "error", message: eventResult.message });

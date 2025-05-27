@@ -37,10 +37,14 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
         const medications = inputs.medication.slice(0, -1);
 
         const medicationsResult = await DB.medication.checkExistence(schedule.account_id, medications);
+        
+        if(medicationsResult === null || medicationsResult === undefined) return;
         if(medicationsResult.message) setInfo({ type: "error", message: medicationsResult.message });
         
         else {
             const doseResult = await DB.dose.create({ schedule_id: schedule.id, ...inputs });
+            
+            if(doseResult === null || doseResult === undefined) return;
             
             if(doseResult.message) {
                 setIsLoading(false);
@@ -50,6 +54,8 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
             }
 
             const doseMedicationResult = await DB.doseMedication.create({ dose_id: doseResult.id, medications: medicationsResult });
+            
+            if(doseMedicationResult === null || doseMedicationResult === undefined) return;
             
             if(doseMedicationResult.message) {
                 setIsLoading(false);
@@ -67,6 +73,8 @@ const DosesCreate = ({ schedule, dosesCreateModalRef, disableDosesCreateModal, s
                 description: "{event.dose_name} was created in {event.schedule_name} schedule.",
                 type: "dose"
             });
+
+            if(eventResult === null || eventResult === undefined) return;
 
             if(eventResult.message) {
                 setIsLoading(false);

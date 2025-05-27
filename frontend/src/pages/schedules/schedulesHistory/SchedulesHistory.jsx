@@ -24,6 +24,8 @@ const SchedulesHistory = ({ account, historyModalRef, disableHistoryModal, setIn
             const result = await DB.event.getAll(account.id);
             setIsLoading(false);
 
+            if(result === null || result === undefined) return;
+
             if(result.message) {
                 setInfo({ type: "error", message: result.message });
                 return;

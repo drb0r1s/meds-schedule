@@ -15,6 +15,8 @@ const SchedulesProfileAdmin = ({ account, setAccount, adminModalRef, disableAdmi
         const result = await DB.account.adminLogin(account.id, adminPassword);
         setIsLoading(false);
 
+        if(result === null || result === undefined) return;
+
         if(result.message) {
             setInfo({ type: "error", message: result.message });
             return;

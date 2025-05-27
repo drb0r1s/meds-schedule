@@ -25,6 +25,8 @@ const Account = () => {
             const result = await DB.account.loggedIn();
             setIsLoading(false);
 
+            if(result === null || result === undefined) return;
+
             if(result.message) return;
             if(result.id) navigate("/schedules");
         }
@@ -56,6 +58,8 @@ const Account = () => {
             const result = await DB.account.login(inputs);
             setIsLoading(false);
 
+            if(result === null || result === undefined) return;
+
             if(result.message) return setInfo({ type: "error", message: result.message });
             navigate("/schedules");
         }
@@ -64,6 +68,8 @@ const Account = () => {
             setIsLoading(true);
             const result = await DB.account.register(inputs);
             setIsLoading(false);
+
+            if(result === null || result === undefined) return;
 
             if(result.message) return setInfo({ type: "error", message: result.message });
         

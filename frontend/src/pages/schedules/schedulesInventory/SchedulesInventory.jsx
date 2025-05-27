@@ -24,6 +24,8 @@ const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal 
     useEffect(() => {
         const getMedications = async () => {
             const result = await DB.account.getMedications(account.id);
+
+            if(result === null || result === undefined) return;
             if(result.message) return;
 
             setMedications(result);
