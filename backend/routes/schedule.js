@@ -6,8 +6,8 @@ const CheckInputs = require("../functions/CheckInputs");
 
 const schedule = express.Router();
 
-schedule.post("/get", async (req, res) => {
-    const { id } = req.body;
+schedule.get("/:id/get", async (req, res) => {
+    const { id } = req.params;
     
     try {
         const queryResult = await DB.schedule.get({ id });
@@ -44,7 +44,7 @@ schedule.post("/create", async (req, res) => {
     }
 });
 
-schedule.post("/update", async (req, res) => {
+schedule.patch("/update", async (req, res) => {
     const { id, value } = req.body;
 
     let updateObject = { updated_at: ExtendedDate.now() };
@@ -71,8 +71,8 @@ schedule.post("/update", async (req, res) => {
     }
 });
 
-schedule.post("/delete", async (req, res) => {
-    const { id } = req.body;
+schedule.delete("/:id/delete", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.schedule.delete({ id });
@@ -85,8 +85,8 @@ schedule.post("/delete", async (req, res) => {
     }
 });
 
-schedule.post("/get-doses", async (req, res) => {
-    const { id } = req.body;
+schedule.get("/:id/get-doses", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.schedule.getDoses({ id });

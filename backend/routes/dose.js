@@ -34,7 +34,7 @@ dose.post("/create", async (req, res) => {
     }
 });
 
-dose.post("/update", async (req, res) => {
+dose.patch("/update", async (req, res) => {
     const { id, value } = req.body;
 
     const parsedTime = `${value.time.year}-${value.time.month >= 10 ? time.month : `0${value.time.month}`}-${value.time.day >= 10 ? value.time.day : `0${value.time.day}`} ${value.time.hours >= 10 ? value.time.hours : `0${value.time.hours}`}:${value.time.minutes >= 10 ? value.time.minutes : `0${value.time.minutes}`}:00`;
@@ -64,8 +64,8 @@ dose.post("/update", async (req, res) => {
     }
 });
 
-dose.post("/delete", async (req, res) => {
-    const { id } = req.body;
+dose.delete("/:id/delete", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.dose.delete({ id });

@@ -24,8 +24,8 @@ event.post("/create", async (req, res) => {
     }
 });
 
-event.post("/get-all", async (req, res) => {
-    const { account_id } = req.body;
+event.get("/:account_id/get-all", async (req, res) => {
+    const { account_id } = req.params;
 
     try {
         const queryResult = await DB.event.getAll({ account_id });

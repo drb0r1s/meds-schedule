@@ -35,7 +35,7 @@ medication.post("/create", async (req, res) => {
     }
 });
 
-medication.post("/update", async (req, res) => {
+medication.patch("/update", async (req, res) => {
     const { id, value } = req.body;
 
     const parsedExpirationDate = `${value.expirationDate.year}-${value.expirationDate.month >= 10 ? value.expirationDate.month : `0${value.expirationDate.month}`}-${value.expirationDate.day >= 10 ? value.expirationDate.day : `0${value.expirationDate.day}`}`;
@@ -66,8 +66,8 @@ medication.post("/update", async (req, res) => {
     }
 });
 
-medication.post("/delete", async (req, res) => {
-    const { id } = req.body;
+medication.delete("/:id/delete", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.medication.delete({ id });

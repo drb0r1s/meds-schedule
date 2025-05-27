@@ -4,8 +4,8 @@ const DB = require("../db/index");
 
 const doseMedication = express.Router();
 
-doseMedication.post("/get", async (req, res) => {
-    const { id, type } = req.body;
+doseMedication.get("/:id/:type/get/", async (req, res) => {
+    const { id, type } = req.params;
 
     try {
         const queryResult = await DB.doseMedication.get({ id, type });

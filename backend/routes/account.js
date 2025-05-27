@@ -117,7 +117,7 @@ account.post("/admin-login", async (req, res) => {
     }
 });
 
-account.post("/update", async (req, res) => {
+account.patch("/update", async (req, res) => {
     const { id, value } = req.body;
 
     if(value.password && value.repeatPassword === undefined) return error(res, { message: "Repeat password wasn't provided." });
@@ -154,8 +154,8 @@ account.post("/update", async (req, res) => {
     }
 });
 
-account.post("/get-schedules", async (req, res) => {
-    const { id } = req.body;
+account.get("/:id/get-schedules", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.account.getSchedules({ id });
@@ -166,8 +166,8 @@ account.post("/get-schedules", async (req, res) => {
     }
 });
 
-account.post("/get-medications", async (req, res) => {
-    const { id } = req.body;
+account.get("/:id/get-medications", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.account.getMedications({ id });
@@ -178,8 +178,8 @@ account.post("/get-medications", async (req, res) => {
     }
 });
 
-account.post("/get-notifications", async (req, res) => {
-    const { id } = req.body;
+account.get("/:id/get-notifications", async (req, res) => {
+    const { id } = req.params;
 
     try {
         const queryResult = await DB.account.getNotifications({ id });
