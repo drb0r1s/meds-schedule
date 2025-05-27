@@ -154,6 +154,7 @@ const Schedules = () => {
                     profileModalRef={profileModalRef}
                     disableProfileModal={disableProfileModal}
                     setInfo={setInfo}
+                    setForeignModals={setModals}
                 />}
 
                 {modals.inventory && <SchedulesInventory

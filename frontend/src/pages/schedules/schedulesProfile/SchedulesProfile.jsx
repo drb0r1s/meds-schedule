@@ -9,7 +9,7 @@ import { DB } from "../../../functions/DB";
 import { ExtendedString } from "../../../functions/ExtendedString";
 import { images } from "../../../data/images";
 
-const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo }) => {
+const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileModalRef, disableProfileModal, setInfo, setForeignModals }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [modals, setModals] = useState({ edit: false, admin: false });
 
@@ -48,9 +48,18 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
 
     async function handleButton(button) {
         switch(button) {
-            case "inventory": break;
-            case "notifications": break;
-            case "history": break;
+            case "inventory":
+                disableProfileModal();
+                setTimeout(() => setForeignModals(prevForeignModals => { return {...prevForeignModals, inventory: true} }), 700);
+                break;
+            case "notifications":
+                disableProfileModal();
+                setTimeout(() => setForeignModals(prevForeignModals => { return {...prevForeignModals, notifications: true} }), 700);
+                break;
+            case "history":
+                disableProfileModal();
+                setTimeout(() => setForeignModals(prevForeignModals => { return {...prevForeignModals, history: true} }), 700);
+                break;
             case "admin mode":
                 setModals({...modals, admin: true});
                 break;
