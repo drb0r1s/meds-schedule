@@ -38,7 +38,7 @@ export const DB = {
         },
     
         loggedIn: async () => {
-            return await DB.getRequest(`${DB.URL}account/loggedIn`);
+            return await DB.getRequest(`${DB.URL}account/logged-in`);
         },
         
         register: async value => {

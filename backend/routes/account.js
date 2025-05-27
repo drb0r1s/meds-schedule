@@ -43,7 +43,7 @@ account.get("/logout", async (req, res) => {
     });
 });
 
-account.get("/loggedIn", async (req, res) => {
+account.get("/logged-in", async (req, res) => {
     const { loggedIn, accountId, admin } = req.session;
 
     if(!loggedIn) return error(res, { message: "Not logged in." });
