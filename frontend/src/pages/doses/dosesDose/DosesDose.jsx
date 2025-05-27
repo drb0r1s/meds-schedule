@@ -31,11 +31,13 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
     }, []);
 
     useEffect(() => {
-        if(modals.edit) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
+        if(modals.edit) setTimeout(() => { if(editModalRef.current) editModalRef.current.id = "edit-active" }, 10);
     }, [modals.edit]);
 
     useEffect(() => {
         if(modals.confirmation) setTimeout(() => {
+            if(!confirmationModalHolderRef.current || !confirmationModalRef.current) return;
+            
             confirmationModalHolderRef.current.id = "confirmation-holder-active";
             confirmationModalRef.current.id = "confirmation-active";
         });
@@ -49,9 +51,12 @@ const DosesDose = ({ account, dose, setDose, schedule, dosesDoseModalHolderRef, 
     }
 
     function disableConfirmationModal() {
+        if(!confirmationModalRef.current) return;
         confirmationModalRef.current.id = "";
 
         setTimeout(() => {
+            if(!confirmationModalHolderRef.current) return;
+
             confirmationModalHolderRef.current.id = "";
             setTimeout(() => setModals({...modals, confirmation: false}), 300);
         }, 300);

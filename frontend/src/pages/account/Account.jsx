@@ -33,7 +33,7 @@ const Account = () => {
     }, []);
 
     useEffect(() => {
-        if(accountPanelRef.current) setTimeout(() => { accountPanelRef.current.id = "account-panel-active" }, 100);
+        if(accountPanelRef.current) setTimeout(() => { if(accountPanelRef.current) accountPanelRef.current.id = "account-panel-active" }, 100);
     }, [isLogin]);
 
     function changePanel(login) {

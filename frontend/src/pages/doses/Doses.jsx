@@ -76,28 +76,34 @@ const Doses = () => {
     }, [schedule]);
 
     useEffect(() => {
-        if(modals.create) setTimeout(() => { dosesCreateModalRef.current.id = "doses-create-active" }, 10);
+        if(modals.create) setTimeout(() => { if(dosesCreateModalRef.current) dosesCreateModalRef.current.id = "doses-create-active" }, 10);
     }, [modals.create]);
 
     useEffect(() => {
-        if(modals.timeslot) setTimeout(() => { dosesTimeslotModalRef.current.id = "doses-timeslot-active" }, 10);
+        if(modals.timeslot) setTimeout(() => { if(dosesTimeslotModalRef.current) dosesTimeslotModalRef.current.id = "doses-timeslot-active" }, 10);
     }, [modals.timeslot]);
 
     useEffect(() => {
-        if(modals.schedule) setTimeout(() => { dosesScheduleModalRef.current.id = "doses-schedule-active" }, 10);
+        if(modals.schedule) setTimeout(() => { if(dosesScheduleModalRef.current) dosesScheduleModalRef.current.id = "doses-schedule-active" }, 10);
     }, [modals.schedule]);
 
     function disableDosesCreateModal() {
+        if(!dosesCreateModalRef.current) return;
+        
         dosesCreateModalRef.current.id = "";
         setTimeout(() => setModals({...modals, create: false}), 300);
     }
 
     function disableDosesTimeslotModal() {
+        if(!dosesTimeslotModalRef.current) return;
+        
         dosesTimeslotModalRef.current.id = "";
         setTimeout(() => setModals({...modals, timeslot: false}), 300);
     }
 
     function disableDosesScheduleModal() {
+        if(!dosesScheduleModalRef.current) return;
+        
         dosesScheduleModalRef.current.id = "";
         setTimeout(() => setModals({...modals, schedule: false}), 300);
     }
@@ -116,6 +122,8 @@ const Doses = () => {
         calendarTimeslotsRef.current.style.opacity = "0";
 
         setTimeout(() => {
+            if(!calendarTimeslotsRef.current) return;
+            
             calendarTimeslotsRef.current.style.transition = "0";
             calendarTimeslotsRef.current.style.top = direction === "next" ? "-30px" : "30px";
             calendarTimeslotsRef.current.style.transition = "";
@@ -124,6 +132,8 @@ const Doses = () => {
             else if(direction === "next") setWeekDistance(weekDistance + 1);
 
             setTimeout(() => {
+                if(!calendarTimeslotsRef.current) return;
+                
                 calendarTimeslotsRef.current.style.top = "";
                 calendarTimeslotsRef.current.style.opacity = "";
             }, 100);

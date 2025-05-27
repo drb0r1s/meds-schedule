@@ -54,20 +54,25 @@ const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal 
     }, [medication]);
 
     useEffect(() => {
-        if(modals.create) setTimeout(() => { inventoryCreateModalRef.current.id = "schedules-inventory-create-active" }, 10);
+        if(modals.create) setTimeout(() => { if(inventoryCreateModalRef.current) inventoryCreateModalRef.current.id = "schedules-inventory-create-active" }, 10);
     }, [modals.create]);
 
     useEffect(() => {
-        if(modals.medication) setTimeout(() => { inventoryMedicationModalRef.current.id = "schedules-inventory-medication-active" }, 10);
+        if(modals.medication) setTimeout(() => { if(inventoryMedicationModalRef.current) inventoryMedicationModalRef.current.id = "schedules-inventory-medication-active" }, 10);
     }, [modals.medication]);
 
     function disableInventoryCreateModal() {
+        if(!inventoryCreateModalRef.current) return;
+        
         inventoryCreateModalRef.current.id = "";
         setTimeout(() => setModals({...modals, create: false}), 300);
     }
 
     function disableInventoryMedicationModal() {
+        if(!inventoryMedicationModalRef.current) return;
+        
         inventoryMedicationModalRef.current.id = "";
+        
         setTimeout(() => {
             setMedication({});
             setModals({...modals, medication: false});

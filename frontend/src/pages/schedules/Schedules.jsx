@@ -71,52 +71,66 @@ const Schedules = () => {
 
     useEffect(() => {
         if(modals.profile) setTimeout(() => {
+            if(!profileModalHolderRef.current) return;
+            
             profileModalHolderRef.current.id = "schedules-profile-holder-active";
-            setTimeout(() => { profileModalRef.current.id = "schedules-profile-active" }, 300);
+            setTimeout(() => { if(profileModalRef.current) profileModalRef.current.id = "schedules-profile-active" }, 300);
         }, 10);
     }, [modals.profile]);
 
     useEffect(() => {
-        if(modals.inventory) setTimeout(() => { inventoryModalRef.current.id = "schedules-inventory-active" }, 10);
+        if(modals.inventory) setTimeout(() => { if(inventoryModalRef.current) inventoryModalRef.current.id = "schedules-inventory-active" }, 10);
     }, [modals.inventory]);
 
     useEffect(() => {
-        if(modals.create) setTimeout(() => { createModalRef.current.id = "schedules-create-active" }, 10);
+        if(modals.create) setTimeout(() => { if(createModalRef.current) createModalRef.current.id = "schedules-create-active" }, 10);
     }, [modals.create]);
 
     useEffect(() => {
-        if(modals.notifications) setTimeout(() => { notificationsModalRef.current.id = "schedules-notifications-active" });
+        if(modals.notifications) setTimeout(() => { if(notificationsModalRef.current) notificationsModalRef.current.id = "schedules-notifications-active" });
     }, [modals.notifications]);
 
     useEffect(() => {
-        if(modals.history) setTimeout(() => { historyModalRef.current.id = "schedules-history-active" }, 10);
+        if(modals.history) setTimeout(() => { if(historyModalRef.current) historyModalRef.current.id = "schedules-history-active" }, 10);
     }, [modals.history]);
 
     function disableProfileModal() {
+        if(!profileModalRef.current) return;
+
         profileModalRef.current.id = "";
         
         setTimeout(() => {
+            if(!profileModalHolderRef.current) return;
+
             profileModalHolderRef.current.id = "";
             setTimeout(() => setModals({...modals, profile: false}), 300);
         }, 300);
     }
 
     function disableInventoryModal() {
+        if(!inventoryModalRef.current) return;
+        
         inventoryModalRef.current.id = "";
         setTimeout(() => setModals({...modals, inventory: false}), 300);
     }
 
     function disableCreateModal() {
+        if(!createModalRef.current) return;
+        
         createModalRef.current.id = "";
         setTimeout(() => setModals({...modals, create: false}), 300);
     }
 
     function disableNotificationsModal() {
+        if(!notificationsModalRef.current) return;
+        
         notificationsModalRef.current.id = "";
         setTimeout(() => setModals({...modals, notifications: false}), 300);
     }
 
     function disableHistoryModal() {
+        if(!historyModalRef.current) return;
+        
         historyModalRef.current.id = "";
         setTimeout(() => setModals({...modals, history: false}), 300);
     }

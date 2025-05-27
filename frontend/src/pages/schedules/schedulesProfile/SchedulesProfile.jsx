@@ -29,19 +29,23 @@ const SchedulesProfile = ({ account, setAccount, profileModalHolderRef, profileM
     };
 
     useEffect(() => {
-        if(modals.edit) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
+        if(modals.edit) setTimeout(() => { if(editModalRef.current) editModalRef.current.id = "edit-active" }, 10);
     }, [modals.edit]);
 
     useEffect(() => {
-        if(modals.admin) setTimeout(() => { adminModalRef.current.id = "schedules-profile-admin-active" }, 10);
+        if(modals.admin) setTimeout(() => { if(adminModalRef.current) adminModalRef.current.id = "schedules-profile-admin-active" }, 10);
     }, [modals.admin]);
 
     function disableEditModal() {
+        if(!editModalRef.current) return;
+        
         editModalRef.current.id = "";
         setTimeout(() => setModals({...modals, edit: false}), 300);
     }
 
     function disableAdminModal() {
+        if(!adminModalRef.current) return;
+        
         adminModalRef.current.id = "";
         setTimeout(() => setModals({...modals, admin: false}), 300);
     }

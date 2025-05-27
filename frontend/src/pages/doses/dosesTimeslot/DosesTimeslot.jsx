@@ -40,8 +40,10 @@ const DosesTimeslot = ({ account, schedule, timeslot, dosesTimeslotModalRef, dis
 
     useEffect(() => {
         if(isDoseModalActive) setTimeout(() => {
+            if(!dosesDoseModalHolderRef.current) return;
+            
             dosesDoseModalHolderRef.current.id = "doses-dose-holder-active";
-            setTimeout(() => { dosesDoseModalRef.current.id = "doses-dose-active" }, 300);
+            setTimeout(() => { if(dosesDoseModalRef.current) dosesDoseModalRef.current.id = "doses-dose-active" }, 300);
         }, 10);
     }, [isDoseModalActive]);
 

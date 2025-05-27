@@ -21,25 +21,32 @@ const DosesSchedule = ({ account, schedule, setSchedule, dosesScheduleModalRef, 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(modals.edit) setTimeout(() => { editModalRef.current.id = "edit-active" }, 10);
+        if(modals.edit) setTimeout(() => { if(editModalRef.current) editModalRef.current.id = "edit-active" }, 10);
     }, [modals.edit]);
 
     useEffect(() => {
         if(modals.confirmation) setTimeout(() => {
+            if(!confirmationModalHolderRef.current || !confirmationModalRef.current) return;
+            
             confirmationModalHolderRef.current.id = "confirmation-holder-active";
             confirmationModalRef.current.id = "confirmation-active";
         });
     }, [modals.confirmation]);
 
     function disableEditModal() {
+        if(!editModalRef.current) return;
+        
         editModalRef.current.id = "";
         setTimeout(() => setModals({...modals, edit: false}), 300);
     }
 
     function disableConfirmationModal() {
+        if(!confirmationModalRef.current) return;
         confirmationModalRef.current.id = "";
 
         setTimeout(() => {
+            if(!confirmationModalHolderRef.current) return;
+            
             confirmationModalHolderRef.current.id = "";
             setTimeout(() => setModals({...modals, confirmation: false}), 300);
         }, 300);
