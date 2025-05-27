@@ -43,14 +43,16 @@ export const CheckInputs = {
                 return true;
             }
 
-            else if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) {
-                setInfo({ type: "error", message: "Admin password field is empty." });
-                return true;
-            }
+            if(inputs.type !== undefined && inputs.type === "family") {
+                if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) {
+                    setInfo({ type: "error", message: "Admin password field is empty." });
+                    return true;
+                }
 
-            else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) {
-                setInfo({ type: "error", message: "Admin password length should be greater than 7 or less than 64!" });
-                return true;
+                else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) {
+                    setInfo({ type: "error", message: "Admin password length should be greater than 7 or less than 64!" });
+                    return true;
+                }
             }
         }
 

@@ -13,8 +13,11 @@ const CheckInputs = {
             else if(inputs.repeatPassword !== undefined && (inputs.repeatPassword.length < 8 || inputs.repeatPassword.length > 64)) return error(res, { message: "Confirmation password length should be greater than 7 or less than 64!" });
             else if(inputs.password !== undefined && inputs.repeatPassword !== undefined && (inputs.password !== inputs.repeatPassword)) return error(res, { message: "Password and confirmation password don't match!" });
             else if(inputs.type !== undefined && ["individual", "family"].indexOf(inputs.type) === -1) return error(res, { message: "Account type is invalid." });
-            else if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) return error(res, { message: "Admin password field is empty." });
-            else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) return error(res, { message: "Admin password length should be greater than 7 or less than 64!" });
+            
+            if(inputs.type !== undefined && inputs.type === "family") {
+                if(inputs.adminPassword !== undefined && !inputs.adminPassword.length) return error(res, { message: "Admin password field is empty." });
+                else if(inputs.adminPassword !== undefined && (inputs.adminPassword.length < 8 || inputs.adminPassword.length > 64)) return error(res, { message: "Admin password length should be greater than 7 or less than 64!" });
+            }
         }
 
         return false;
