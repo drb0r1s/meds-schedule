@@ -14,9 +14,10 @@ import deleteIcon from "../images/delete-icon.svg";
 import arrowPathIcon from "../images/arrow-path-icon.svg";
 import adminIcon from "../images/admin-icon.svg";
 import warningIcon from "../images/warning-icon.svg";
+import warningRedIcon from "../images/warning-red-icon.svg";
 
 export const images = {
     checkIcon, xIcon, plusIcon, profileIcon, medicationIcon,
     notificationIcon, historyIcon, pillIcon, arrowUpIcon, arrowDownIcon,
-    penIcon, signOutIcon, deleteIcon, arrowPathIcon, adminIcon, warningIcon
+    penIcon, signOutIcon, deleteIcon, arrowPathIcon, adminIcon, warningIcon, warningRedIcon
 };
