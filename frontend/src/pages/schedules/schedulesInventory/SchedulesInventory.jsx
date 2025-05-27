@@ -125,6 +125,7 @@ const SchedulesInventory = ({ account, inventoryModalRef, disableInventoryModal 
                                 <span>{medication.substance}</span>
 
                                 <div className="info-inner-holder">
+                                    {medication.amount < 5 && <img src={images.warningIcon} alt="WARNING" />}
                                     <p>Amount: <span>{medication.amount} {medication.amount_unit}</span></p>
                                     <p>Expiration date: <span>{ExtendedDate.display(medication.expiration_date, { noTime: true })}</span></p>
                                 </div>

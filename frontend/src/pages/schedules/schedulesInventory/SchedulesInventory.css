@@ -125,6 +125,12 @@
     gap: 15px;
 }
 
+.schedules-inventory .list .medication .info-holder .info-inner-holder img {
+    height: 23px;
+    width: 23px;
+    object-fit: contain;
+}
+
 .schedules-inventory .list .medication .info-holder .info-inner-holder p {
     color: white;
     font-size: 12px;
