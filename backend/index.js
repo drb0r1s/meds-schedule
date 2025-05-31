@@ -20,7 +20,7 @@ app.use(session({
 }));
 
 app.use(cors({
-    origin: "http://88.200.63.148:9999",
+    origin: "http://88.200.63.148:9998",
     credentials: true
 }));
 
@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/ping", (req, res) => {
-    res.status(200).send('OK');
+    res.status(200).send("OK");
 });
 
 const account = require("./routes/account.js");
