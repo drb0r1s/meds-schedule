@@ -8,6 +8,9 @@ const medication = express.Router();
 
 medication.post("/create", async (req, res) => {
     const { account_id, name, description, substance, expirationDate, amount, amountUnit } = req.body;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     const isError = CheckInputs.medication({ name, description, substance, expirationDate, amount, amountUnit }, res);
     if(isError) return;
@@ -37,6 +40,9 @@ medication.post("/create", async (req, res) => {
 
 medication.patch("/update", async (req, res) => {
     const { id, value } = req.body;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     const parsedExpirationDate = `${value.expirationDate.year}-${value.expirationDate.month >= 10 ? value.expirationDate.month : `0${value.expirationDate.month}`}-${value.expirationDate.day >= 10 ? value.expirationDate.day : `0${value.expirationDate.day}`}`;
     const parsedValue = {...value, expiration_date: parsedExpirationDate, amount_unit: value.amountUnit};
@@ -68,6 +74,9 @@ medication.patch("/update", async (req, res) => {
 
 medication.delete("/:id/delete", async (req, res) => {
     const { id } = req.params;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     try {
         const queryResult = await DB.medication.delete({ id });

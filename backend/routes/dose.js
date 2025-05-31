@@ -36,6 +36,9 @@ dose.post("/create", async (req, res) => {
 
 dose.patch("/update", async (req, res) => {
     const { id, value } = req.body;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     const parsedTime = `${value.time.year}-${value.time.month >= 10 ? time.month : `0${value.time.month}`}-${value.time.day >= 10 ? value.time.day : `0${value.time.day}`} ${value.time.hours >= 10 ? value.time.hours : `0${value.time.hours}`}:${value.time.minutes >= 10 ? value.time.minutes : `0${value.time.minutes}`}:00`;
     const parsedValue = {...value, time: parsedTime};
@@ -66,6 +69,9 @@ dose.patch("/update", async (req, res) => {
 
 dose.delete("/:id/delete", async (req, res) => {
     const { id } = req.params;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     try {
         const queryResult = await DB.dose.delete({ id });
@@ -80,6 +86,10 @@ dose.delete("/:id/delete", async (req, res) => {
 
 dose.post("/delete-multiple", async (req, res) => {
     const { ids } = req.body;
+    const { admin } = req.session;
+
+    if(!ids.length) return;
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     try {
         const queryResult = await DB.dose.deleteMultiple({ ids });

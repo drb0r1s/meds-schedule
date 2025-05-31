@@ -4,7 +4,7 @@ const DB = require("../db/index");
 
 const doseMedication = express.Router();
 
-doseMedication.get("/:id/:type/get/", async (req, res) => {
+doseMedication.get("/:id/:type/get", async (req, res) => {
     const { id, type } = req.params;
 
     try {

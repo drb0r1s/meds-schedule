@@ -46,6 +46,9 @@ schedule.post("/create", async (req, res) => {
 
 schedule.patch("/update", async (req, res) => {
     const { id, value } = req.body;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     let updateObject = { updated_at: ExtendedDate.now() };
     const blockKeys = [];
@@ -73,6 +76,9 @@ schedule.patch("/update", async (req, res) => {
 
 schedule.delete("/:id/delete", async (req, res) => {
     const { id } = req.params;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     try {
         const queryResult = await DB.schedule.delete({ id });

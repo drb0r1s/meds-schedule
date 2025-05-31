@@ -119,6 +119,9 @@ account.post("/admin-login", async (req, res) => {
 
 account.patch("/update", async (req, res) => {
     const { id, value } = req.body;
+    const { admin } = req.session;
+
+    if(admin === undefined) return error(res, { message: "Administrator permissions required." });
 
     if(value.password && value.repeatPassword === undefined) return error(res, { message: "Repeat password wasn't provided." });
 
