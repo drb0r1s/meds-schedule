@@ -20,7 +20,7 @@ app.use(session({
 }));
 
 app.use(cors({
-    origin: "http://88.200.63.148:9998",
+    origin: "http://88.200.63.148:9999",
     credentials: true
 }));
 
@@ -30,6 +30,10 @@ app.listen(port, () => console.log(`Server is listening on http://88.200.63.148:
 
 app.get("/", (req, res) => {
     res.send("Hello world!");
+});
+
+app.get("/ping", (req, res) => {
+    res.status(200).send('OK');
 });
 
 const account = require("./routes/account.js");
