@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./SchedulesInventoryCreate.css";
 import Loading from "../../../components/loading/Loading";
 import ExpirationDateInputs from "../../../components/expirationDateInputs/ExpirationDateInputs";
@@ -14,10 +14,6 @@ const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInv
     const [isAutocompleteActive, setIsAutocompleteActive] = useState(false);
 
     const autocompleteRef = useRef(null);
-
-    useEffect(() => {
-        if(isAutocompleteActive) setTimeout(() => { if(autocompleteRef.current) autocompleteRef.current.id = "autocomplete-active" }, 10);
-    }, [isAutocompleteActive]);
 
     function disableAutocomplete() {
         if(!autocompleteRef.current) return;
@@ -83,6 +79,7 @@ const SchedulesInventoryCreate = ({ account, inventoryCreateModalRef, disableInv
             <form>
                 <fieldset>
                     {isAutocompleteActive && <Autocomplete
+                        isAutocompleteActive={isAutocompleteActive}
                         autocompleteRef={autocompleteRef}
                         input={inputs.name}
                         disableAutocomplete={disableAutocomplete}

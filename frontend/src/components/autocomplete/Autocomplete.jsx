@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Autocomplete.css";
 import { medications } from "../../data/medications";
 
-const Autocomplete = ({ autocompleteRef, input, disableAutocomplete, onSelect }) => {
+const Autocomplete = ({ isAutocompleteActive, autocompleteRef, input, disableAutocomplete, onSelect }) => {
     const [shownMedications, setShownMedications] = useState([]);
 
     useEffect(() => {        
@@ -14,7 +14,11 @@ const Autocomplete = ({ autocompleteRef, input, disableAutocomplete, onSelect })
         }
 
         if(input && !newShownMedications.length) disableAutocomplete();
-        else setShownMedications(newShownMedications);
+        
+        else {
+            if(isAutocompleteActive && autocompleteRef.current && !autocompleteRef.current.id) setTimeout(() => { autocompleteRef.current.id = "autocomplete-active" }, 10);
+            setShownMedications(newShownMedications);
+        }
     }, [input]);
     
     return(
