@@ -1,12 +1,30 @@
 .expiration-date-inputs {
+    flex-direction: column;
     gap: 10px;
 }
 
-.expiration-date-inputs input {
+.expiration-date-inputs p {
+    width: 100%;
+    color: white;
+    font-size: 17px;
+    text-align: left;
+    font-family: Roboto-Light;
+    margin: 0;
+}
+
+.expiration-date-inputs .expiration-date-inputs-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.expiration-date-inputs .expiration-date-inputs-holder input {
     text-align: center;
 }
 
-.expiration-date-inputs input:nth-child(1),
-.expiration-date-inputs input:nth-child(2) {
+.expiration-date-inputs .expiration-date-inputs-holder input:nth-child(1),
+.expiration-date-inputs .expiration-date-inputs-holder input:nth-child(2) {
     width: 50%;
 }

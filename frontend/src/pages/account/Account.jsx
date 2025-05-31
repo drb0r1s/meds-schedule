@@ -88,7 +88,7 @@ const Account = () => {
             
             <div className="logo-holder">
                 <Logo />
-                <p>{isLogin ? "Log in" : "Register"} to your account</p>
+                <p>{isLogin ? "Log in to your" : "Register an"} account</p>
             </div>
 
             {isLogin ? <>
