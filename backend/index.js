@@ -3,6 +3,7 @@ const cors = require("cors");
 const session = require("express-session");
 const path = require("path");
 require("dotenv").config();
+const connection = require("./db/connection");
 
 const port = 9999;
 
@@ -32,8 +33,23 @@ app.get("/", (req, res) => {
     res.send("Hello world!");
 });
 
-app.get("/ping", (req, res) => {
-    res.status(200).send("OK");
+app.get("/ping", async (req, res) => {
+    function checkDatabaseConnection() {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT 1", (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+            });
+        });
+    }
+
+    try {
+        await checkDatabaseConnection();
+        res.status(200).send("OK");
+    } catch (err) {
+        console.error("DB health check failed:", err.message);
+        res.status(500).send("Unhealthy");
+    }
 });
 
 const account = require("./routes/account.js");
