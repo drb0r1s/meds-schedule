@@ -68,15 +68,16 @@ const SchedulesInventoryMedication = ({ account, medication, setMedication, inve
         const doseIds = [];
         for(let i = 0; i < doseMedicationResult.length; i++) doseIds.push(doseMedicationResult[i].dose_id);
 
-        const doseResult = await DB.dose.deleteMultiple(doseIds);
+        if(doseIds.length) {
+            const doseResult = await DB.dose.deleteMultiple(doseIds);
+            if(doseResult === null || doseResult === undefined) return;
 
-        if(doseResult === null || doseResult === undefined) return;
+            if(doseResult.message) {
+                setIsLoading(false);
+                setInfo({ type: "error", message: doseResult.message });
 
-        if(doseResult.message) {
-            setIsLoading(false);
-            setInfo({ type: "error", message: doseResult.message });
-
-            return;
+                return;
+            }
         }
 
         const medicationResult = await DB.medication.delete(medication.id);
